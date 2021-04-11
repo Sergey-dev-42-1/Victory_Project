@@ -1,0 +1,56 @@
+@import "./Main_variables.scss";
+.Header {
+  grid-area: 1 / 1 / 2 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding-left: 3vw;
+
+  .spacer {
+    width: 100%;
+  }
+  .linkContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 1vw;
+    height: 100%;
+    transition: color 0.2s, background-color 0.2s;
+  }
+  .linkContainer:hover {
+    background-color: $primary-color;
+    cursor: pointer;
+    color: white;
+    .link {
+      color: white;
+    }
+  }
+  .link {
+    height: 100%;
+    max-width: 40%;
+    text-decoration: none;
+    font-size: $title-size;
+  }
+  .link:visited {
+    color: $primary-color;
+  }
+}
+.title {
+  color: $primary-color;
+  font-size: $title-size;
+}
+@media only screen and (max-width: 1024px) {
+  .Header {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .link {
+    width: 100%;
+    min-width: 100%;
+  }
+  .spacer {
+    display: none;
+  }
+}
