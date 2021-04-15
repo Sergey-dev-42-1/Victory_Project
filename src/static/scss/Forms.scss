@@ -1,29 +1,48 @@
-@import "./Main_variables.scss";
+@import "./MainVariables.scss";
 
+.RegPageContainer {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-area: content1;
+  grid-template-columns: [first-column] 40% [second-column] auto;
+  grid-template-rows: [first-row] 100%;
+  grid-template-areas: "content1 content2";
+}
 .textContainer {
-  grid-area: 1 / 1/ 2/ 2;
+  grid-area: content1;
   font-family: $font-stack-secondary;
   font-size: $title-size;
+
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   text-align: justify;
-  background-color: adjust-color($color: $background-color, $lightness: -15%);
+  background-color: adjust-color($color: $primary-color, $lightness: -5%);
   color: white;
 }
 
 //Стилизация контейнера формы и ее элементов(кнопки сабмита, полей, подписей)
+.outerFormContainer {
+  grid-area: content2;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  background-color: $background-color;
+}
 .FormContainer {
-  grid-area: 1 / 2/ 1/ 3;
   font-family: $font-stack-secondary;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2vh 20vw;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
-  color: white;
-  background-color: adjust-color($color: $primary-color, $alpha: -0.5);
+  padding: 2vh 10vw;
+  box-shadow: 3px 0px 1px 0 rgba(0, 0, 0, 0.16);
+  color: adjust-color($color: $primary-color, $lightness: 0%, $alpha: -0.1);
+  background-color: white;
   label {
     font-size: $label-size;
     font-weight: bold;
@@ -38,22 +57,27 @@
   .formInput {
     font-size: $fields-size - 0.5;
     line-height: $fields-size;
-    border-radius: 5px;
-    border: 0.5vh solid $background-color;
+    border-radius: 2px;
+    border: 0.5vh solid
+      adjust-color($color: $background-color, $lightness: 35%, $alpha: -0.2);
     padding: 5px;
     box-shadow: 0;
     outline: 0;
+    transition: border 0.4s;
   }
+  .formInput:hover,
   .formInput:focus {
-    border: 0.5vh solid
-      adjust-color($color: $background-color, $hue: 180, $lightness: -25%);
+    border: 0.5vh solid $background-color;
   }
   .submitButton {
-    background-color: $primary-color2;
-    border: 0.2vh solid white;
-    border-radius: 5px;
+    @extend %button-3d-effect;
+    background-color: adjust-color($color: $primary-color, $alpha: 1);
+    min-width: 20%;
+    align-self: center;
+    border: 0 solid white;
+    border-radius: 2px;
     font-size: $label-size;
-    padding: 0.5vh 1vw;
+    padding: 1.5vh 1.7vw;
     margin: 2vh 0px;
     color: white;
     cursor: pointer;
@@ -64,22 +88,11 @@
     cursor: not-allowed;
   }
   .submitButton:hover {
-    background-color: adjust-color(
-      $color: $primary-color,
-      $lightness: 10%,
-      $alpha: 1
-    );
+    background-color: adjust-color($color: $primary-color, $lightness: -7.5%);
   }
   .submitButton:focus {
-    background-color: adjust-color(
-      $color: $primary-color,
-      $lightness: -10%,
-      $alpha: 1
-    );
-    border-top: 0.2vh solid
-      adjust-color($color: white, $lightness: -50%, $alpha: 1);
-    border-left: 0.2vh solid
-      adjust-color($color: white, $lightness: -50%, $alpha: 1);
+    @extend %button-3d-effect-active;
+    border: 0;
     outline: 0;
   }
   .errorValidation {

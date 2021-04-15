@@ -1,9 +1,29 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggle, selectSidebarOpen } from "../state/sidebarSlice";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
+//TODO: Опираться на то, авторизован пользователь или нет
 export const Header = () => {
+  const dispatch = useDispatch();
+  const opened = useSelector(selectSidebarOpen);
   return (
-    <div className="Header">
+    <header className="Header">
+      {!localStorage.getItem("userData") && (
+        <div
+          className="showSidebarContainer"
+          onClick={() => {
+            dispatch(toggle());
+          }}
+        >
+          {opened ? (
+            <CloseIcon style={{ fontSize: "3vw" }} htmlColor={"#f06f19"} />
+          ) : (
+            <MenuIcon style={{ fontSize: "3vw" }} htmlColor={"#f06f19"} />
+          )}
+        </div>
+      )}
       <p className="title">Victory</p>
       <span className="spacer"></span>
       {!localStorage.getItem("userData") ? (
@@ -26,6 +46,6 @@ export const Header = () => {
           </div>
         </Link>
       )}
-    </div>
+    </header>
   );
 };

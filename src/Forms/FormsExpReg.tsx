@@ -64,7 +64,7 @@ export const FormExpReg = () => {
   }, [errors]);
 
   return (
-    <div className="pageContainer">
+    <div className="RegPageContainer">
       <div className="textContainer">
         Victory - сервис, позволящий организовать и провести конкурс с минимум
         усилий, для всех участников процесса: организаторов, экспертов и

@@ -1,11 +1,10 @@
-@import "./Main_variables.scss";
+@import "./MainVariables.scss";
 .Footer {
-  grid-area: 3 / 1 / 4/ 4;
-  display: flex;
+  @extend %flex-space-between;
+  @extend %main-color-scheme;
   align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  padding-left: 1vw;
+  grid-area: footer;
+  margin: auto;
   .spacer {
     width: 100%;
   }
@@ -21,9 +20,8 @@
   .link:hover {
     font-size: $title-size + 2;
   }
-}
-.footer-text {
-  color: $primary-color;
-  font-size: $title-size;
-  text-align: center;
+  .footer-text {
+    font-size: $title-size;
+    text-align: center;
+  }
 }

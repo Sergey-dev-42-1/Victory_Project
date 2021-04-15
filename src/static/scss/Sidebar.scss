@@ -1,0 +1,96 @@
+@import "./MainVariables.scss";
+
+.sidebarContainer {
+  @extend %flex-center;
+  height: 100%;
+  width: 0;
+  font-family: $font-stack;
+  font-size: $label-size;
+
+  background-color: darken($background-color, 10);
+  justify-items: center;
+  visibility: hidden;
+  .controlsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .primaryButton {
+      @extend %base-button;
+    }
+
+    .primaryButton:focus {
+      outline: 0;
+      background-color: darken($primary-color, 10);
+    }
+    .spacer {
+      height: 100%;
+    }
+  }
+}
+
+.showSidebarContainer {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//Анимация переходов для сайдбара, подробнее в документации к CSSTransitions от react-group-transition
+
+.sidebarTransitions-enter {
+  width: 0vw;
+  transition: width 800ms;
+}
+.sidebarTransitions-enter-active {
+  width: 25vw;
+  visibility: visible;
+  transition: width 800ms;
+}
+.sidebarTransitions-enter-done {
+  width: 25vw;
+  visibility: visible;
+  transition: width 800ms;
+}
+.sidebarTransitions-exit {
+  width: 25vw;
+  opacity: 1;
+  visibility: visible;
+}
+.sidebarTransitions-exit-active {
+  width: 0vw;
+  visibility: visible;
+  opacity: 0;
+  transition: width 800ms, opacity 500ms;
+}
+.sidebarTransitions-exit-done {
+  width: 0vw;
+  transition: width 800ms;
+}
+// //Анимация перехода переключателя
+// .sidebarControlTransitions-enter {
+//   width: 5vw;
+//   transition: width 800ms;
+// }
+// .sidebarControlTransitions-enter-active {
+//   width: 100%;
+
+//   transition: width 800ms;
+// }
+// .sidebarControlTransitions-enter-done {
+//   width: 100%;
+
+//   transition: width 800ms;
+// }
+// .sidebarControlTransitions-exit {
+//   width: 100%;
+// }
+// .sidebarControlTransitions-exit-active {
+//   width: 5vw;
+//   transition: width 800ms;
+// }
+// .sidebarControlTransitions-exit-done {
+//   width: 5vw;
+// }

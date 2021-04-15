@@ -1,6 +1,6 @@
 //Форма регистрации организатора
 import { useForm } from "react-hook-form";
-import { string, object, SchemaOf, setLocale } from "yup";
+import { string, object, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInputField } from "./FormInputField";
 import * as yup from "yup";
@@ -54,54 +54,58 @@ export const FormOrgReg = () => {
   React.useEffect(() => {
     console.log(errors);
   }, [errors]);
-
+  //TODO: Создать компонент, который бы являлся базисом для всех трех форм
   return (
-    <div className="pageContainer">
+    <div className="RegPageContainer">
       <div className="textContainer">
         Victory - сервис, позволящий организовать и провести конкурс с минимум
         усилий, для всех участников процесса: организаторов, экспертов и
         участников
       </div>
-      <form className="FormContainer" onSubmit={handleSubmit(Submit)}>
-        <label className="formTitle">Зарегистрироваться как организатор</label>
-        <FormInputField
-          label="Email организации"
-          fieldName="Email"
-          regist={register("Email")}
-          errors={errors}
-        />
+      <main className="outerFormContainer">
+        <form className="FormContainer" onSubmit={handleSubmit(Submit)}>
+          <label className="formTitle">
+            Зарегистрироваться как организатор
+          </label>
+          <FormInputField
+            label="Email организации"
+            fieldName="Email"
+            regist={register("Email")}
+            errors={errors}
+          />
 
-        <FormInputField
-          label="Название организации"
-          fieldName="OrgName"
-          regist={register("OrgName")}
-          errors={errors}
-        />
+          <FormInputField
+            label="Название организации"
+            fieldName="OrgName"
+            regist={register("OrgName")}
+            errors={errors}
+          />
 
-        <FormInputField
-          label="Пароль"
-          fieldName="Password"
-          regist={register("Password")}
-          type="password"
-          errors={errors}
-        />
+          <FormInputField
+            label="Пароль"
+            fieldName="Password"
+            regist={register("Password")}
+            type="password"
+            errors={errors}
+          />
 
-        <FormInputField
-          label="Подтвердите пароль"
-          fieldName="PasswordCheck"
-          regist={register("PasswordCheck")}
-          type="password"
-          errors={errors}
-        />
+          <FormInputField
+            label="Подтвердите пароль"
+            fieldName="PasswordCheck"
+            regist={register("PasswordCheck")}
+            type="password"
+            errors={errors}
+          />
 
-        <button
-          className="submitButton"
-          type="submit"
-          disabled={formState.isSubmitting || submitted}
-        >
-          Отправить
-        </button>
-      </form>
+          <button
+            className="submitButton"
+            type="submit"
+            disabled={formState.isSubmitting || submitted}
+          >
+            Отправить
+          </button>
+        </form>
+      </main>
     </div>
   );
 };

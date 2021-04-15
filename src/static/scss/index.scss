@@ -1,6 +1,8 @@
-@import "./Main_variables.scss";
+@import "./MainVariables.scss";
+@import "./MainPages.scss";
 @import "./Header.scss";
 @import "./Footer.scss";
+@import "./Sidebar.scss";
 @import "./Forms.scss";
 *,
 *:before,
@@ -20,22 +22,15 @@ body {
 #root {
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: [first-row] 10% [second-row] auto [third-row] 10%;
+  display: flex;
+  flex-direction: column;
 }
-.pageContainer {
-  grid-area: 2 / 1 / 3 /4;
-  display: grid;
-  grid-template-columns: [first-column] 40% [second-column] auto;
-  grid-template-rows: [first-row] 100%;
-}
+
 @media only screen and (max-width: 1024px) {
   body #root {
     display: flex;
     flex-direction: column;
-  }
-  .pageContainer {
-    display: flex;
-    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
   }
 }

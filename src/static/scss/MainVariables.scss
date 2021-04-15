@@ -1,0 +1,50 @@
+$font-stack: "Poppins", "Roboto";
+$font-stack-secondary: "Roboto", "sans-serif";
+
+$primary-color: #f06f19;
+$primary-color2: #dc6d02;
+$background-color: #52808d;
+$out-of-focus-color: #fcb500;
+$error-color: #df1301;
+
+$fields-size: 3vh;
+$title-size: 4vh;
+$label-size: 2.5vh;
+$mini-label-size: 2vh;
+
+@function buttonHeight($padding, $fontSize) {
+  @return ($padding * 2) + $fontSize;
+}
+%main-color-scheme {
+  background-color: $background-color;
+  color: white;
+}
+%flex-center {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+%flex-space-between {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+%base-button {
+  font-size: $label-size;
+  border: 0;
+  width: 100%;
+  color: white;
+  background-color: $primary-color;
+  line-height: 1;
+  padding: 2vh;
+}
+%button-3d-effect {
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+%button-3d-effect-active {
+  box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
