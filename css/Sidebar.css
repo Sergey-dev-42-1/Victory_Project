@@ -18,6 +18,7 @@
   width: 100%;
   color: white;
   background-color: #f06f19;
+  line-height: 1;
   padding: 2vh;
 }
 
@@ -41,6 +42,18 @@
           flex-direction: column;
   width: 100%;
   height: 100%;
+}
+
+.sidebarContainer .controlsContainer .primaryButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
 }
 
 .sidebarContainer .controlsContainer .primaryButton:focus {

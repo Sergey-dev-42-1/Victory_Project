@@ -1,23 +1,19 @@
-@use "./MainVariables.scss";
 .mainPageContainer {
   background-color: white;
-  height: 100%;
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
   align-content: flex-start;
-  .sidebarContainer {
-    flex-grow: 1;
-  }
   .contentContainer {
+    padding-top: 3vh;
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: auto buttonHeight(2vh, $label-size);
+    grid-template-rows: auto buttonHeight(2vh, 3vh);
     grid-template-areas:
       "content"
       "footer";
-
+    transition: opacity 0.5s, background-color 0.5s;
     .Footer {
       height: 100%;
       width: 100%;
@@ -25,11 +21,39 @@
       display: flex;
       justify-content: center;
     }
+    .managmentContainer {
+      display: flex;
+      justify-content: flex-start;
+      flex-flow: column wrap;
+      width: 70%;
+      min-height: 90%;
+      border-radius: 1vh;
+      border: 1px solid rgba($color: #000000, $alpha: 0.1);
+      box-shadow: $box-shadow;
+    }
+    .managmentContainerFilters {
+      width: 90%;
+      min-height: 10vh;
+      border-radius: 1vh;
+      align-self: center;
+      margin-top: 2vh;
+      margin-bottom: 1vh;
+      background-color: rgba($primary-color, 0.2);
+      box-shadow: $box-shadow;
+    }
   }
 }
-.dimmed {
-  z-index: 100;
-  background-color: black;
-  opacity: 0.5;
-  transition: opacity 0.5s, background-color 0.5s;
+.contestManagmentContainer {
+  @extend %flex-center;
+  height: 100%;
+  padding-bottom: 4vh;
+}
+
+.dimmer {
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  transition: background-color 0.5s;
+  * {
+    opacity: 0.8;
+    transition: opacity 0.5s, background-color 0.5s;
+  }
 }

@@ -4,6 +4,7 @@
 @import "./Footer.scss";
 @import "./Sidebar.scss";
 @import "./Forms.scss";
+@import "./ContestCard.scss";
 *,
 *:before,
 *:after {
@@ -14,7 +15,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  font: 100% $font-stack;
+  font-family: $font-stack;
   background-color: $background-color;
   color: $primary-color;
   overflow-x: hidden;

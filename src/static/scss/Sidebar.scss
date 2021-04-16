@@ -1,8 +1,8 @@
-@import "./MainVariables.scss";
-
 .sidebarContainer {
+  position: fixed;
   @extend %flex-center;
-  height: 100%;
+  height: 100vh - $header-height;
+  z-index: 100;
   width: 0;
   font-family: $font-stack;
   font-size: $label-size;
@@ -18,6 +18,10 @@
 
     .primaryButton {
       @extend %base-button;
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+      text-align: center;
     }
 
     .primaryButton:focus {
@@ -69,28 +73,3 @@
   width: 0vw;
   transition: width 800ms;
 }
-// //Анимация перехода переключателя
-// .sidebarControlTransitions-enter {
-//   width: 5vw;
-//   transition: width 800ms;
-// }
-// .sidebarControlTransitions-enter-active {
-//   width: 100%;
-
-//   transition: width 800ms;
-// }
-// .sidebarControlTransitions-enter-done {
-//   width: 100%;
-
-//   transition: width 800ms;
-// }
-// .sidebarControlTransitions-exit {
-//   width: 100%;
-// }
-// .sidebarControlTransitions-exit-active {
-//   width: 5vw;
-//   transition: width 800ms;
-// }
-// .sidebarControlTransitions-exit-done {
-//   width: 5vw;
-// }

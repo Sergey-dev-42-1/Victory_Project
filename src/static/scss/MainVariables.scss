@@ -7,11 +7,13 @@ $background-color: #52808d;
 $out-of-focus-color: #fcb500;
 $error-color: #df1301;
 
+$header-height: 8vh;
 $fields-size: 3vh;
 $title-size: 4vh;
 $label-size: 2.5vh;
 $mini-label-size: 2vh;
 
+$box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 @function buttonHeight($padding, $fontSize) {
   @return ($padding * 2) + $fontSize;
 }
@@ -36,7 +38,7 @@ $mini-label-size: 2vh;
   width: 100%;
   color: white;
   background-color: $primary-color;
-  line-height: 1;
+  // line-height: 1;
   padding: 2vh;
 }
 %button-3d-effect {

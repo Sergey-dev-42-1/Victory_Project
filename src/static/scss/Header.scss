@@ -1,9 +1,11 @@
-@import "./MainVariables.scss";
 .Header {
   @extend %flex-space-between;
   @extend %main-color-scheme;
+  height: $header-height;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   align-items: center;
-  grid-area: header1;
   padding-left: 5vw;
   .spacer {
     width: 100%;

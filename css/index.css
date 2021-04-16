@@ -3,56 +3,7 @@
   color: white;
 }
 
-.sidebarContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.Header, .Footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.sidebarContainer .controlsContainer .primaryButton {
-  font-size: 2.5vh;
-  border: 0;
-  width: 100%;
-  color: white;
-  background-color: #f06f19;
-  padding: 2vh;
-}
-
-.FormContainer .submitButton {
-  -webkit-box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-}
-
-.FormContainer .submitButton:focus {
-  -webkit-box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-}
-
-.Header, .Footer {
-  background-color: #52808d;
-  color: white;
-}
-
-.sidebarContainer {
+.contestManagmentContainer, .sidebarContainer, .contestCardContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -97,12 +48,15 @@
 }
 
 .mainPageContainer {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  grid-area: content1;
+  background-color: white;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -110,53 +64,71 @@
       align-content: flex-start;
 }
 
-.Header, .Footer {
-  background-color: #52808d;
-  color: white;
+.mainPageContainer .contentContainer {
+  height: 100%;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 7vh;
+      grid-template-rows: auto 7vh;
+      grid-template-areas: "content" "footer";
+  -webkit-transition: opacity 0.5s, background-color 0.5s;
+  transition: opacity 0.5s, background-color 0.5s;
 }
 
-.sidebarContainer {
+.mainPageContainer .contentContainer .Footer {
+  height: 100%;
+  width: 100%;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: footer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
-.Header, .Footer {
+.mainPageContainer .contentContainer .managmentContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  width: 70%;
+  height: 90%;
+  border-radius: 1vh;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
-.sidebarContainer .controlsContainer .primaryButton {
-  font-size: 2.5vh;
-  border: 0;
-  width: 100%;
-  color: white;
-  background-color: #f06f19;
-  padding: 2vh;
+.mainPageContainer .contentContainer .managmentContainerFilters {
+  width: 97%;
+  height: 20%;
+  border-radius: 1vh;
+  margin: 1vh 2vh 3vh;
+  background-color: rgba(240, 111, 25, 0.2);
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 
-.FormContainer .submitButton {
-  -webkit-box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+.dimmer {
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
 }
 
-.FormContainer .submitButton:focus {
-  -webkit-box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+.dimmer * {
+  opacity: 0.8;
+  -webkit-transition: opacity 0.5s, background-color 0.5s;
+  transition: opacity 0.5s, background-color 0.5s;
 }
 
 .Header {
@@ -237,7 +209,7 @@
   color: white;
 }
 
-.sidebarContainer {
+.contestManagmentContainer, .sidebarContainer, .contestCardContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -285,8 +257,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
   grid-area: footer;
-  padding-left: 1vw;
+  margin: auto;
 }
 
 .Footer .spacer {
@@ -314,60 +288,11 @@
   text-align: center;
 }
 
-.Header, .Footer {
-  background-color: #52808d;
-  color: white;
-}
-
 .sidebarContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.Header, .Footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.sidebarContainer .controlsContainer .primaryButton {
-  font-size: 2.5vh;
-  border: 0;
-  width: 100%;
-  color: white;
-  background-color: #f06f19;
-  padding: 2vh;
-}
-
-.FormContainer .submitButton {
-  -webkit-box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-}
-
-.FormContainer .submitButton:focus {
-  -webkit-box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-}
-
-.sidebarContainer {
+  height: 100%;
   width: 0;
   font-family: "Poppins", "Roboto";
   font-size: 2.5vh;
-  grid-area: sidebar;
   background-color: #3f636d;
   justify-items: center;
   visibility: hidden;
@@ -383,6 +308,18 @@
           flex-direction: column;
   width: 100%;
   height: 100%;
+}
+
+.sidebarContainer .controlsContainer .primaryButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
 }
 
 .sidebarContainer .controlsContainer .primaryButton:focus {
@@ -446,55 +383,6 @@
   width: 0vw;
   -webkit-transition: width 800ms;
   transition: width 800ms;
-}
-
-.Header, .Footer {
-  background-color: #52808d;
-  color: white;
-}
-
-.sidebarContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.Header, .Footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.sidebarContainer .controlsContainer .primaryButton {
-  font-size: 2.5vh;
-  border: 0;
-  width: 100%;
-  color: white;
-  background-color: #f06f19;
-  padding: 2vh;
-}
-
-.FormContainer .submitButton {
-  -webkit-box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17), inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-}
-
-.FormContainer .submitButton:focus {
-  -webkit-box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 0.6em 2em -0.3em rgba(0, 0, 0, 0.15), inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
 }
 
 .RegPageContainer {
@@ -639,6 +527,11 @@
   color: #df1301;
 }
 
+.contestCardContainer {
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+}
+
 *,
 *:before,
 *:after {
@@ -650,7 +543,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  font: 100% "Poppins", "Roboto";
+  font-family: "Poppins", "Roboto";
   background-color: #52808d;
   color: #f06f19;
   overflow-x: hidden;

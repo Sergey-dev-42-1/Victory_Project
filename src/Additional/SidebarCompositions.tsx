@@ -1,3 +1,4 @@
+import { ExitToApp } from "@material-ui/icons";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +23,8 @@ export class SidebarButton {
 export const Orgbuttons = [
   new SidebarButton("Главная", ["primaryButton"]),
   new SidebarButton("Конкурсы", ["primaryButton"]),
+  new SidebarButton("Эксперты", ["primaryButton"]),
+  new SidebarButton("Организаторы", ["primaryButton"]),
 ];
 interface Props {
   buttons: Array<SidebarButton>;
@@ -45,11 +48,11 @@ export const OrgComposition = ({ buttons }: Props) => {
       })}
       <span className="spacer"></span>
       <button
-        //TODO: Обрвботчик выхода из учетной записи
+        //TODO: Обработчик выхода из учетной записи
         onClick={() => navigate("/")}
         className="primaryButton"
       >
-        Выйти
+        Выйти <ExitToApp style={{ fontSize: "3vh" }}></ExitToApp>{" "}
       </button>
     </React.Fragment>
   );
