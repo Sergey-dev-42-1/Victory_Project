@@ -9,7 +9,7 @@
 }
 
 .contestManagmentContainer, .sidebarContainer, .status,
-.controls {
+.controls, .controls .controlButton {
   -ms-flex-line-pack: center;
       align-content: center;
   -webkit-box-pack: center;
@@ -194,6 +194,12 @@
 
 .Header .linkContainer:hover .link {
   color: white;
+}
+
+.Header .link {
+  height: 100%;
+  font-size: 2.5vh;
+  text-decoration: none;
 }
 
 .Header .title {
@@ -552,16 +558,38 @@
 
 .status,
 .controls {
+  width: 20%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -ms-flex-line-pack: start;
       align-content: flex-start;
-  width: 20%;
 }
 
 .controls {
   width: 10%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+}
+
+.controls .controlButton {
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+}
+
+.iconDescription {
+  padding: 1vh 2vh 2vh;
+  margin: 1vh 0 12vh 3vh;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -597,6 +625,12 @@ a {
 
 a:visited {
   color: #f06f19;
+}
+
+svg:hover {
+  color: #f06f19;
+  -webkit-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14);
+          box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14);
 }
 
 #root {

@@ -46,30 +46,39 @@
 .controls {
   @extend %contest-card-text;
   @extend %flex-center;
+
+  width: 20%;
+
   justify-content: center;
   align-content: flex-start;
-  width: 20%;
 }
 .controls {
-  @extend %flex-center;
   width: 10%;
 
+  @extend %flex-center;
+  flex-flow: column wrap;
   .controlButton {
+    height: 100%;
     flex-flow: column wrap;
     @extend %flex-center;
   }
   .controlButton:hover {
-    box-shadow: $box-shadow;
+    color: $primary-color;
+    svg {
+      box-shadow: $box-shadow;
+    }
   }
 }
+
 .iconDescription {
+  padding: 1vh 2vh 2vh;
+  margin: 1vh 0 12vh 3vh;
+
   align-self: flex-start;
   position: fixed;
 
   background-color: rgba(black, 0.8);
-  border-radius: 5px;
-  padding: 1vh 2vh 2vh;
-  margin: 1vh 0 12vh 3vh;
+
   color: white;
 }
 @media only screen and (max-width: 1024px) {

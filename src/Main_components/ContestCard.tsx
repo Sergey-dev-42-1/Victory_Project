@@ -1,5 +1,7 @@
 import CreateSharpIcon from "@material-ui/icons/Create";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
+import { IconWrapper } from "../Additional/IconTooltipWrapper";
 import { Link } from "react-router-dom";
 //TODO: Переместить в отдельный файл с типами?
 export class Contest {
@@ -37,32 +39,6 @@ export const ContestCard = ({
   dateBeginning,
   dateEnding,
 }: Contest) => {
-  const messageMouseOverIcon = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    text: string
-  ) => {
-    const icon_container = event.target as Element;
-
-    const iconDescription = document.createElement("div");
-    iconDescription.setAttribute("class", "iconDescription");
-
-    iconDescription.innerText = text;
-    icon_container.before(iconDescription);
-  };
-
-  const messageLeaveIcon = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    var targeted = event.target as Element;
-    var iconDescription = targeted.parentElement!.getElementsByClassName(
-      "iconDescription"
-    );
-
-    if (iconDescription) {
-      targeted.parentElement!.removeChild(iconDescription[0] as Element);
-    }
-  };
-
   return (
     <div className="contestCardContainer">
       <div className="baseInfo">
@@ -79,15 +55,22 @@ export const ContestCard = ({
       </div>
       <div className="status">Статус: {status}</div>
       <div className="controls">
-        <div
-          onMouseOver={(event) => messageMouseOverIcon(event, "Изменить")}
-          onMouseOut={(event) => messageLeaveIcon(event)}
-          className="controlButton"
-        >
-          <CreateSharpIcon
-            style={{ fontSize: "2vw", pointerEvents: "none" }}
-          ></CreateSharpIcon>
-        </div>
+        <IconWrapper
+          tooltipText="Изменить"
+          icon={
+            <CreateSharpIcon
+              style={{ fontSize: "1.5em", pointerEvents: "none" }}
+            ></CreateSharpIcon>
+          }
+        ></IconWrapper>
+        <IconWrapper
+          tooltipText="Просмотр"
+          icon={
+            <OpenInNewIcon
+              style={{ fontSize: "1.5em", pointerEvents: "none" }}
+            ></OpenInNewIcon>
+          }
+        ></IconWrapper>
       </div>
     </div>
   );
