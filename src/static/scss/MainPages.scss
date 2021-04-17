@@ -1,13 +1,16 @@
 .mainPageContainer {
+  height: auto;
   background-color: white;
+
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
   align-content: flex-start;
   .contentContainer {
     padding-top: 3vh;
-    height: 100%;
+    min-height: 100vh - $header-height;
     width: 100%;
+
     display: grid;
     grid-template-rows: auto buttonHeight(2vh, 3vh);
     grid-template-areas:
@@ -17,29 +20,35 @@
     .Footer {
       height: 100%;
       width: 100%;
+
       grid-area: footer;
+
       display: flex;
       justify-content: center;
     }
     .managmentContainer {
-      display: flex;
-      justify-content: flex-start;
-      flex-flow: column wrap;
       width: 70%;
       min-height: 90%;
       border-radius: 1vh;
       border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
       box-shadow: $box-shadow;
+
+      display: flex;
+      justify-content: flex-start;
+      flex-flow: column wrap;
     }
     .managmentContainerFilters {
       width: 90%;
       min-height: 10vh;
       border-radius: 1vh;
-      align-self: center;
       margin-top: 2vh;
       margin-bottom: 1vh;
-      background-color: rgba($primary-color, 0.2);
-      box-shadow: $box-shadow;
+
+      align-self: center;
+
+      border: 2px solid rgba($primary-color2, 0.8);
+      box-shadow: 0 1px 4px 1px rgba(darken($primary-color, 20), 0.25);
     }
   }
 }
@@ -50,10 +59,16 @@
 }
 
 .dimmer {
+  color: #000000;
   background-color: rgba($color: #000000, $alpha: 0.5);
   transition: background-color 0.5s;
   * {
     opacity: 0.8;
     transition: opacity 0.5s, background-color 0.5s;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .managmentContainer {
+    width: 100vw;
   }
 }

@@ -23,17 +23,19 @@ export const BasePage = () => {
       <main className={opened ? "contentContainer dimmer" : "contentContainer"}>
         <div className="contestManagmentContainer">
           <div className="managmentContainer">
-            <div className="managmentContainerFilters"></div>
+            <div className="managmentContainerFilters">
+              Компоненты управления
+            </div>
+            <ContestCard {...tempContestData} />
+            <ContestCard {...tempContestData} />
+            <ContestCard {...tempContestData} />
+            {/* <ContestCard {...tempContestData} />
             <ContestCard {...tempContestData} />
             <ContestCard {...tempContestData} />
             <ContestCard {...tempContestData} />
             <ContestCard {...tempContestData} />
             <ContestCard {...tempContestData} />
-            <ContestCard {...tempContestData} />
-            <ContestCard {...tempContestData} />
-            <ContestCard {...tempContestData} />
-            <ContestCard {...tempContestData} />
-            <ContestCard {...tempContestData} />
+            <ContestCard {...tempContestData} /> */}
           </div>
         </div>
         <Footer />

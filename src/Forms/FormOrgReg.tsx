@@ -57,55 +57,57 @@ export const FormOrgReg = () => {
   //TODO: Создать компонент, который бы являлся базисом для всех трех форм
   return (
     <div className="RegPageContainer">
-      <div className="textContainer">
-        Victory - сервис, позволящий организовать и провести конкурс с минимум
-        усилий, для всех участников процесса: организаторов, экспертов и
-        участников
+      <div className="regContentContainer">
+        <div className="textContainer">
+          Victory - сервис, позволящий организовать и провести конкурс с минимум
+          усилий, для всех участников процесса: организаторов, экспертов и
+          участников
+        </div>
+        <main className="outerFormContainer">
+          <form className="FormContainer" onSubmit={handleSubmit(Submit)}>
+            <label className="formTitle">
+              Зарегистрироваться как организатор
+            </label>
+            <FormInputField
+              label="Email организации"
+              fieldName="Email"
+              regist={register("Email")}
+              errors={errors}
+            />
+
+            <FormInputField
+              label="Название организации"
+              fieldName="OrgName"
+              regist={register("OrgName")}
+              errors={errors}
+            />
+
+            <FormInputField
+              label="Пароль"
+              fieldName="Password"
+              regist={register("Password")}
+              type="password"
+              errors={errors}
+            />
+
+            <FormInputField
+              label="Подтвердите пароль"
+              fieldName="PasswordCheck"
+              regist={register("PasswordCheck")}
+              type="password"
+              errors={errors}
+            />
+
+            <button
+              className="submitButton"
+              type="submit"
+              disabled={formState.isSubmitting || submitted}
+            >
+              Отправить
+            </button>
+          </form>
+        </main>
       </div>
-      <main className="outerFormContainer">
-        <form className="FormContainer" onSubmit={handleSubmit(Submit)}>
-          <label className="formTitle">
-            Зарегистрироваться как организатор
-          </label>
-          <FormInputField
-            label="Email организации"
-            fieldName="Email"
-            regist={register("Email")}
-            errors={errors}
-          />
-
-          <FormInputField
-            label="Название организации"
-            fieldName="OrgName"
-            regist={register("OrgName")}
-            errors={errors}
-          />
-
-          <FormInputField
-            label="Пароль"
-            fieldName="Password"
-            regist={register("Password")}
-            type="password"
-            errors={errors}
-          />
-
-          <FormInputField
-            label="Подтвердите пароль"
-            fieldName="PasswordCheck"
-            regist={register("PasswordCheck")}
-            type="password"
-            errors={errors}
-          />
-
-          <button
-            className="submitButton"
-            type="submit"
-            disabled={formState.isSubmitting || submitted}
-          >
-            Отправить
-          </button>
-        </form>
-      </main>
     </div>
   );
 };
