@@ -1,0 +1,60 @@
+//Анимация переходов для сайдбара, подробнее в документации к CSSTransitions от react-group-transition
+.sidebarTransitions-enter {
+  width: 0vw;
+  transition: width 800ms;
+}
+.sidebarTransitions-enter-active {
+  width: 25vw;
+  visibility: visible;
+  transition: width 800ms;
+}
+.sidebarTransitions-enter-done {
+  width: 25vw;
+  visibility: visible;
+  transition: width 800ms;
+}
+.sidebarTransitions-exit {
+  width: 25vw;
+  opacity: 1;
+  visibility: visible;
+}
+.sidebarTransitions-exit-active {
+  width: 0vw;
+  visibility: visible;
+  opacity: 0;
+  transition: width 800ms, opacity 500ms;
+}
+.sidebarTransitions-exit-done {
+  width: 0vw;
+  transition: width 800ms;
+}
+
+//Анимация появления модальных форм
+.formAnimation-enter {
+  opacity: 0;
+  left: -20vh;
+  display: grid;
+}
+.formAnimation-enter-active {
+  left: 30%;
+  opacity: 1;
+  display: grid;
+  transition: opacity 500ms ease-in, left 500ms;
+}
+.formAnimation-enter-done {
+  display: grid;
+}
+.formAnimation-exit {
+  display: grid;
+  left: 30%;
+  opacity: 1;
+}
+.formAnimation-exit-active {
+  display: grid;
+  left: 100%;
+  opacity: 0;
+  transition: opacity 500ms ease-in, left 500ms;
+}
+.formAnimation-exit-done {
+  display: none;
+}

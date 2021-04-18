@@ -9,7 +9,7 @@ import Store from "./state/store";
 import { Header } from "./Main_components/Header";
 
 import { Register } from "./Main_pages/Register";
-import { BasePage } from "./OrganisatorPages/BasePage";
+import { OrgBasePage } from "./OrganisatorPages/OrgBasePage";
 import { ContestPage } from "./Main_pages/ContestPage";
 import { NotFound } from "./Extra_pages/404";
 
@@ -22,9 +22,9 @@ ReactDOM.render(
       <React.StrictMode>
         <Header />
         <Routes>
-          <Route path="" element={<BasePage />} />
+          <Route path="" element={<OrgBasePage />} />
           <Route path="signup" element={<Register />} />
-          <Route path="main" element={<BasePage />} />
+          <Route path="main" element={<OrgBasePage />} />
           <Route path="contest/:id" element={<ContestPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -5,6 +5,8 @@
 @import "./Sidebar.scss";
 @import "./Forms.scss";
 @import "./ContestCard.scss";
+@import "./Modals.scss";
+@import "./Animations.scss";
 *,
 *:before,
 *:after {
@@ -37,3 +39,4 @@ a:visited {
   display: flex;
   flex-direction: column;
 }
+//TODO: рендерить покрывающий всю поверхность див, чтобы не пропускать события и цвет при открытом сайдбаре

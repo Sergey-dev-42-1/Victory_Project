@@ -16,6 +16,7 @@ export const FormInputField = (props: Props) => {
     <React.Fragment>
       <label>{props.label}</label>
       <input
+        style={props.errors[props.fieldName] ? { borderColor: "#ca2f2f" } : {}}
         className="formInput"
         id={props.fieldName}
         placeholder={props.placeholder ?? props.label}

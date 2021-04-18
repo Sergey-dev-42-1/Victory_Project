@@ -47,7 +47,7 @@
   font-family: $font-stack-secondary;
 
   box-shadow: 3px 0px 1px 0 rgba(0, 0, 0, 0.16);
-  color: adjust-color($color: $primary-color, $lightness: 0%, $alpha: -0.1);
+  color: $plain-text;
   background-color: white;
 
   display: flex;
@@ -62,7 +62,7 @@
   }
   .formTitle {
     font-size: $title-size;
-
+    color: adjust-color($color: $primary-color, $lightness: 0%, $alpha: -0.1);
     text-align: center;
     align-self: center;
   }
@@ -83,43 +83,43 @@
   }
   .formInput:hover,
   .formInput:focus {
-    border: 0.5vh solid $background-color;
+    border: 0.5vh solid $primary-color;
   }
-  .submitButton {
-    @extend %button-3d-effect;
-    min-width: 20%;
-    padding: 1.5vh 1.7vw;
-    margin: 2vh 0px;
+}
+.submitButton {
+  @extend %button-3d-effect;
+  min-width: 20%;
+  padding: 1.5vh 1.7vw;
+  margin: 2vh 0px;
 
-    font-size: $label-size;
+  font-size: $label-size;
 
-    align-self: center;
-    background-color: adjust-color($color: $primary-color, $alpha: 1);
-    color: white;
-    border: 0 solid white;
-    border-radius: 2px;
+  align-self: center;
+  background-color: adjust-color($color: $primary-color, $alpha: 1);
+  color: white;
+  border: 0 solid white;
+  border-radius: 2px;
 
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
-  }
-  .submitButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .submitButton:hover {
-    background-color: adjust-color($color: $primary-color, $lightness: -7.5%);
-  }
-  .submitButton:focus {
-    @extend %button-3d-effect-active;
-    border: 0;
-    outline: 0;
-  }
-  .errorValidation {
-    padding: 0;
-    margin: 0;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.submitButton:hover {
+  background-color: adjust-color($color: $primary-color, $lightness: -7.5%);
+}
+.submitButton:focus {
+  @extend %button-3d-effect-active;
+  border: 0;
+  outline: 0;
+}
+.errorValidation {
+  padding: 0;
+  margin: 0;
 
-    font-size: $mini-label-size;
+  font-size: $mini-label-size;
 
-    color: $error-color;
-  }
+  color: $error-color;
 }

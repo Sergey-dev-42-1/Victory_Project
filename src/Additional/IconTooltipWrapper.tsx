@@ -12,7 +12,8 @@ const messageMouseOverIcon = (
 
   const iconDescription = document.createElement("div");
   iconDescription.setAttribute("class", "iconDescription");
-
+  // var rect = icon_container.getBoundingClientRect();
+  // iconDescription.setAttribute("style", `top:${1000000} left:${rect.left}`);
   iconDescription.innerText = text;
   icon_container.before(iconDescription);
 };

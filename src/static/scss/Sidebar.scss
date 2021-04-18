@@ -45,35 +45,3 @@
   justify-content: center;
   align-items: center;
 }
-
-//Анимация переходов для сайдбара, подробнее в документации к CSSTransitions от react-group-transition
-
-.sidebarTransitions-enter {
-  width: 0vw;
-  transition: width 800ms;
-}
-.sidebarTransitions-enter-active {
-  width: 25vw;
-  visibility: visible;
-  transition: width 800ms;
-}
-.sidebarTransitions-enter-done {
-  width: 25vw;
-  visibility: visible;
-  transition: width 800ms;
-}
-.sidebarTransitions-exit {
-  width: 25vw;
-  opacity: 1;
-  visibility: visible;
-}
-.sidebarTransitions-exit-active {
-  width: 0vw;
-  visibility: visible;
-  opacity: 0;
-  transition: width 800ms, opacity 500ms;
-}
-.sidebarTransitions-exit-done {
-  width: 0vw;
-  transition: width 800ms;
-}
