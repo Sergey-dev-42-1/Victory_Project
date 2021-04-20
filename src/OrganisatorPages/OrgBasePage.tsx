@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { Contest, ContestCard } from "../Main_components/ContestCard";
+import { ContestCard } from "../Main_components/ContestCard";
+import { Contest } from "../Additional/Types";
 import { Sidebar, sidebarTypes } from "../Main_components/Sidebar";
 import { CreateContestModal } from "./CreateContestModal";
 import { Footer } from "../Main_components/Footer";
@@ -46,7 +47,12 @@ export const OrgBasePage = () => {
           ></div>
         </React.Fragment>
       )}
-      <CSSTransition in={createNew} timeout={800} classNames="formAnimation">
+      <CSSTransition
+        unmountOnExit={true}
+        in={createNew}
+        timeout={800}
+        classNames="formAnimation"
+      >
         <React.Fragment>
           <CreateContestModal />
         </React.Fragment>

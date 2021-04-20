@@ -3,34 +3,7 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
 import { IconWrapper } from "../Additional/IconTooltipWrapper";
 import { Link } from "react-router-dom";
-//TODO: Переместить в отдельный файл с типами?
-export class Contest {
-  name: string;
-  notes: string;
-  //TODO: Лучше конкретно определить варианты статусов, на сервере
-  status: string;
-  dateBeginning: string;
-  applyDateBeginning: string;
-  applyDateEnding: string;
-  dateEnding: string;
-  constructor(
-    name: string,
-    notes: string,
-    status: string,
-    dateBegining: Date,
-    dateEnding: Date,
-    applyDateBeginning: Date,
-    applyDateEnding: Date
-  ) {
-    this.name = name;
-    this.notes = notes;
-    this.status = status;
-    this.dateBeginning = dateBegining.toLocaleDateString();
-    this.dateEnding = dateEnding.toLocaleDateString();
-    this.applyDateBeginning = applyDateBeginning.toLocaleDateString();
-    this.applyDateEnding = applyDateEnding.toLocaleDateString();
-  }
-}
+import { Contest } from "../Additional/Types";
 
 export const ContestCard = ({
   name,
@@ -46,7 +19,10 @@ export const ContestCard = ({
           <label className="contestName">{name}</label>
         </Link>
         <label className="timePeriod">
-          {"Даты проведения:" + dateBeginning + "-" + dateEnding}
+          {"Даты проведения:" +
+            dateBeginning.toLocaleDateString() +
+            "-" +
+            dateEnding.toLocaleDateString()}
         </label>
       </div>
       <div className="description">

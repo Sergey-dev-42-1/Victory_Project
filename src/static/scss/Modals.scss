@@ -29,7 +29,6 @@
   right: 30%;
 
   background-color: white;
-  box-shadow: 0 0 2px 3px rgb(66, 66, 66);
 
   display: none;
   grid-template-rows: 1fr 6fr;
@@ -99,6 +98,8 @@
       justify-content: space-around;
       .submitButton {
         min-height: 2vh;
+        min-width: 20%;
+        width: 40%;
         margin: 0 0.5vh;
         padding: 0.5vh;
 
