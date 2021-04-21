@@ -16,21 +16,15 @@
   z-index: 101;
 }
 
-.formContainer {
+.modalFormContainer {
   @extend %modalBase;
-
-  height: 98%;
-  width: 40%;
+  @include fixedCenter(98%, 40%);
 
   z-index: 102;
-  top: 1%;
-  bottom: 1%;
-  left: 30%;
-  right: 30%;
 
   background-color: white;
 
-  display: none;
+  display: grid;
   grid-template-rows: 1fr 6fr;
   grid-template-columns: 1fr;
   grid-template-areas:

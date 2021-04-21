@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { string, object, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInputField } from "./FormInputField";
+import { FormInputField } from "./Elements/FormInputField";
 import * as yup from "yup";
 import React from "react";
 interface FormFields {

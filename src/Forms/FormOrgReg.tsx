@@ -2,7 +2,8 @@
 import { useForm } from "react-hook-form";
 import { string, object, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInputField } from "./FormInputField";
+import { FormInputField } from "./Elements/FormInputField";
+import { FormBase } from "../Forms/Elements/FormBase";
 import * as yup from "yup";
 import React from "react";
 interface FormFields {
@@ -34,19 +35,19 @@ const OrgFormSchema: SchemaOf<FormFields> = object({
 export const FormOrgReg = () => {
   const [submitted, setSubmitted] = React.useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    formState,
-  } = useForm({
+  const formSet = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     resolver: yupResolver(OrgFormSchema),
     shouldFocusError: true,
   });
 
-  const Submit = async (data: FormFields) => {
+  const {
+    register,
+    formState: { errors },
+  } = formSet;
+
+  const Submit = async (data: FormData) => {
     console.log(data);
     // TODO: Имплементировать сброс на сервер
     setSubmitted(true);
@@ -63,50 +64,46 @@ export const FormOrgReg = () => {
           усилий, для всех участников процесса: организаторов, экспертов и
           участников
         </div>
-        <main className="outerFormContainer">
-          <form className="FormContainer" onSubmit={handleSubmit(Submit)}>
-            <label className="formTitle">
-              Зарегистрироваться как организатор
-            </label>
-            <FormInputField
-              label="Email организации"
-              fieldName="Email"
-              regist={register("Email")}
-              errors={errors}
-            />
 
-            <FormInputField
-              label="Название организации"
-              fieldName="OrgName"
-              regist={register("OrgName")}
-              errors={errors}
-            />
+        <FormBase
+          formStyle="inline"
+          formSet={formSet}
+          SubmittedState={submitted}
+          Submit={Submit}
+        >
+          <label className="formTitle">
+            Зарегистрироваться как организатор
+          </label>
+          <FormInputField
+            label="Email организации"
+            fieldName="Email"
+            regist={register("Email")}
+            errors={errors}
+          />
 
-            <FormInputField
-              label="Пароль"
-              fieldName="Password"
-              regist={register("Password")}
-              type="password"
-              errors={errors}
-            />
+          <FormInputField
+            label="Название организации"
+            fieldName="OrgName"
+            regist={register("OrgName")}
+            errors={errors}
+          />
 
-            <FormInputField
-              label="Подтвердите пароль"
-              fieldName="PasswordCheck"
-              regist={register("PasswordCheck")}
-              type="password"
-              errors={errors}
-            />
+          <FormInputField
+            label="Пароль"
+            fieldName="Password"
+            regist={register("Password")}
+            type="password"
+            errors={errors}
+          />
 
-            <button
-              className="submitButton"
-              type="submit"
-              disabled={formState.isSubmitting || submitted}
-            >
-              Отправить
-            </button>
-          </form>
-        </main>
+          <FormInputField
+            label="Подтвердите пароль"
+            fieldName="PasswordCheck"
+            regist={register("PasswordCheck")}
+            type="password"
+            errors={errors}
+          />
+        </FormBase>
       </div>
     </div>
   );

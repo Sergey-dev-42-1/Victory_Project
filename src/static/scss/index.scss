@@ -1,42 +1,18 @@
-@import "./MainVariables.scss";
-@import "./MainPages.scss";
-@import "./Header.scss";
-@import "./Footer.scss";
-@import "./Sidebar.scss";
-@import "./Forms.scss";
-@import "./ContestCard.scss";
-@import "./Modals.scss";
-@import "./Animations.scss";
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-html {
-  -webkit-font-smoothing: antialiased;
-}
-body {
-  margin: 0;
+@charset 'utf-8';
 
-  font-family: $font-stack;
+@import-normalize;
 
-  background-color: $background-color;
-  color: $primary-color;
-  overflow-x: hidden;
-}
-a {
-  text-decoration: none;
-  color: $primary-color;
-}
-a:visited {
-  color: $primary-color;
-}
+//Общие установки, переменные
+@import "abstracts/_abstracts-dir";
 
-#root {
-  width: 100%;
-  height: 100%;
+//Основные стили, ресеты
+@import "base/_base-dir";
 
-  display: flex;
-  flex-direction: column;
-}
-//TODO: рендерить покрывающий всю поверхность див, чтобы не пропускать события и цвет при открытом сайдбаре
+//Стилизация компонентов
+@import "components/_components-dir";
+
+//Контейнеры и выкладка компонентов
+@import "layouts/_layouts-dir";
+
+//Внешний CSS(normalize, font-awesome и т.д.)
+@import "vendor/_vendor-dir";

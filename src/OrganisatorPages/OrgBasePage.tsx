@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ContestCard } from "../Main_components/ContestCard";
 import { Contest } from "../Additional/Types";
 import { Sidebar, sidebarTypes } from "../Main_components/Sidebar";
-import { CreateContestModal } from "./CreateContestModal";
+import { CreateContestModal } from "../Forms/CreateContestModal";
 import { Footer } from "../Main_components/Footer";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -25,6 +25,7 @@ export const OrgBasePage = () => {
   const opened = useSelector(selectSidebarOpen);
   const dispatch = useDispatch();
   const [createNew, setCreateNew] = useState(false);
+
   return (
     <React.Fragment>
       {opened && (
@@ -50,8 +51,8 @@ export const OrgBasePage = () => {
       <CSSTransition
         unmountOnExit={true}
         in={createNew}
-        timeout={800}
-        classNames="formAnimation"
+        timeout={500}
+        classNames="slideIn"
       >
         <React.Fragment>
           <CreateContestModal />
@@ -59,9 +60,7 @@ export const OrgBasePage = () => {
       </CSSTransition>
       <div className="mainPageContainer">
         <Sidebar type={sidebarTypes.Org} />
-        <main
-          className={opened ? "contentContainer dimmer" : "contentContainer"}
-        >
+        <main className="contentContainer">
           <div className="contestManagmentContainer">
             <div className="contestControls">
               <div

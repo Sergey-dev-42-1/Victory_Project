@@ -1,5 +1,5 @@
 import React from "react";
-import { FormInputField } from "../Forms/FormInputField";
+import { FormInputField } from "./Elements/FormInputField";
 import { useForm } from "react-hook-form";
 import { string, object, date } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -73,17 +73,17 @@ export const CreateContestModal = () => {
     // TODO: Имплементировать сброс на сервер
     setSubmitted(true);
   };
-
+  //TODO: переписать с использованием formBase
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit(Submit)} className="formContainer">
+      <form onSubmit={handleSubmit(Submit)} className="modalFormContainer">
         <div className="formTitle">Создать конкурс</div>
         <div className="formShapingContainer">
           <div className="fieldsContainer">
             <FormInputField
               label="Название конкурса*"
-              fieldName="contestName"
-              regist={register("contestName")}
+              fieldName="name"
+              regist={register("name")}
               errors={errors}
             ></FormInputField>
             <FormInputField

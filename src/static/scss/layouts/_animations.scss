@@ -1,17 +1,17 @@
 //Анимация переходов для сайдбара, подробнее в документации к CSSTransitions от react-group-transition
 .sidebarTransitions-enter {
   width: 0vw;
-  transition: width 800ms;
+  transition: width 500ms;
 }
 .sidebarTransitions-enter-active {
   width: 25vw;
   visibility: visible;
-  transition: width 800ms;
+  transition: width 500ms;
 }
 .sidebarTransitions-enter-done {
   width: 25vw;
   visibility: visible;
-  transition: width 800ms;
+  transition: width 500ms;
 }
 .sidebarTransitions-exit {
   width: 25vw;
@@ -22,36 +22,50 @@
   width: 0vw;
   visibility: visible;
   opacity: 0;
-  transition: width 800ms, opacity 500ms;
+  transition: width 500ms, opacity 500ms;
 }
 .sidebarTransitions-exit-done {
   width: 0vw;
-  transition: width 800ms;
+  transition: width 500ms;
 }
 
-//Анимация появления модальных форм
-.formAnimation-enter {
+//Анимация появления модальных форм(вылет слева)
+.slideIn-enter {
   opacity: 0;
-  left: -20vh;
-  display: grid;
+  left: -40vh;
 }
-.formAnimation-enter-active {
+.slideIn-enter-active {
   left: 30%;
   opacity: 1;
-  display: grid;
   transition: opacity 500ms ease-in, left 500ms;
 }
-.formAnimation-enter-done {
-  display: grid;
+.slideIn-enter-done {
 }
-.formAnimation-exit {
-  display: grid;
+
+.slideIn-exit {
   left: 30%;
   opacity: 1;
 }
-.formAnimation-exit-active {
-  display: grid;
+.slideIn-exit-active {
   left: 100%;
   opacity: 0;
   transition: opacity 500ms ease-in, left 500ms;
+}
+
+//Анимация появления модальных форм(медленное появление)
+.fadeIn-enter {
+  opacity: 0;
+}
+.fadeIn-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.fadeIn-enter-done {
+}
+.fadeIn-exit {
+  opacity: 1;
+}
+.fadeIn-exit-active {
+  opacity: 0;
+  transition: opacity 500ms linear;
 }
