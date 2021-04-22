@@ -1,0 +1,26 @@
+//Шаблон стилизации
+/*1.Размеры(height width, border и другие)
+  2.Шрифты и их стилизация
+  3.Положение на странице и стилизация
+  4.Модификаторы потомков(flex, grid)*/
+$font-stack: "Poppins", "Roboto";
+$font-stack-secondary: "Roboto", "sans-serif";
+
+$primary-color: #f06f19;
+$primary-color2: #dc6d02;
+$background-color: #52808d;
+$out-of-focus-color: #fcb500;
+$error-color: #df1301;
+$plain-text: rgba(black, 0.5);
+
+$header-height: 8vh;
+$fields-size: 3vh;
+$title-size: 4vh;
+$label-size: 2.5vh;
+$mini-label-size: 2vh;
+
+$box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.14);
+
+@function buttonHeight($padding, $fontSize) {
+  @return ($padding * 2) + $fontSize;
+}

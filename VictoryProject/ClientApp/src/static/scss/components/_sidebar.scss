@@ -1,0 +1,47 @@
+.sidebarContainer {
+  @extend %flex-center;
+
+  height: 100vh - $header-height;
+  width: 0;
+  z-index: 100;
+
+  font-family: $font-stack;
+  font-size: $label-size;
+
+  position: fixed;
+  visibility: hidden;
+  background-color: darken($background-color, 10);
+
+  .controlsContainer {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    .primaryButton {
+      @include btn(0, 100%, 2vh);
+
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .primaryButton:focus {
+      outline: 0;
+      background-color: darken($primary-color, 10);
+    }
+    .spacer {
+      height: 100%;
+    }
+  }
+}
+
+.showSidebarContainer {
+  height: 100%;
+  width: 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
