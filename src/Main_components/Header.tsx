@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@reach/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle, selectSidebarOpen } from "../state/sidebarSlice";
 import { CSSTransition } from "react-transition-group";
@@ -52,7 +52,7 @@ export const Header = () => {
           </div>
         )}
 
-        <Link to="./main">
+        <Link to="main">
           <p className="title">Victory</p>
         </Link>
         <span className="spacer"></span>
@@ -68,14 +68,14 @@ export const Header = () => {
                 <span>Войти</span>
               </div>
             </button>
-            <Link to="./signup" className="link">
+            <Link to="signup" className="link">
               <div className="linkContainer">
                 <span>Зарегестрироваться</span>
               </div>
             </Link>
           </React.Fragment>
         ) : (
-          <Link to="./" className="link">
+          <Link to="/" className="link">
             <div className="linkContainer">
               <span>Имя пользователя</span>
             </div>

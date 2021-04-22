@@ -1,4 +1,27 @@
 //Файл для помещения сюда интерфейсов некоторых сущностей
+export enum UserRoles {
+  organistor = "organisator",
+  participant = "participant",
+  expert = "expert",
+}
+
+export class User {
+  username: string;
+  email: string;
+  password: string;
+  role: UserRoles;
+  constructor(
+    username: string,
+    email: string,
+    password: string,
+    role: UserRoles
+  ) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+  }
+}
 export class Contest {
   name: string;
   notes: string;

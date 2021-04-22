@@ -15,19 +15,23 @@ export const FormInputField = (props: Props) => {
   return (
     <React.Fragment>
       <label>{props.label}</label>
-      <input
-        style={props.errors[props.fieldName] ? { borderColor: "#ca2f2f" } : {}}
-        className="formInput"
-        id={props.fieldName}
-        placeholder={props.placeholder ?? props.label}
-        type={props.type ?? "text"}
-        {...props.regist}
-      />
-      {props.errors[props.fieldName]?.message && (
-        <p className="errorValidation">
-          {props.errors[props.fieldName]?.message}
-        </p>
-      )}
+      <div className="fieldGroup">
+        <input
+          style={
+            props.errors[props.fieldName] ? { borderColor: "#ca2f2f" } : {}
+          }
+          className="formInput"
+          id={props.fieldName}
+          placeholder={props.placeholder ?? props.label}
+          type={props.type ?? "text"}
+          {...props.regist}
+        />
+        {props.errors[props.fieldName]?.message && (
+          <p className="errorValidation">
+            {props.errors[props.fieldName]?.message}
+          </p>
+        )}
+      </div>
     </React.Fragment>
   );
 };

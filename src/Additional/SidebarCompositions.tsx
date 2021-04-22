@@ -1,7 +1,8 @@
 import { ExitToApp } from "@material-ui/icons";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "@reach/router";
+import { useSelector, useDispatch } from "react-redux";
+import { toggle } from "../state/sidebarSlice";
 export class SidebarButton {
   readonly text: string;
   readonly classes: string;
@@ -21,8 +22,7 @@ export class SidebarButton {
 
 //Для организатора
 export const Orgbuttons = [
-  new SidebarButton("Главная", ["primaryButton"]),
-  new SidebarButton("Конкурсы", ["primaryButton"]),
+  new SidebarButton("Конкурсы", ["primaryButton"], "/main"),
   new SidebarButton("Эксперты", ["primaryButton"]),
   new SidebarButton("Организаторы", ["primaryButton"]),
 ];
@@ -32,14 +32,17 @@ interface Props {
 //Кнопки настроены лишь выполнять навигацию по ссылке, кнопки с другой логикой нужно писать в самом компоненте
 export const OrgComposition = ({ buttons }: Props) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
       {buttons.map((button: SidebarButton) => {
         return (
           <button
             key={button.text}
-            onClick={() => navigate(button.to)}
+            onClick={() => {
+              dispatch(toggle());
+              navigate(button.to);
+            }}
             className={button.classes}
           >
             {button.text}

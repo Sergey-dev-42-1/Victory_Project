@@ -10,26 +10,24 @@ import { Header } from "./Main_components/Header";
 
 import { Register } from "./Main_pages/Register";
 import { OrgBasePage } from "./OrganisatorPages/OrgBasePage";
-import { ContestPage } from "./Main_pages/ContestPage";
+import { ContestPage } from "./Contest/ContestPage";
 import { NotFound } from "./Extra_pages/404";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router } from "@reach/router";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <Provider store={Store}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <Header />
-        <Routes>
-          <Route path="" element={<OrgBasePage />} />
-          <Route path="signup" element={<Register />} />
-          <Route path="main" element={<OrgBasePage />} />
-          <Route path="contest/:id" element={<ContestPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </React.StrictMode>
-    </BrowserRouter>
+    <React.StrictMode>
+      <Header />
+      <Router>
+        <OrgBasePage path="/" />
+        <Register path="/signup" />
+        <OrgBasePage path="/main" />
+        <ContestPage path="/contest/:id" />
+        <NotFound path="*" />
+      </Router>
+    </React.StrictMode>
   </Provider>,
   document.getElementById("root")
 );

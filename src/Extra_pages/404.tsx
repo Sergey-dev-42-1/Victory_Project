@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, RouteComponentProps } from "@reach/router";
 
-export const NotFound = () => {
+export const NotFound = (props: RouteComponentProps) => {
   return <p>Запрашиваемая страница не существует</p>;
 };

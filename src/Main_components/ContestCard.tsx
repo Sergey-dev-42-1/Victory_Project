@@ -2,34 +2,34 @@ import CreateSharpIcon from "@material-ui/icons/Create";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
 import { IconWrapper } from "../Additional/IconTooltipWrapper";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "@reach/router";
 import { Contest } from "../Additional/Types";
+import { ContestPage } from "../Contest/ContestPage";
 
-export const ContestCard = ({
-  name,
-  notes,
-  status,
-  dateBeginning,
-  dateEnding,
-}: Contest) => {
+interface Props {
+  contest: Contest;
+  id: string;
+}
+
+export const ContestCard = ({ contest, id }: Props) => {
   return (
     <div className="contestCardContainer">
       <div className="baseInfo">
-        <Link to={"/contest/" + "1"}>
-          <label className="contestName">{name}</label>
+        <Link to={`/contest/` + (id || "3")} state={{ contest: contest }}>
+          <label className="contestName">{contest.name}</label>
         </Link>
         <label className="timePeriod">
           {"Даты проведения:" +
-            dateBeginning.toLocaleDateString() +
+            contest.dateBeginning.toLocaleDateString() +
             "-" +
-            dateEnding.toLocaleDateString()}
+            contest.dateEnding.toLocaleDateString()}
         </label>
       </div>
       <div className="description">
         <span>Примечания</span>
-        {notes}
+        {contest.notes}
       </div>
-      <div className="status">Статус: {status}</div>
+      <div className="status">Статус: {contest.status}</div>
       <div className="controls">
         <IconWrapper
           tooltipText="Изменить"

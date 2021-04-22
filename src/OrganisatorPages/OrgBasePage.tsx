@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 
 import { ContestCard } from "../Main_components/ContestCard";
 import { Contest } from "../Additional/Types";
@@ -8,7 +8,7 @@ import { Footer } from "../Main_components/Footer";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectSidebarOpen, toggle } from "../state/sidebarSlice";
-
+import { RouteComponentProps } from "@reach/router";
 import { CSSTransition } from "react-transition-group";
 //TODO: Подстановчный объект, потом удалить
 const tempContestData = new Contest(
@@ -21,10 +21,10 @@ const tempContestData = new Contest(
   new Date(Date.now() + 86400 * 1000 * 31)
 );
 const options = ["Архивировать конкурс", "Удалить конкурс"];
-export const OrgBasePage = () => {
+export const OrgBasePage = (props: RouteComponentProps) => {
   const opened = useSelector(selectSidebarOpen);
   const dispatch = useDispatch();
-  const [createNew, setCreateNew] = useState(false);
+  const [createNew, setCreateNew] = React.useState(false);
 
   return (
     <React.Fragment>
@@ -83,11 +83,14 @@ export const OrgBasePage = () => {
               <div className="managmentContainerFilters">
                 Компоненты управления
               </div>
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
+              <ContestCard contest={tempContestData} id="1" />
+              <ContestCard contest={tempContestData} id="2" />
+              <ContestCard contest={tempContestData} id="1" />
+              <ContestCard contest={tempContestData} id="2" />
+              <ContestCard contest={tempContestData} id="1" />
+              <ContestCard contest={tempContestData} id="2" />
+              <ContestCard contest={tempContestData} id="1" />
+              <ContestCard contest={tempContestData} id="2" />
               {/* <ContestCard {...tempContestData} />
               <ContestCard {...tempContestData} />
               <ContestCard {...tempContestData} />

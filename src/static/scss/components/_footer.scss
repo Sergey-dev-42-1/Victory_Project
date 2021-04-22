@@ -1,11 +1,9 @@
 .Footer {
   @extend %flex-space-between;
   @extend %main-color-scheme;
-  margin: auto;
 
-  align-items: center;
   grid-area: footer;
-
+  justify-content: center;
   .spacer {
     width: 100%;
   }
