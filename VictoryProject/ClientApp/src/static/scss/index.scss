@@ -1,0 +1,18 @@
+@charset 'utf-8';
+
+@import-normalize;
+
+//Общие установки, переменные
+@import "abstracts/_abstracts-dir";
+
+//Основные стили, ресеты
+@import "base/_base-dir";
+
+//Стилизация компонентов
+@import "components/_components-dir";
+
+//Контейнеры и выкладка компонентов
+@import "layouts/_layouts-dir";
+
+//Внешний CSS(normalize, font-awesome и т.д.)
+@import "vendor/_vendor-dir";

@@ -1,0 +1,109 @@
+.textContainer {
+  padding: 10px 20px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  font-family: $font-stack-secondary;
+  font-size: $title-size;
+
+  grid-area: content1;
+  background-color: adjust-color($color: $primary-color, $lightness: -5%);
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+}
+
+//Стилизация контейнера формы и ее элементов(кнопки сабмита, полей, подписей)
+.outerFormContainer {
+  grid-area: content2;
+  background-color: $background-color;
+
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+}
+.formContainer {
+  width: 100%;
+
+  font-family: $font-stack-secondary;
+
+  color: $plain-text;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  label {
+    margin-top: 10px;
+
+    font-size: $label-size;
+    font-weight: bold;
+  }
+  .formTitle {
+    font-size: $title-size;
+    color: adjust-color($color: $primary-color, $lightness: 0%, $alpha: -0.1);
+    text-align: center;
+    align-self: center;
+  }
+  .formInput {
+    width: 100%;
+    padding: 5px;
+
+    font-size: $fields-size - 0.5;
+    line-height: $fields-size;
+
+    border-radius: 2px;
+    border: 0.5vh solid
+      adjust-color($color: $background-color, $lightness: 35%, $alpha: -0.2);
+
+    box-shadow: 0;
+    outline: 0;
+
+    transition: border 0.4s;
+  }
+  .formInput:hover,
+  .formInput:focus {
+    border: 0.5vh solid $primary-color;
+  }
+}
+.submitButton {
+  @extend %button-3d-effect;
+  min-width: 40%;
+  padding: 1.5vh 1.7vw;
+  margin: 2vh 0px;
+
+  font-size: $label-size;
+
+  align-self: center;
+  background-color: adjust-color($color: $primary-color, $alpha: 1);
+  color: white;
+  border: 0 solid white;
+  border-radius: 2px;
+
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.submitButton:hover {
+  background-color: adjust-color($color: $primary-color, $lightness: 5%);
+}
+.submitButton:focus {
+  @extend %button-3d-effect-active;
+  border: 0;
+  outline: 0;
+}
+.errorValidation {
+  padding: 0;
+  margin: 0;
+
+  font-size: $mini-label-size;
+
+  color: $error-color;
+}

@@ -1,0 +1,28 @@
+.Footer {
+  @extend %flex-space-between;
+  @extend %main-color-scheme;
+
+  grid-area: footer;
+  justify-content: center;
+  .spacer {
+    width: 100%;
+  }
+  .link {
+    padding: 0 2vw;
+
+    font-size: $title-size;
+    text-decoration: none;
+
+    transition: font-size 0.5s;
+  }
+  .link:visited {
+    color: $primary-color;
+  }
+  .link:hover {
+    font-size: $title-size + 2;
+  }
+  .footer-text {
+    font-size: $title-size;
+    text-align: center;
+  }
+}
