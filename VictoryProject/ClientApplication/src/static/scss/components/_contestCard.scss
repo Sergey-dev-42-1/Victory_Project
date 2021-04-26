@@ -1,0 +1,76 @@
+.contestCardContainer {
+  width: 90%;
+  height: 15vh;
+  padding: 1vh 2vh 3vh;
+  margin: 2vh 0;
+
+  font-family: "Roboto";
+
+  color: lighten(black, 40);
+
+  display: flex;
+  align-self: center;
+  box-shadow: $box-shadow;
+
+  .baseInfo {
+    width: 40%;
+    min-height: 90%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column wrap;
+
+    .contestName {
+      font-family: "Montserrat";
+      font-weight: bold;
+      font-size: 3vh;
+    }
+
+    .timePeriod {
+      font-style: italic;
+    }
+  }
+
+  .description {
+    @extend %contest-card-text;
+    text-align: justify;
+  }
+
+  .status,
+  .controls {
+    @extend %contest-card-text;
+    @extend %flex-center;
+
+    width: 20%;
+
+    justify-content: center;
+    align-content: flex-start;
+  }
+
+  .controls {
+    width: 10%;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, 50%);
+
+    .controlButton {
+      grid-column: span 1;
+      @extend %flex-center;
+    }
+
+    .controlButton:hover {
+      color: $primary-color;
+      svg {
+        box-shadow: $box-shadow;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .contestCardContainer {
+    height: 20vh;
+    width: 100%;
+  }
+}

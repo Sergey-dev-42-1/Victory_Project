@@ -1,0 +1,18 @@
+.RegPageContainer {
+  height: auto;
+  width: 100%;
+
+  .regContentContainer {
+    min-height: 100vh - $header-height - $title-size -1;
+    width: 100vw;
+    display: grid;
+    grid-area: content1;
+    grid-template-columns: [first-column] 40% [second-column] auto;
+    grid-template-rows: [first-row] 100%;
+    grid-template-areas: "content1 content2";
+
+    .formContainer {
+      padding: 2vh 10vw;
+    }
+  }
+}
