@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,46 +13,59 @@ using VictoryProject.Entity;
 
 namespace VictoryProject.Controllers
 {
+    
+    
+    [Route("api/")]
     [ApiController]
-    public class ApiController : Controller
+    public class ContestController : ControllerBase
     {
-        private readonly DbContext _dbContext;
-        private readonly ILogger _logger;
+        private readonly VictoryContext _dbContext;
 
-        public ApiController(DbContext dbContext, ILogger logger)
+
+        public ContestController(VictoryContext dbContext)
         {
             _dbContext = dbContext;
-            _logger = logger;
+
         }
 
+        //Пример рабочего обработчика, я не совсем понимаю как это должно работать, но насколько я понял,
+        //по умолчанию JSON пропихивается как есть(Регистрация пролезла без проблем)
+        // а если он соответствует какой-то из моделей, то он автоматически десериализуется на отдельные поля, 
+        // Если разобрать запрос с помощью JsonElement, то можно вытащить из тела все что нужно
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Route("[action]")]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login([FromBody] JsonElement body)
         {
+            string Email = body.GetProperty("Email").ToString();
+            string Password = body.GetProperty("Password").ToString();
+            Console.WriteLine(body.GetProperty("Password"));
             if (ModelState.IsValid)
             {
+                Console.WriteLine(Email+" : "+ Password);
+                Console.WriteLine("Model validation passed");
                 User user = await _dbContext.Set<User>()
-                    .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+                    .FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
+                Console.WriteLine(user);
                 if (user != null)
                 {
-                    await Authenticate(email);
+                    
+                    await Authenticate(Email);
 
-                    return Ok();
+                    return Ok(user);
                 }
 
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-                return BadRequest();
+               
             }
 
             return Ok();
         }
 
-        [Route("[action]")]
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Route("[action]")]
         public async Task<IActionResult> Register(User user)
         {
+            Console.WriteLine("Register request accepted");
             if (!ModelState.IsValid)
             {
                 return BadRequest("Необходимые поля не заполнены");
@@ -61,7 +75,8 @@ namespace VictoryProject.Controllers
             
             if (checkUser != null)
             {
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Пользователь с таким электронным адресом уже зарегестрирован");
+                return BadRequest("Пользователь с таким электронным адресом уже зарегестрирован");
             }
 
             await _dbContext.Set<User>().AddAsync(user);
@@ -72,6 +87,7 @@ namespace VictoryProject.Controllers
 
         private async Task Authenticate(string email)
         {
+            Console.Write("Authentification");
             try
 
             {
@@ -86,12 +102,13 @@ namespace VictoryProject.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+              Console.WriteLine("Auth error");
             }
         }
         [Route("[action]")]
         public async Task<IActionResult> Logout()
         {
+            Console.WriteLine("recievedLogout");
             try
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -103,10 +120,12 @@ namespace VictoryProject.Controllers
             }
         }
         [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        [Route("add_contest")]
+        [Route("addcontest")]
         public async Task<IActionResult> AddContest(Contest contest)
         {
+            Console.WriteLine("recievedContest");
             try
             {
                 await _dbContext.Set<Contest>().AddAsync(contest);
@@ -114,8 +133,25 @@ namespace VictoryProject.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e,e.Message);
+
                 return BadRequest("Что-то разломалось на создании конкурса");
+
+            }
+        }
+        [HttpGet]
+        [Route("test")]
+        public async Task<IActionResult> test()
+        {
+
+            try
+            {
+                return Ok("All is well");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Проблемка");
+
+                return BadRequest("Что-то разломалось на получении конкурсов");
 
             }
         }

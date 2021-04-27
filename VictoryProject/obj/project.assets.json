@@ -5426,23 +5426,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mikca\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\xo3ab\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\diplom\\WebApi\\VictoryProject\\VictoryProject.csproj",
+      "projectUniqueName": "C:\\Users\\xo3ab\\RiderProjects\\Victory_Project\\VictoryProject\\VictoryProject.csproj",
       "projectName": "VictoryProject",
-      "projectPath": "C:\\diplom\\WebApi\\VictoryProject\\VictoryProject.csproj",
-      "packagesPath": "C:\\Users\\mikca\\.nuget\\packages\\",
-      "outputPath": "C:\\diplom\\WebApi\\VictoryProject\\obj\\",
+      "projectPath": "C:\\Users\\xo3ab\\RiderProjects\\Victory_Project\\VictoryProject\\VictoryProject.csproj",
+      "packagesPath": "C:\\Users\\xo3ab\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\xo3ab\\RiderProjects\\Victory_Project\\VictoryProject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mikca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\xo3ab\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5454,6 +5450,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -5465,6 +5462,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "JavaScriptEngineSwitcher.ChakraCore": {
             "target": "Package",
@@ -5541,7 +5539,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
       }
     }
   }
