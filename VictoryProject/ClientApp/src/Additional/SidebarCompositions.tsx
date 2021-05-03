@@ -1,62 +1,73 @@
 import { ExitToApp } from "@material-ui/icons";
+
+import { Snackbar, Button } from "@material-ui/core";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+
 import React from "react";
 import { useNavigate } from "@reach/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggle } from "../state/sidebarSlice";
-export class SidebarButton {
-  readonly text: string;
-  readonly classes: string;
-  to: string;
-  constructor(text: string, classes: Array<string>, to: string = "./") {
-    this.text = text;
-    this.classes = this.cssReduce(classes);
-    this.to = to;
-  }
+import { logout } from "../API/mainServices";
+import {makeStyles, Theme} from "@material-ui/core/styles";
 
-  private cssReduce(classes: Array<string>): string {
-    return classes.reduce(
-      (acc: string, value: string) => acc + (acc === "" ? value : " " + value)
-    );
-  }
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-//Для организатора
-export const Orgbuttons = [
-  new SidebarButton("Конкурсы", ["primaryButton"], "/main"),
-  new SidebarButton("Эксперты", ["primaryButton"]),
-  new SidebarButton("Организаторы", ["primaryButton"]),
-];
-interface Props {
-  buttons: Array<SidebarButton>;
-}
+const useStyles = makeStyles((theme: Theme) => ({
+  button:{
+    textTransform:"none",
+    borderRadius: 0,
+    overflow:"hidden"
+  }
+}));
+
+
 //Кнопки настроены лишь выполнять навигацию по ссылке, кнопки с другой логикой нужно писать в самом компоненте
-export const OrgComposition = ({ buttons }: Props) => {
+export const MainComposition = () => {
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const handleLogout = async () => {
+    const response = await logout();
+    console.log(response);
+    if (response.status === 200) {
+      dispatch(toggle());
+    } else {
+      setSnackbarOpen(true)
+    }
+  };
+  const handleClose= () => {
+    setSnackbarOpen(false)
+  }
   return (
     <React.Fragment>
-      {buttons.map((button: SidebarButton) => {
-        return (
-          <button
-            key={button.text}
-            onClick={() => {
-              dispatch(toggle());
-              navigate(button.to);
-            }}
-            className={button.classes}
-          >
-            {button.text}
-          </button>
-        );
-      })}
-      <span className="spacer"></span>
-      <button
-        //TODO: Обработчик выхода из учетной записи
-        onClick={() => navigate("/")}
-        className="primaryButton"
+      <Button
+          onClick={() => {
+            dispatch(toggle())
+            navigate("/main");
+          }}
+          className={"primaryButton " + classes.button}
       >
-        Выйти <ExitToApp style={{ fontSize: "3vh" }}></ExitToApp>{" "}
-      </button>
+        Ваши конкурсы
+      </Button>
+      <Button
+          onClick={() => {
+            dispatch(toggle())
+            navigate("/main");
+          }}
+          className={"primaryButton " + classes.button}
+      >
+        Все конкурсы
+      </Button>
+      <span className="spacer"/>
+      <Button onClick={handleLogout} className={"primaryButton " + classes.button}>
+        Выйти <ExitToApp style={{ fontSize: "3vh" }} />
+      </Button>
+      <Snackbar open={snackbarOpen} onClose={handleClose} autoHideDuration={5000}>
+        <Alert severity="error">Ошибка выхода, попробуйте снова</Alert>
+      </Snackbar>
     </React.Fragment>
   );
 };

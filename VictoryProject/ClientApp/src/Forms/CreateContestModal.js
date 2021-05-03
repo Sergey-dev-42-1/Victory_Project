@@ -3,8 +3,10 @@ import { FormInputField } from "./Elements/FormInputField";
 import { useForm } from "react-hook-form";
 import { string, object, date } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createContest } from '../API/mainServices';
 
 import * as yup from "yup";
+import {Contest} from "../Additional/Types";
 
 export const CreateContestModal = () => {
   const [submitted, setSubmitted] = React.useState(false);
@@ -69,8 +71,8 @@ export const CreateContestModal = () => {
     shouldFocusError: true,
   });
   const Submit = async (data) => {
-    console.log(data);
-    // TODO: Имплементировать сброс на сервер
+    await createContest(data)
+
     setSubmitted(true);
   };
   //TODO: переписать с использованием formBase

@@ -19,7 +19,7 @@
 //Стилизация контейнера формы и ее элементов(кнопки сабмита, полей, подписей)
 .outerFormContainer {
   grid-area: content2;
-  background-color: $background-color;
+  background-color: $secondary-color;
 
   display: flex;
   justify-content: flex-end;
@@ -58,7 +58,7 @@
 
     border-radius: 2px;
     border: 0.5vh solid
-      adjust-color($color: $background-color, $lightness: 35%, $alpha: -0.2);
+      adjust-color($color: $secondary-color, $lightness: 35%, $alpha: -0.2);
 
     box-shadow: 0;
     outline: 0;

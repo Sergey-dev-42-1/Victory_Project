@@ -1,18 +1,52 @@
 import React, { useState } from "react";
-import { Link } from "@reach/router";
+
+import { Link as RouterLink } from "@reach/router";
+
+import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer} from "@material-ui/core";
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
 import { useDispatch, useSelector } from "react-redux";
 import { toggle, selectSidebarOpen } from "../state/sidebarSlice";
+
 import { CSSTransition } from "react-transition-group";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { LogInForm } from "../Forms/LogInForm";
+
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        position:"sticky",
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow:1,
+    },
+    link:{
+        "&:visited":{
+            color:"inherit",
+           
+        },
+        "&:hover":{
+            textDecoration: 'none',
+        }
+    }
+}));
+
+
 //TODO: Опираться на то, авторизован пользователь или нет при показе полей
 export const Header = () => {
+    
+    const classes = useStyles();
   const dispatch = useDispatch();
   const opened = useSelector(selectSidebarOpen);
   const [logIn, setLogIn] = useState(false);
 
+  
   return (
     <React.Fragment>
       {logIn && (
@@ -21,11 +55,8 @@ export const Header = () => {
             onClick={() => {
               setLogIn(false);
             }}
-            //Модалка закрывающая другие элементы от взаимодействия, поверх
-            //которой можно устанавливать разные формы
-            //требующие внимания пользователя, ShowControls - оставить видимыми сайдбар и хедер
             className="modalHideControls"
-          ></div>
+          />
         </React.Fragment>
       )}
       <CSSTransition
@@ -36,52 +67,25 @@ export const Header = () => {
       >
         <LogInForm />
       </CSSTransition>
-      <header className="Header">
-        {!localStorage.getItem("userData") && (
-          <div
-            className="showSidebarContainer"
-            onClick={() => {
-              dispatch(toggle());
-            }}
-          >
-            {opened ? (
-              <CloseIcon style={{ fontSize: "3vw" }} htmlColor={"#f06f19"} />
-            ) : (
-              <MenuIcon style={{ fontSize: "3vw" }} htmlColor={"#f06f19"} />
-            )}
-          </div>
-        )}
-
-        <Link to="main">
-          <p className="title">Victory</p>
-        </Link>
-        <span className="spacer"></span>
-        {!localStorage.getItem("userData") ? (
-          <React.Fragment>
-            <button
-              onClick={() => {
-                setLogIn(true);
-              }}
-              className="link"
-            >
-              <div className="linkContainer">
-                <span>Войти</span>
-              </div>
-            </button>
-            <Link to="signup" className="link">
-              <div className="linkContainer">
-                <span>Зарегестрироваться</span>
-              </div>
-            </Link>
-          </React.Fragment>
-        ) : (
-          <Link to="/" className="link">
-            <div className="linkContainer">
-              <span>Имя пользователя</span>
-            </div>
-          </Link>
-        )}
-      </header>
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton onClick={()=>{dispatch(toggle())}} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    {opened?
+                        <CloseIcon />:
+                         <MenuIcon />
+                    }
+                </IconButton>
+                
+                <Typography className={classes.title} variant="h6">
+                    <Link className={classes.link} component={RouterLink} to={"./"}>
+                    Victory
+                    </Link>
+                </Typography>
+                
+                <Button color="inherit" onClick={() => {setLogIn(true)}}>Войти</Button>
+                <Button color="inherit"><Link className={classes.link} component={RouterLink} to={"/signup"}>Зарегестрироваться</Link></Button>
+            </Toolbar>
+        </AppBar>
     </React.Fragment>
   );
 };

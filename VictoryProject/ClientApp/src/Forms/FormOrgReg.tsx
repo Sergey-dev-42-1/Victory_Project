@@ -53,7 +53,7 @@ export const FormOrgReg = () => {
   const Submit = async (formData: any) => {
     let user = new User(formData.OrgName, formData.Email, formData.Password);
     let response = await axiosRegister(user);
-    if (response.status === "200") {
+    if (response.status === 200) {
       setSubmitted(true);
       navigate("./main");
     } else {

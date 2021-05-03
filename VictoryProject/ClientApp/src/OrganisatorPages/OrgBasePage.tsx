@@ -16,7 +16,7 @@ const tempContestData = new Contest(
   "Заметки о конкурсе",
   "Начат",
   new Date(Date.now()),
-  new Date(Date.now() + 86400 * 1000 * 1),
+  new Date(Date.now() + 86400 * 1000),
   new Date(Date.now() + 86400 * 1000 * 20),
   new Date(Date.now() + 86400 * 1000 * 31)
 );
@@ -35,7 +35,7 @@ export const OrgBasePage = (props: RouteComponentProps) => {
               dispatch(toggle());
             }}
             className="modalShowControls"
-          ></div>
+          />
         </React.Fragment>
       )}
       {createNew && (
@@ -45,7 +45,7 @@ export const OrgBasePage = (props: RouteComponentProps) => {
               setCreateNew(false);
             }}
             className="modalHideControls"
-          ></div>
+          />
         </React.Fragment>
       )}
       <CSSTransition
@@ -61,7 +61,7 @@ export const OrgBasePage = (props: RouteComponentProps) => {
       <div className="mainPageContainer">
         <Sidebar type={sidebarTypes.Org} />
         <main className="contentContainer">
-          <div className="contestManagmentContainer">
+          <div className="contestManagementContainer">
             <div className="contestControls">
               <div
                 onClick={() => {
@@ -79,8 +79,8 @@ export const OrgBasePage = (props: RouteComponentProps) => {
                 );
               })}
             </div>
-            <div className="managmentContainer">
-              <div className="managmentContainerFilters">
+            <div className="managementContainer">
+              <div className="managementContainerFilters">
                 Компоненты управления
               </div>
               <ContestCard contest={tempContestData} id="1" />

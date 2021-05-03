@@ -42,10 +42,8 @@ namespace VictoryProject.Controllers
             if (ModelState.IsValid)
             {
                 Console.WriteLine(Email+" : "+ Password);
-                Console.WriteLine("Model validation passed");
                 User user = await _dbContext.Set<User>()
                     .FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
-                Console.WriteLine(user);
                 if (user != null)
                 {
                     
@@ -54,7 +52,8 @@ namespace VictoryProject.Controllers
                     return Ok(user);
                 }
 
-               
+                return BadRequest("Неверный логин или пароль");
+
             }
 
             return Ok();

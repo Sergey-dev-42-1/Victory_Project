@@ -13,11 +13,14 @@ import { OrgBasePage } from "./OrganisatorPages/OrgBasePage";
 import { ContestPage } from "./Contest/ContestPage";
 import { NotFound } from "./Extra_pages/404";
 
+import {ThemeProvider} from "@material-ui/core";
+import {defaultTheme} from "./MaterialUI/Themes"
 import { Router } from "@reach/router";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <Provider store={Store}>
+    <ThemeProvider theme={defaultTheme}>
     <React.StrictMode>
       <Header />
       <Router>
@@ -28,6 +31,7 @@ ReactDOM.render(
         <NotFound path="*" />
       </Router>
     </React.StrictMode>
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

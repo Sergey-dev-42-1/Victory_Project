@@ -1,32 +1,39 @@
 //Анимация переходов для сайдбара, подробнее в документации к CSSTransitions от react-group-transition
 .sidebarTransitions-enter {
-  width: 0vw;
-  transition: width 500ms;
+  position:absolute;
+  
+  left: -25vw;
+  transition: left 500ms;
 }
 .sidebarTransitions-enter-active {
-  width: 25vw;
+  position:absolute;
+  left: 0vw;
+
   visibility: visible;
-  transition: width 500ms;
+  transition: left 500ms;
 }
 .sidebarTransitions-enter-done {
-  width: 25vw;
   visibility: visible;
-  transition: width 500ms;
+  transition: left 500ms;
 }
 .sidebarTransitions-exit {
-  width: 25vw;
+  position:absolute;
+  left: 0vw;
   opacity: 1;
   visibility: visible;
+  transition: left 500ms;
 }
 .sidebarTransitions-exit-active {
-  width: 0vw;
+  position:absolute;
+  left: -25vw;
   visibility: visible;
   opacity: 0;
-  transition: width 500ms, opacity 500ms;
+  transition:left 500ms, opacity 500ms;
 }
 .sidebarTransitions-exit-done {
-  width: 0vw;
-  transition: width 500ms;
+  position:absolute;
+  left: -25vw;
+  transition: left 500ms;
 }
 
 //Анимация появления модальных форм(вылет слева)

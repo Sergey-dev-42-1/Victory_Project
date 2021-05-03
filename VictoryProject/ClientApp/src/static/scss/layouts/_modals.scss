@@ -45,7 +45,7 @@
 
     color: $plain-text;
 
-    background-color: $background-color;
+    background-color: $secondary-color;
   }
 
   .formShapingContainer {
@@ -82,7 +82,7 @@
 
           border: 0.5vh solid
             adjust-color(
-              $color: $background-color,
+              $color: $secondary-color,
               $lightness: 35%,
               $alpha: -0.2
             );
