@@ -16,9 +16,13 @@ export async function login(credentials: any) {
 }
 
 export async function logout() {
-  let response = await instance.get(`logout`);
-  console.log(response);
-  return response;
+  try {
+    let response = await instance.get(`logout`);
+    console.log(response);
+    return response;
+  } catch {
+    console.log("Ошибка сервера");
+  }
 }
 
 export async function createContest(Contest: types.Contest) {

@@ -3,14 +3,16 @@ import { useForm } from "react-hook-form";
 import { string, object, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInputField } from "./Elements/FormInputField";
-import { FormBase } from "../Forms/Elements/FormBase";
-import {login} from "../API/mainServices"; 
+import { FormBase } from "./Elements/FormBase";
+import {Button, IconButton, InputAdornment} from "@material-ui/core";
+import { login } from "../API/mainServices";
 import * as yup from "yup";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Visibility from "@material-ui/icons/Visibility";
 
 interface FormFields {
   Email: string;
   Password: string;
-
 }
 const LogInFormSchema: SchemaOf<FormFields> = object({
   Email: string().required("Введите Email").defined(),
@@ -18,7 +20,8 @@ const LogInFormSchema: SchemaOf<FormFields> = object({
 });
 export const LogInForm = () => {
   const [submitted, setSubmitted] = React.useState(false);
-
+  const [passwordVisibility, setPasswordVisibility] = React.useState(false);
+  
   const formSet = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
@@ -29,11 +32,6 @@ export const LogInForm = () => {
     await login(data);
     setSubmitted(true);
   };
-  const {
-    register,
-
-    formState: { errors },
-  } = formSet;
 
   return (
     <div className="logInForm">
@@ -52,19 +50,34 @@ export const LogInForm = () => {
               label="Логин*"
               placeholder="Введите адрес электронной почты или номер телефона"
               fieldName="Email"
-              regist={register("Email")}
-              errors={errors}
+              formSet={formSet}
             />
             <FormInputField
-              label="Пароль*"
-              placeholder="Введите пароль"
-              type="password"
-              fieldName="Password"
-              regist={register("Password")}
-              errors={errors}
+                label="Пароль"
+                placeholder="Введите пароль"
+                fieldName="Password"
+                type={passwordVisibility ? "text":"password" }
+                formSet={formSet}
+                extra={{ endAdornment:
+                      <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => {passwordVisibility ? setPasswordVisibility(false) : setPasswordVisibility(true) }}
+
+                        >
+                          {passwordVisibility ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                }}
             />
           </div>
-          <button className="submitButton">Войти</button>
+          <Button
+            variant="outlined"
+            disabled={formSet.formState.isSubmitting || submitted}
+            formAction="drop"
+          >
+            Войти
+          </Button>
         </div>
       </FormBase>
     </div>

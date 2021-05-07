@@ -3,6 +3,7 @@
   background-color: white;
 
   display: flex;
+  flex-grow: 1;
   flex-flow: column wrap;
   justify-content: flex-start;
   align-content: flex-start;
@@ -88,7 +89,7 @@
     }
   }
 }
-.hideOverflowY{
+.hideOverflowY {
   overflow-y: hidden;
 }
 @media only screen and (max-width: 1024px) {

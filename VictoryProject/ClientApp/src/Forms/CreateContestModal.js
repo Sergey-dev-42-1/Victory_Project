@@ -1,12 +1,16 @@
 import React from "react";
-import { FormInputField } from "./Elements/FormInputField";
+
 import { useForm } from "react-hook-form";
 import { string, object, date } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createContest } from '../API/mainServices';
+import { createContest } from "../API/mainServices";
 
 import * as yup from "yup";
-import {Contest} from "../Additional/Types";
+
+import { FormInputField } from "./Elements/FormInputField";
+import { FormBase } from "../Forms/Elements/FormBase";
+import { Contest } from "../Additional/Types";
+import { Button } from "@material-ui/core";
 
 export const CreateContestModal = () => {
   const [submitted, setSubmitted] = React.useState(false);
@@ -59,86 +63,79 @@ export const CreateContestModal = () => {
       .typeError("Заполните поле")
       .defined(),
   }).defined();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    formState,
-  } = useForm({
+  const formSet = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     resolver: yupResolver(CreateContestSchema),
     shouldFocusError: true,
   });
   const Submit = async (data) => {
-    await createContest(data)
+    await createContest(data);
 
     setSubmitted(true);
   };
   //TODO: переписать с использованием formBase
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit(Submit)} className="modalFormContainer">
-        <div className="formTitle">Создать конкурс</div>
+      <FormBase
+        formStyle="modal"
+        formSet={formSet}
+        buttons={<React.Fragment />}
+        SubmittedState={submitted}
+        Submit={Submit}
+      >
         <div className="formShapingContainer">
           <div className="fieldsContainer">
             <FormInputField
               label="Название конкурса*"
               fieldName="name"
-              regist={register("name")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
             <FormInputField
               label="Описание конкурса"
               fieldName="notes"
               type="text"
-              regist={register("notes")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
             <FormInputField
               label="Дата начала*"
               fieldName="dateBeginning"
               type="datetime-local"
-              regist={register("dateBeginning")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
 
             <FormInputField
               label="Дата окончания конкурса*"
               fieldName="dateEnding"
               type="datetime-local"
-              regist={register("dateEnding")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
             <FormInputField
               label="Дата начала приема заявок*"
               fieldName="applyDateBeginning"
               type="datetime-local"
-              regist={register("applyDateBeginning")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
             <FormInputField
               label="Дата окончания приема заявок*"
               fieldName="applyDateEnding"
               type="datetime-local"
-              regist={register("applyDateEnding")}
-              errors={errors}
+              formSet={formSet}
             ></FormInputField>
           </div>
           <div className="buttonsContainer">
-            <button formAction="submit" className="submitButton">
-              Создать
-            </button>
-            <button
-              disabled={formState.isSubmitting || submitted}
+            <Button
+              variant="outlined"
+              disabled={formSet.formState.isSubmitting || submitted}
               formAction="drop"
               className="submitButton"
             >
-              Отмена
-            </button>
+              Создать
+            </Button>
+            <button formAction="submit" className="submitButton"></button>
           </div>
         </div>
-      </form>
+      </FormBase>
     </React.Fragment>
   );
 };

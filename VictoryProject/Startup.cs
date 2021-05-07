@@ -33,7 +33,7 @@ namespace VictoryProject
             services.AddAuthorization();
             services.AddDbContext<VictoryContext>(options =>
                 options.UseOracle(Configuration.GetConnectionString("DevConnection")));
-            services.AddControllersWithViews();
+            services.AddControllers();
             services.AddAntiforgery(options => options.Cookie.Name = "X-CSRF-TOKEN");
            // services.AddDbContext<VictoryContext>(options => options.UseOracle(Configuration.GetConnectionString("DevConnection")));
             // In production, the React files will be served from this directory

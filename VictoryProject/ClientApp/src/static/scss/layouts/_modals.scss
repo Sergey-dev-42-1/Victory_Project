@@ -6,21 +6,21 @@
   height: 100vh;
   top: 0;
 }
-//Header и Sidebar имеют z-index = 100
+//Header и Sidebar имеют z-index = 1100
 .modalShowControls {
   @extend %modalBase;
-  z-index: 99;
+  z-index: 1099;
 }
 .modalHideControls {
   @extend %modalBase;
-  z-index: 101;
+  z-index: 1101;
 }
 
 .modalFormContainer {
   @extend %modalBase;
   @include fixedCenter(98%, 40%);
 
-  z-index: 102;
+  z-index: 1102;
 
   background-color: white;
 

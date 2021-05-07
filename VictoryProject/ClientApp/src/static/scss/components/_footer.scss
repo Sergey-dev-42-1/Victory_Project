@@ -1,6 +1,7 @@
 .Footer {
   @extend %flex-space-between;
-  @extend %main-color-scheme;
+
+  background-color: #424242;
 
   grid-area: footer;
   justify-content: center;
@@ -22,8 +23,5 @@
   .link:hover {
     font-size: $title-size + 2;
   }
-  .footer-text {
-    font-size: $title-size;
-    text-align: center;
-  }
+
 }

@@ -1,0 +1,24 @@
+.RegPageContainer {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+
+  .regContentContainer {
+    height: 100%;
+    width: 100vw;
+    display: grid;
+
+    grid-template-columns: [first-column] 60% [second-column] auto;
+    grid-template-rows: [first-row] 95% [second-row] 5%;
+    grid-template-areas:
+      "content1 content2"
+      "footer content2";
+
+    .formContainer {
+      grid-area: content2;
+      background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(255,183,0,1) 45%, rgba(255,108,0,1) 59%, rgba(84,191,190,1) 59%);
+      padding: 4vh 6vw;
+    }
+
+  }
+}

@@ -1,37 +1,45 @@
 import React from "react";
+import { TextField } from "@material-ui/core";
+import { Controller } from "react-hook-form";
 //Компонент добавляющий поле в форму
 // Regist - объект с параметрами от react-hook-form необходимый для регистрации поля в форме
 interface Props {
   label: string;
   fieldName: string;
-  regist: any;
-  errors: any;
+  formSet: any;
   placeholder?: string;
   type?: string;
+  //Дополнительное поле для кастомизации TextField
+  extra?: {};
 }
 
 export const FormInputField = (props: Props) => {
-  console.log(props);
+  const {
+    formState: { errors },
+  } = props.formSet;
+
   return (
     <React.Fragment>
-      <label>{props.label}</label>
-      <div className="fieldGroup">
-        <input
-          style={
-            props.errors[props.fieldName] ? { borderColor: "#ca2f2f" } : {}
-          }
-          className="formInput"
-          id={props.fieldName}
-          placeholder={props.placeholder ?? props.label}
-          type={props.type ?? "text"}
-          {...props.regist}
-        />
-        {props.errors[props.fieldName]?.message && (
-          <p className="errorValidation">
-            {props.errors[props.fieldName]?.message}
-          </p>
+      <Controller
+        name={props.fieldName}
+        control={props.formSet.control}
+        defaultValue=""
+        render={({ field: { onChange, onBlur, ref } }) => (
+          <TextField
+            variant="outlined"
+            label={props.label}
+            id={props.fieldName}
+            placeholder={props.placeholder ?? props.label}
+            type={props.type ?? "text"}
+            error={errors[props.fieldName] !== undefined}
+            helperText={errors[props.fieldName]?.message}
+            onChange={(value: any) => onChange(value)}
+            onBlur={onBlur}
+            inputRef={ref}
+            InputProps= {props.extra}
+          />
         )}
-      </div>
+      />
     </React.Fragment>
   );
 };

@@ -1,0 +1,30 @@
+
+.outerFormContainer {
+  grid-area: content2;
+  background-color: $secondary-color;
+
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+}
+.formContainer {
+  width: 100%;
+
+  color: $plain-text;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  label {
+    font-size: $label-size;
+    font-weight: bold;
+  }
+  .formTitle {
+    font-size: $title-size;
+    color: adjust-color($color: $primary-color, $lightness: 0%, $alpha: -0.1);
+    text-align: center;
+    align-self: center;
+  }
+}

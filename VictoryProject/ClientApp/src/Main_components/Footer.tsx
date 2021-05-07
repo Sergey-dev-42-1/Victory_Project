@@ -1,7 +1,9 @@
+import {Typography} from "@material-ui/core";
+
 export const Footer = () => {
   return (
     <footer className="Footer">
-      <span className="footer-text">СФУ 2021</span>
+      <Typography variant={"body2"} style={{color:"white"}} className="footer-text">СФУ 2021</Typography>
     </footer>
   );
 };

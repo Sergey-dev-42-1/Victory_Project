@@ -1,15 +1,6 @@
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-html {
-  -webkit-font-smoothing: antialiased;
-}
 body {
-  margin: 0;
-
-  font-family: $font-stack;
+  min-height: 100vh;
+  height: 100%;
   background-color: $secondary-color;
   color: $primary-color;
   overflow-x: hidden;
@@ -21,17 +12,10 @@ a {
 a:visited {
   color: $primary-color;
 }
-button {
-  outline: 0;
-  border: 0;
-  background-color: transparent;
-  margin: 0;
-  padding: 0;
-}
 #root {
   width: 100%;
+  min-height: 100vh;
   height: 100%;
-
   display: flex;
   flex-direction: column;
 }
