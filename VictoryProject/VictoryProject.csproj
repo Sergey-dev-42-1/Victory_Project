@@ -36,6 +36,7 @@
         <Content Include="ClientApp\src\static\img\cards\organizeFeature.jpg" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <None Include="ClientApp\src\Forms\Elements\PasswordVisibilityAdornment.tsx" />
         <None Include="ClientApp\src\Main_pages\RegisterPage\Components\FeatureCard.tsx" />
         <None Include="ClientApp\src\Main_pages\RegisterPage\Register.tsx" />
         <None Include="ClientApp\src\MaterialUI\Themes.ts" />

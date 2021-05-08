@@ -10,7 +10,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectSidebarOpen, toggle } from "../state/sidebarSlice";
 import { RouteComponentProps } from "@reach/router";
 import { CSSTransition } from "react-transition-group";
+import {Dialog} from "@material-ui/core";
+
 //TODO: Подстановчный объект, потом удалить
+
 const tempContestData = new Contest(
   "Название",
   "Заметки о конкурсе",
@@ -20,13 +23,19 @@ const tempContestData = new Contest(
   new Date(Date.now() + 86400 * 1000 * 20),
   new Date(Date.now() + 86400 * 1000 * 31)
 );
+
 const options = ["Архивировать конкурс", "Удалить конкурс"];
+
 export const OrgBasePage = (props: RouteComponentProps) => {
+  
   const opened = useSelector(selectSidebarOpen);
   const dispatch = useDispatch();
   const [createNew, setCreateNew] = React.useState(false);
 
+  const handleCloseCreate = () => {setCreateNew(false)}
+  
   return (
+      
     <React.Fragment>
       {opened && (
         <React.Fragment>
@@ -37,27 +46,14 @@ export const OrgBasePage = (props: RouteComponentProps) => {
             className="modalShowControls"
           />
         </React.Fragment>
+          
       )}
-      {createNew && (
-        <React.Fragment>
-          <div
-            onClick={() => {
-              setCreateNew(false);
-            }}
-            className="modalHideControls"
-          />
-        </React.Fragment>
-      )}
-      <CSSTransition
-        unmountOnExit={true}
-        in={createNew}
-        timeout={500}
-        classNames="slideIn"
-      >
-        <React.Fragment>
-          <CreateContestModal />
-        </React.Fragment>
-      </CSSTransition>
+      
+      
+      <Dialog onClose={handleCloseCreate} aria-labelledby="simple-dialog-title" open={createNew}>
+          <CreateContestModal close={handleCloseCreate}/>
+      </Dialog>
+
       <div className="mainPageContainer">
         <Sidebar type={sidebarTypes.Org} />
         <main className="contentContainer">

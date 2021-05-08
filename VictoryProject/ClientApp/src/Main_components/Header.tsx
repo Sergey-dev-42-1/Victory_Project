@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Link as RouterLink } from "@reach/router";
 
-import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer} from "@material-ui/core";
+import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer, Dialog} from "@material-ui/core";
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { LogInForm } from "../Forms/LogInForm";
+import {CreateContestModal} from "../Forms/CreateContestModal";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -46,27 +47,15 @@ export const Header = () => {
   const opened = useSelector(selectSidebarOpen);
   const [logIn, setLogIn] = useState(false);
 
+  const handleCloseLogin = () => {setLogIn(false)}
   
   return (
     <React.Fragment>
-      {logIn && (
-        <React.Fragment>
-          <div
-            onClick={() => {
-              setLogIn(false);
-            }}
-            className="modalHideControls"
-          />
-        </React.Fragment>
-      )}
-      <CSSTransition
-        unmountOnExit={true}
-        in={logIn}
-        timeout={500}
-        classNames="fadeIn"
-      >
-        <LogInForm />
-      </CSSTransition>
+
+      <Dialog onClose={handleCloseLogin} aria-labelledby="simple-dialog-title" open={logIn}>
+          <LogInForm close={handleCloseLogin}/>
+      </Dialog>
+        
         <AppBar position="static">
             <Toolbar>
                 <IconButton onClick={()=>{dispatch(toggle())}} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">

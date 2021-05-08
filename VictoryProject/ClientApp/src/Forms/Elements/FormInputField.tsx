@@ -36,7 +36,7 @@ export const FormInputField = (props: Props) => {
             onChange={(value: any) => onChange(value)}
             onBlur={onBlur}
             inputRef={ref}
-            InputProps= {props.extra}
+            {...props.extra}
           />
         )}
       />

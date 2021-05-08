@@ -9,14 +9,12 @@ import * as yup from "yup";
 import { navigate } from "@reach/router";
 import { register as axiosRegister } from "../API/mainServices";
 
-import {InputAdornment, IconButton} from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
-
 import { FormInputField } from "./Elements/FormInputField";
 import { FormBase } from "./Elements/FormBase";
 import { User } from "../Additional/Types";
+import { passwordAdornment } from "./Elements/PasswordVisibilityAdornment";
+import {createStyles, Grid} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
 interface FormFields {
   Email: string;
@@ -25,18 +23,11 @@ interface FormFields {
   PasswordCheck: string;
 }
 
-const passwordAdornment = (passwordVisibility: boolean, passwordVisibilityChange: () => void) => {
-  return (
-  <InputAdornment position="end">
-    <IconButton
-        aria-label="toggle password visibility"
-        onClick={passwordVisibilityChange}
-    >
-      {passwordVisibility ? <VisibilityOff/> : <Visibility/>}
-    </IconButton>
-  </InputAdornment>
-)
-}
+const useStyles = makeStyles((Theme)=> createStyles({
+  input: {
+    marginBottom:"20px"
+  }
+}))
 
 const OrgFormSchema: SchemaOf<FormFields> = object({
   Email: string()
@@ -58,8 +49,11 @@ const OrgFormSchema: SchemaOf<FormFields> = object({
 }).defined();
 
 export const RegistrationForm = () => {
+  
   const [submitted, setSubmitted] = React.useState(false);
   const [passwordVisibility, setPasswordVisibility] = React.useState(false);
+
+  const classes = useStyles();
 
   const passwordVisibilityChange = () => {passwordVisibility ? setPasswordVisibility(false) 
       : setPasswordVisibility(true) }
@@ -73,7 +67,9 @@ export const RegistrationForm = () => {
 
   const Submit = async (formData: any) => {
     let user = new User(formData.Name, formData.Email, formData.Password);
+    
     let response = await axiosRegister(user);
+    
     if (response.status === 200) {
       setSubmitted(true);
       navigate("./main");
@@ -97,47 +93,61 @@ export const RegistrationForm = () => {
 
   return (
         <FormBase
-          formStyle="inline"
           formSet={formSet}
           SubmittedState={submitted}
           Submit={Submit}
         >
           <label className="formTitle">Зарегистрироваться</label>
-
-          <FormInputField
-            label="Email"
-            placeholder="foobar@gmail.com"
-            fieldName="Email"
-            formSet={formSet}
-          />
-
-          <FormInputField
-            label="Имя пользователя"
-            placeholder="Никнейм или ФИО"
-            fieldName="Name"
-            formSet={formSet}
-          />
-
-          <FormInputField
-            label="Пароль"
-            placeholder="Введите пароль"
-            fieldName="Password"
-            type={passwordVisibility ? "text":"password" }
-            formSet={formSet}
-            extra={{ endAdornment: 
-              passwordAdornment(passwordVisibility,passwordVisibilityChange)
-            }}
-          />
-
-          <FormInputField
-            label="Подтвердите пароль"
-            fieldName="PasswordCheck"
-            type={passwordVisibility ? "text":"password" }
-            formSet={formSet}
-            extra={{ endAdornment:
-                  passwordAdornment(passwordVisibility,passwordVisibilityChange)
-            }}
-          />
+          <Grid container>
+            
+            <FormInputField
+              label="Email"
+              placeholder="foobar@gmail.com"
+              fieldName="Email"
+              formSet={formSet}
+              extra={{
+                className: classes.input,
+                fullWidth:true,
+              }}
+            />
+            <FormInputField
+              label="Имя пользователя"
+              placeholder="Никнейм или ФИО"
+              fieldName="Name"
+              formSet={formSet}
+              extra={{
+                className: classes.input, 
+                fullWidth:true
+              }}
+            />
+  
+            <FormInputField
+              label="Пароль"
+              placeholder="Введите пароль"
+              fieldName="Password"
+              type={passwordVisibility ? "text":"password" }
+              formSet={formSet}
+              extra={{
+                className: classes.input,
+                InputProps:{
+                  endAdornment:passwordAdornment(passwordVisibility,passwordVisibilityChange)},
+                fullWidth:true
+              }}
+            />
+  
+            <FormInputField
+              label="Подтвердите пароль"
+              fieldName="PasswordCheck"
+              type={passwordVisibility ? "text":"password" }
+              formSet={formSet}
+              extra={{
+                className: classes.input,
+                InputProps:{
+                  endAdornment:passwordAdornment(passwordVisibility,passwordVisibilityChange)},
+                fullWidth:true
+              }}
+            />
+          </Grid>
         </FormBase>
   );
 };

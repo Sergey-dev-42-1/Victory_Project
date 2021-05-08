@@ -10,7 +10,7 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            alignContent: "space-evenly",
+            alignContent: "space-around",
 
             flexGrow: 0.5,
         },
@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         features: {
+            display:"flex",
+            justifyContent:"center",
             padding: theme.spacing(1)
         }
     }),
@@ -46,10 +48,10 @@ export const Register = (props: RouteComponentProps) => {
                                 усилий, для всех участников процесса: организаторов, экспертов и
                                 участников
                             </Typography>
-                            <Grid container>
-                                <Grid container justify={"space-around"}>
+                            <Grid container justify={"space-around"}>
+                                <Grid container>
                                     <Grid className={classes.features}  lg={4}>
-                                        <FeatureCard title={"Орагнизовывать"}
+                                        <FeatureCard title={"Организовывать"}
                                                      content={"Организовывайте любые конкурсы, приглашайте участников и экспертов"}
                                                      cardImg={require("../../static/img/cards/organizeFeature.jpg")}/>
                                     </Grid>

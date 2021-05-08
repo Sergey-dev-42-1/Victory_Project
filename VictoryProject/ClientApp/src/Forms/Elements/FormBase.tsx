@@ -6,7 +6,6 @@ interface Props {
     children: JSX.Element[] | JSX.Element;
     formSet: UseFormReturn;
     SubmittedState: boolean;
-    formStyle: "inline" | "modal";
     Submit: (data: FormData) => Promise<any>;
     buttons?: JSX.Element[] | JSX.Element;
 }
@@ -29,14 +28,13 @@ const useStyles = makeStyles({
 export const FormBase = ({
                              children,
                              formSet,
-                             formStyle,
                              buttons,
                              Submit,
                              SubmittedState,
                          }: Props) => {
     const classes = useStyles();
     return (
-        <Paper elevation={6} square className={formStyle === "modal" ? "modalFormContainer" : "formContainer"}>
+        <Paper elevation={6} square className={"formContainer"}>
             <form
                 className={classes.formOuter}
                 onSubmit={formSet.handleSubmit(Submit)}
