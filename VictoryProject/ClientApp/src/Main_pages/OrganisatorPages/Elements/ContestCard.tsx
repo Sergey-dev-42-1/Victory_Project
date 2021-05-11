@@ -1,10 +1,9 @@
 import CreateSharpIcon from "@material-ui/icons/Create";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
-import { IconWrapper } from "../Additional/IconTooltipWrapper";
+import { IconWrapper } from "../../../Additional/IconTooltipWrapper";
 import { Link, useLocation } from "@reach/router";
-import { Contest } from "../Additional/Types";
-import { ContestPage } from "../Contest/ContestPage";
+import { Contest } from "../../../Additional/Types";
 
 interface Props {
   contest: Contest;
@@ -36,17 +35,17 @@ export const ContestCard = ({ contest, id }: Props) => {
           icon={
             <CreateSharpIcon
               style={{ fontSize: "1.5em", pointerEvents: "none" }}
-            ></CreateSharpIcon>
+            />
           }
-        ></IconWrapper>
+        />
         <IconWrapper
           tooltipText="Просмотр"
           icon={
             <OpenInNewIcon
               style={{ fontSize: "1.5em", pointerEvents: "none" }}
-            ></OpenInNewIcon>
+            />
           }
-        ></IconWrapper>
+        />
       </div>
     </div>
   );

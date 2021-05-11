@@ -1,15 +1,15 @@
 import { ExitToApp } from "@material-ui/icons";
 
 import { Snackbar, Button, Portal } from "@material-ui/core";
-import MuiAlert, { AlertProps, Color } from "@material-ui/lab/Alert";
+import MuiAlert, {  Color } from "@material-ui/lab/Alert";
 
 import React from "react";
 import { useNavigate } from "@reach/router";
-import { useDispatch } from "react-redux";
-import { toggle } from "../state/sidebarSlice";
+import {useDispatch, useSelector} from "react-redux";
+import { toggle, selectSidebarOpen } from "../state/sidebarSlice";
 import { logout } from "../API/mainServices";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { string } from "yup/lib/locale";
+
 
 type snackbarState = {
   open: boolean;
@@ -36,6 +36,7 @@ export const MainComposition = () => {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const sidebarOpen = useSelector(selectSidebarOpen)
   const classes = useStyles();
 
   const handleLogout = async () => {
@@ -47,7 +48,7 @@ export const MainComposition = () => {
         severity: "success",
         content: "Выход успешен!",
       });
-      dispatch(toggle());
+      dispatch(toggle(!sidebarOpen));
     } else {
       setSnackbarTypeOpen({
         open: true,
@@ -63,7 +64,7 @@ export const MainComposition = () => {
     <React.Fragment>
       <Button
         onClick={() => {
-          dispatch(toggle());
+          dispatch(toggle(!sidebarOpen));
           navigate("/main");
         }}
         className={"primaryButton " + classes.button}
@@ -72,7 +73,7 @@ export const MainComposition = () => {
       </Button>
       <Button
         onClick={() => {
-          dispatch(toggle());
+          dispatch(toggle(!sidebarOpen));
           navigate("/main");
         }}
         className={"primaryButton " + classes.button}
