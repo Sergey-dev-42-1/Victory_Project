@@ -1,14 +1,14 @@
-﻿import {createStyles, Divider, Grid, Paper, Typography} from "@material-ui/core";
+﻿import {createStyles, Divider, Grid, IconButton, Paper, Tooltip, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import React from "react";
-import {Contest} from "../../../Additional/Types";
+import React, {useContext} from "react";
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {ContestContext} from "../Context/contestContext";
+import {IconWrapper} from "../../../Additional/IconTooltipWrapper";
+import {navigate, useNavigate} from "@reach/router";
 
 
-interface Props {
-    contest: Contest
-}
-
-const useStyles = makeStyles( (theme) => createStyles ( {
+const useStyles = makeStyles((theme) => createStyles({
     root: {
         color: theme.palette.getContrastText(theme.palette.primary.main),
         backgroundColor: theme.palette.primary.main,
@@ -18,13 +18,13 @@ const useStyles = makeStyles( (theme) => createStyles ( {
         flexFlow: "row",
     },
     card: {
-        height:"100%",
+        height: "100%",
         justifyContent: "space-evenly"
     },
     section: {
         height: "80%",
         width: "33.3%",
-        display: "flex", 
+        display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
         alignSelf: "center",
@@ -32,7 +32,7 @@ const useStyles = makeStyles( (theme) => createStyles ( {
     },
     divider: {
         backgroundColor: theme.palette.getContrastText(theme.palette.primary.main),
-        height:"80%",
+        height: "80%",
         alignSelf: "center"
     },
     title: {
@@ -41,55 +41,60 @@ const useStyles = makeStyles( (theme) => createStyles ( {
         display: "flex",
         alignItems: "center",
     },
-    sectionTitle:{
-        alignSelf:"flex-start"
+    sectionTitle: {
+        alignSelf: "flex-start"
+    },
+    returnButton: {
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        display: "flex"
     }
 }))
 
-export const ContestHeader = ({
-      contest: {
-          name,
-          dateBeginning,
-          dateEnding,
-          status,
-          applyDateBeginning,
-          applyDateEnding,
-          notes
-      }
-  }: Props) => {
-
+export const ContestHeader = () => {
+    const navigate = useNavigate();
+    const contest = useContext(ContestContext)
     const classes = useStyles()
     return (
-        
+
         <React.Fragment>
-        <Paper  elevation={3} square className={classes.root}>
+            <Paper elevation={3} square className={classes.root}>
                 <Grid className={classes.card} container>
-                    <Grid item spacing={1} >
-                        <Typography  className={classes.title} variant="h4" component="h2">
-                            {name}
-                        </Typography>
+                    <Grid item spacing={1} style={{display:"flex",alignItems:"center"}}>
+                        <Grid item >
+                            <Tooltip title={"Назад"}>
+                            <IconButton onClick={() => {
+                                navigate("/")
+                            }} className={classes.returnButton}>
+                                <ArrowBackIcon fontSize={"large"}  />
+                            </IconButton>
+                            </Tooltip>
+                        </Grid>
+                        <Grid item>
+                            <Typography className={classes.title} variant="h4" component="h2">
+                                {contest.name +" "+ contest.id}
+                            </Typography>
+                        </Grid>
                     </Grid>
                     <Divider orientation={"vertical"} className={classes.divider}/>
                     <Grid item className={classes.section}>
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Даты проведения
                         </Typography>
-                        <Typography variant="h6" component="h4" >
-                            {dateBeginning.toLocaleDateString() + "-" + dateEnding.toLocaleDateString()}
+                        <Typography variant="h6" component="h4">
+                            {contest.dateBeginning.toLocaleDateString() + "-" + contest.dateEnding.toLocaleDateString()}
                         </Typography>
-                    </Grid >
+                    </Grid>
                     <Divider orientation={"vertical"} className={classes.divider}/>
                     <Grid item className={classes.section}>
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Статус
                         </Typography>
-                        <Typography  variant="h6" component="h4" >
-                           
-                            {status}
+                        <Typography variant="h6" component="h4">
+                            {contest.status}
                         </Typography>
                     </Grid>
                 </Grid>
-        </Paper>
+            </Paper>
         </React.Fragment>
     )
 }

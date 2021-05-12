@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import {Link as RouterLink} from "@reach/router";
 
-import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer, Dialog} from "@material-ui/core";
+import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer, Dialog, Collapse} from "@material-ui/core";
 import {makeStyles, Theme} from '@material-ui/core/';
 
 import {useDispatch, useSelector} from "react-redux";
@@ -43,51 +43,55 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 //TODO: Опираться на то, авторизован пользователь или нет при показе полей
 export const Header = () => {
-
+    
+    
     const classes = useStyles();
     const dispatch = useDispatch();
-    
+
     const hideHeader = useSelector(selectHeaderHide);
     const opened = useSelector(selectSidebarOpen);
     const shown = useSelector(selectSidebarShow);
     const darkTheme = useSelector(selectDarkTheme);
+    //Примерная имплементация, но нужно состояние перевести в глобальное, так как обновлений не будет до ререндера
+    const [user, setUser] = useState(localStorage.getItem("email"))
     const [logIn, setLogIn] = useState(false);
-
+    
+    
     const handleCloseLogin = () => {
         setLogIn(false)
     }
 
     return (
-        <React.Fragment>
-            {!hideHeader &&
-            <React.Fragment>
-                <Dialog onClose={handleCloseLogin} aria-labelledby="simple-dialog-title" open={logIn}>
-                    <LogInForm/>
-                </Dialog>
+        <Collapse style={{zIndex: 1101}} in={!hideHeader}>
 
-                <AppBar position="static">
-                    <Toolbar>
-                        {shown &&
-                        <IconButton onClick={() => {
-                            dispatch(toggle(!opened))
-                        }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            {opened ?
-                                <CloseIcon/> :
-                                <MenuIcon/>
-                            }
-                        </IconButton>
+            <Dialog onClose={handleCloseLogin} aria-labelledby="simple-dialog-title" open={logIn}>
+                <LogInForm setLogIn={setLogIn}/>
+            </Dialog>
+
+            <AppBar position="static">
+                <Toolbar>
+                    {shown &&
+                    <IconButton onClick={() => {
+                        dispatch(toggle(!opened))
+                    }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        {opened ?
+                            <CloseIcon/> :
+                            <MenuIcon/>
                         }
-                        <Typography className={classes.title} variant="h6">
-                            <Link className={classes.link} component={RouterLink} to={"./"}>
-                                Victory
-                            </Link>
-                        </Typography>
-                        
+                    </IconButton>
+                    }
+                    <Typography className={classes.title} variant="h6">
+                        <Link className={classes.link} component={RouterLink} to={"./"}>
+                            Victory
+                        </Link>
+                    </Typography>
+                    {!user &&
+                    <React.Fragment>
                         <IconButton onClick={() => {
                             dispatch(dark())
                         }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             {darkTheme ?
-                                <Brightness7Icon/>:
+                                <Brightness7Icon/> :
                                 <Brightness2OutlinedIcon/>
 
                             }
@@ -95,12 +99,19 @@ export const Header = () => {
                         <Button color="inherit" onClick={() => {
                             setLogIn(true)
                         }}>Войти</Button>
-                        <Button color="inherit"><Link className={classes.link} component={RouterLink}
-                                                      to={"/signup"}>Зарегестрироваться</Link></Button>
-                    </Toolbar>
-                </AppBar>
-
-            </React.Fragment>}
-        </React.Fragment>
+                        <Button color="inherit">
+                            <Link className={classes.link} component={RouterLink}
+                                  to={"/signup"}>Зарегестрироваться</Link>
+                        </Button>
+                    </React.Fragment>
+                    }
+                    {user && 
+                    <Typography variant={"h5"}>
+                        {user}
+                    </Typography>
+                    }
+                </Toolbar>
+            </AppBar>
+        </Collapse>
     );
 };

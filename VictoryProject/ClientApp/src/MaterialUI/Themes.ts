@@ -1,4 +1,5 @@
 ﻿import { createMuiTheme } from '@material-ui/core/styles';
+import { DataGrid, ruRU } from '@material-ui/data-grid';
 export const defaultTheme = createMuiTheme({
     palette:{
         primary:{
@@ -11,8 +12,9 @@ export const defaultTheme = createMuiTheme({
             dark:"#096371",
             light:"#22b8c9"
         }
-    }
-})
+    },
+    
+},ruRU,)
 export const darkTheme = createMuiTheme({
     palette:{
         primary:{
@@ -26,4 +28,4 @@ export const darkTheme = createMuiTheme({
             light:"#4c4c4c"
         }
     }
-})
+},ruRU,)

@@ -35,7 +35,7 @@ export const App = () => {
                     
                     <OrgBasePage path="/"/>
                     <Register path="/signup"/>
-                    <ContestPage path="/contest/:id"/>
+                    <ContestPage path="/contest/:id/*"/>
                     <HttpError path="*" errorType={"HTTP 404"} errorMessage={""}/>
                 </Router>
             </ThemeProvider>

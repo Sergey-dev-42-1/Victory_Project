@@ -2,7 +2,7 @@ import CreateSharpIcon from "@material-ui/icons/Create";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
 import { IconWrapper } from "../../../Additional/IconTooltipWrapper";
-import { Link, useLocation } from "@reach/router";
+import { Link } from "@reach/router";
 import { Contest } from "../../../Additional/Types";
 
 interface Props {
@@ -14,7 +14,7 @@ export const ContestCard = ({ contest, id }: Props) => {
   return (
     <div className="contestCardContainer">
       <div className="baseInfo">
-        <Link to={`/contest/` + (id || "3")} state={{ contest: contest }}>
+        <Link to={`/contest/` + (id || "3")} state={{ contest: contest, id:id }}>
           <label className="contestName">{contest.name}</label>
         </Link>
         <label className="timePeriod">
@@ -37,6 +37,7 @@ export const ContestCard = ({ contest, id }: Props) => {
               style={{ fontSize: "1.5em", pointerEvents: "none" }}
             />
           }
+          classes={['controlButton']}
         />
         <IconWrapper
           tooltipText="Просмотр"
@@ -45,6 +46,7 @@ export const ContestCard = ({ contest, id }: Props) => {
               style={{ fontSize: "1.5em", pointerEvents: "none" }}
             />
           }
+          classes={['controlButton']}
         />
       </div>
     </div>

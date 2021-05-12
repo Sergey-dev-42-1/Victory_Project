@@ -77,11 +77,7 @@ export const OrgBasePage = (props: RouteComponentProps) => {
                             <ContestCard contest={tempContestData} id="2"/>
                             <ContestCard contest={tempContestData} id="1"/>
                             <ContestCard contest={tempContestData} id="2"/>
-                            {/* <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} />
-              <ContestCard {...tempContestData} /> */}
+
                         </div>
                     </div>
                     <Footer/>

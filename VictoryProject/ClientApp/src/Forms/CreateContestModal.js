@@ -19,10 +19,11 @@ import {
     createStyles,
   Divider
 } from "@material-ui/core";
-import Context from "react-redux/lib/components/Context";
+
 
 const useStyles = makeStyles((Theme) => createStyles({
     title:{
+        color:Theme.palette.getContrastText(Theme.palette.primary.main),
       backgroundColor:Theme.palette.primary.main
     },
     form: {
@@ -35,61 +36,61 @@ const useStyles = makeStyles((Theme) => createStyles({
         justifyContent: "space-between"
     }
 }))
+const CreateContestSchema = object({
+    name: string()
+        .max(50, "Слишком длинное название конкурса")
+        .required("Поле необходимо заполнить")
+        .defined(),
+    notes: string().max(200, "Достигнут предел длины примечаний").defined(),
+    dateBeginning: date()
+        .min(new Date(Date.now()), "Нельзя создать конкурс в прошлом :)")
+        .nullable()
+        .typeError("Заполните поле")
+        .required("Укажите дату начала конкурса")
+        .defined(),
+    dateEnding: date()
+        .min(
+            yup.ref("dateBeginning"),
+            "Дата окончания не может быть раньше начала"
+        )
+        .required("Укажите дату окончания конкурса")
+        .nullable()
+        .typeError("Заполните поле")
+        .defined(),
+    applyDateBeginning: date()
+        .min(
+            yup.ref("dateBeginning"),
+            "Нельзя установить начало приема заявок ранее начала конкурса"
+        )
+        .max(
+            yup.ref("dateEnding"),
+            "Нельзя установить прием заявок позднее окончания конкурса"
+        )
+        .required("Укажите дату начала приема заявок на конкурс")
+        .nullable()
+        .typeError("Заполните поле")
+        .defined(),
+    applyDateEnding: date()
+        .min(
+            yup.ref("applyDateBeginning"),
+            "Нельзя установить окончание приема заявок ранее начала приема"
+        )
+        .max(
+            yup.ref("dateEnding"),
+            "Нельзя установить окончание приема заявок позднее окончания конкурса"
+        )
+        .required("Укажите дату начала приема заявок на конкурс")
+        .required("Укажите дату окончания приема заявок на конкурс")
+        .nullable()
+        .typeError("Заполните поле")
+        .defined(),
+}).defined();
 
 export const CreateContestModal = (props) => {
+    
     const [submitted, setSubmitted] = React.useState(false);
 
     const classes = useStyles();
-
-    const CreateContestSchema = object({
-        name: string()
-            .max(50, "Слишком длинное название конкурса")
-            .required("Поле необходимо заполнить")
-            .defined(),
-        notes: string().max(200, "Достигнут предел длины примечаний").defined(),
-        dateBeginning: date()
-            .min(new Date(Date.now()), "Нельзя создать конкурс в прошлом :)")
-            .nullable()
-            .typeError("Заполните поле")
-            .required("Укажите дату начала конкурса")
-            .defined(),
-        dateEnding: date()
-            .min(
-                yup.ref("dateBeginning"),
-                "Дата окончания не может быть раньше начала"
-            )
-            .required("Укажите дату окончания конкурса")
-            .nullable()
-            .typeError("Заполните поле")
-            .defined(),
-        applyDateBeginning: date()
-            .min(
-                yup.ref("dateBeginning"),
-                "Нельзя установить начало приема заявок ранее начала конкурса"
-            )
-            .max(
-                yup.ref("dateEnding"),
-                "Нельзя установить прием заявок позднее окончания конкурса"
-            )
-            .required("Укажите дату начала приема заявок на конкурс")
-            .nullable()
-            .typeError("Заполните поле")
-            .defined(),
-        applyDateEnding: date()
-            .min(
-                yup.ref("applyDateBeginning"),
-                "Нельзя установить окончание приема заявок ранее начала приема"
-            )
-            .max(
-                yup.ref("dateEnding"),
-                "Нельзя установить окончание приема заявок позднее окончания конкурса"
-            )
-            .required("Укажите дату начала приема заявок на конкурс")
-            .required("Укажите дату окончания приема заявок на конкурс")
-            .nullable()
-            .typeError("Заполните поле")
-            .defined(),
-    }).defined();
 
     const formSet = useForm({
         mode: "onSubmit",
@@ -97,6 +98,7 @@ export const CreateContestModal = (props) => {
         resolver: yupResolver(CreateContestSchema),
         shouldFocusError: true,
     });
+    
     const Submit = async (data) => {
         console.log("submitted")
         await createContest(data);

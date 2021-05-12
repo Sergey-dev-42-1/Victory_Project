@@ -14,6 +14,7 @@ import {
     makeStyles
 } from "@material-ui/core";
 import {login} from "../API/mainServices";
+import {navigate} from "@reach/router";
 
 
 interface FormFields {
@@ -21,8 +22,14 @@ interface FormFields {
     Password: string;
 }
 
+const LogInFormSchema: SchemaOf<FormFields> = object({
+    Email: string().required("Введите Email").defined(),
+    Password: string().required("Введите пароль").defined(),
+});
+
 const useStyles = makeStyles((Theme) => createStyles({
     title: {
+        color:Theme.palette.getContrastText(Theme.palette.primary.main),
         backgroundColor: Theme.palette.primary.main
     },
     form: {
@@ -42,12 +49,11 @@ const useStyles = makeStyles((Theme) => createStyles({
     }
 }))
 
+interface Props {
+    setLogIn: any
+}
 
-const LogInFormSchema: SchemaOf<FormFields> = object({
-    Email: string().required("Введите Email").defined(),
-    Password: string().required("Введите пароль").defined(),
-});
-export const LogInForm = () => {
+export const LogInForm = ({setLogIn}:Props) => {
     const [submitted, setSubmitted] = React.useState(false);
     const [passwordVisibility, setPasswordVisibility] = React.useState(false);
 
@@ -66,7 +72,10 @@ export const LogInForm = () => {
     });
     const Submit = async (data: any) => {
         const response = await login(data);
+        localStorage.setItem("email", response.data.email)
         setSubmitted(true);
+        navigate("/")
+        setLogIn(false)
     };
 
     return (

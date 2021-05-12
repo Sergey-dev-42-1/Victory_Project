@@ -17,6 +17,7 @@ export class User {
   }
 }
 export class Contest {
+  id?: string;
   name: string;
   notes: string;
   //TODO: Лучше конкретно определить варианты статусов, на сервере

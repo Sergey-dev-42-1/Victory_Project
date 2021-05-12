@@ -4,7 +4,6 @@ import React from "react";
 
 export function useSidebar() {
     const dispatch = useDispatch();
-    const sidebarOpen = useSelector(selectSidebarOpen)
     React.useEffect(() => {
         dispatch(show());
         return () => {

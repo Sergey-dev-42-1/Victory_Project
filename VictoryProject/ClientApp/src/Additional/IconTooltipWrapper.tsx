@@ -2,6 +2,7 @@ import React from "react";
 interface Props {
   tooltipText: string;
   icon: any;
+  classes?: string[];
 }
 
 const messageMouseOverIcon = (
@@ -31,12 +32,12 @@ const messageLeaveIcon = (
   }
 };
 
-export const IconWrapper = ({ tooltipText, icon }: Props) => {
+export const IconWrapper = ({ tooltipText, icon, classes }:Props) => {
   return (
     <div
       onMouseOver={(event) => messageMouseOverIcon(event, tooltipText)}
       onMouseOut={(event) => messageLeaveIcon(event)}
-      className="controlButton"
+      className={classes ? classes.reduce((accumulated, current)=>{return accumulated + current + " "}) : ""}
     >
       {icon}
     </div>

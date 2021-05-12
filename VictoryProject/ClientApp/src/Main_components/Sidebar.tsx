@@ -4,6 +4,7 @@ import React, {useEffect} from "react";
 import {CSSTransition} from "react-transition-group";
 import * as sidebarComps from "../Additional/SidebarCompositions";
 import {Modal} from "@material-ui/core";
+import {createStyles, makeStyles} from "@material-ui/core/";
 
 export enum sidebarTypes {
     Org,
@@ -15,7 +16,16 @@ interface Props {
     type: sidebarTypes;
 }
 
+const useStyles = makeStyles((Theme)=>createStyles({
+    colors:{
+        color:Theme.palette.getContrastText(Theme.palette.secondary.main),
+        backgroundColor:Theme.palette.secondary.main
+    }
+}))
+
 export const Sidebar = ({type}: Props) => {
+    const classes = useStyles();
+    
     const opened = useSelector(selectSidebarOpen);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -36,9 +46,7 @@ export const Sidebar = ({type}: Props) => {
             >{<React.Fragment/>}
             </Modal>
             <CSSTransition in={opened} timeout={800} classNames="sidebarTransitions">
-
-
-                <div className="sidebarContainer">
+                <div className={opened? "sidebarContainer" + " " + classes.colors+ " " + "sidebarTransitions-enter-done" :  "sidebarContainer" + " " + classes.colors}>
                     <div className="controlsContainer">
                         {type.valueOf() === sidebarTypes.Org && (
                             <sidebarComps.MainComposition/>
