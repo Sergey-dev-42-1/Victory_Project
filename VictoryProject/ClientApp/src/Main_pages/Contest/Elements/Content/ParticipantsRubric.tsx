@@ -5,7 +5,7 @@ import {
     GridColDef,
     GridColumnMenuProps,
     gridColumnMenuStateSelector,
-    GridRowsProp
+    GridRowsProp, GridSortCellParams
 } from '@material-ui/data-grid';
 import {AppBar, Button, createStyles, Grid, makeStyles, Tab, Tabs, Toolbar, Typography} from "@material-ui/core/";
 
@@ -21,14 +21,44 @@ const useStyles = makeStyles((Theme) => createStyles({
     toolbar: {
         backgroundColor: Theme.palette.secondary.dark,
         color: Theme.palette.getContrastText(Theme.palette.secondary.dark)
-    }
+    },
+
 }))
+
+function getShow(params: GridSortCellParams) {
+    return params.getValue('accepted') === "no" ;
+}
 
 const columns: GridColDef[] = [
     {field: 'id', headerName: 'Номер заявки', flex: 0.2},
     {field: 'firstName', headerName: 'Имя', flex: 0.2},
     {field: 'lastName', headerName: 'Фамилия', flex: 0.2},
-    {field: 'age', headerName: 'Возраст', flex: 0.2,},
+    {
+        field: 'actions',
+        align: "center",
+        sortable: false,
+        disableClickEventBubbling: true,
+        disableColumnMenu: true,
+        headerName: 'Действия',
+        valueGetter: getShow,
+        flex: 0.2,
+        renderCell: (params) => {
+            return (
+                <React.Fragment>
+                    {params.value &&
+                        <React.Fragment><Button style={{marginRight: '8px', backgroundColor: "#5fcf3a"}} variant={"contained"}
+                                         onClick={() => {
+                                             alert("clicked")
+                                         }}>Принять</Button>
+                    <Button style={{marginRight: '8px', backgroundColor: "#de3e53"}} variant={"contained"}
+                            onClick={() => {
+                                alert("clicked")
+                            }}>Отклонить</Button></React.Fragment>
+                    }
+                </React.Fragment>
+            )
+        }
+    },
 ];
 
 const rows = [
@@ -44,10 +74,9 @@ const filteringApplications = (rows: GridRowsProp, filter: number) => {
     return rows.filter((value) => {
             if (filter === 0) {
                 return value.accepted === "no"
-            } else if(filter === 1) {
+            } else if (filter === 1) {
                 return value.accepted === "yes"
-            }
-            else{
+            } else {
                 return value.accepted === "declined"
             }
         }

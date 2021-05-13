@@ -2,7 +2,7 @@ import CreateSharpIcon from "@material-ui/icons/Create";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import React from "react";
 import { IconWrapper } from "../../../Additional/IconTooltipWrapper";
-import { Link } from "@reach/router";
+import {Link, navigate} from "@reach/router";
 import { Contest } from "../../../Additional/Types";
 
 interface Props {
@@ -30,7 +30,8 @@ export const ContestCard = ({ contest, id }: Props) => {
       </div>
       <div className="status">Статус: {contest.status}</div>
       <div className="controls">
-        <IconWrapper
+        <IconWrapper 
+            onClick={()=>{navigate(`./contest/${id}`)}}
           tooltipText="Изменить"
           icon={
             <CreateSharpIcon

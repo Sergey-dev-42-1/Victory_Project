@@ -1,6 +1,6 @@
 ﻿import {Grid, List, ListItem, ListItemText, makeStyles, Drawer,} from "@material-ui/core";
-import React, {useContext} from "react";
-import {useNavigate, RouteComponentProps} from "@reach/router";
+import React, {useContext, useState} from "react";
+import {useNavigate} from "@reach/router";
 import {ContestContext} from "../Context/contestContext"
 const useStyles = makeStyles((theme) => ({
     drawer:{
@@ -18,15 +18,24 @@ const useStyles = makeStyles((theme) => ({
         height: "90%",
     },
 }))
-const rubrics = [{name:'Новости',url:`news`},
-    {name:'Участники',url:`participants`},
-    {name:'Эксперты',url:`experts`},
-   {name:'Кастомизация',url:`customization`}]
+const rubrics = [
+    {name:'Поданные работы',url:`works`},
+]
 
-export const ContestRubrics = () => {
+export const ContestRubricsExpert = () => {
     const navigate = useNavigate()
+
     const classes = useStyles();
-    const context = useContext(ContestContext)
+
+    const contest = useContext(ContestContext)
+
+    const [selected, setSelected] = useState("");
+
+    const handleRubricClick = (item: {name: string, url: string})=>{
+        setSelected(item.name)
+        navigate("/contest/" + contest.id +"/"+  item.url)
+    }
+
     return (
         <Grid item xs={12} md={2} className={classes.pages}>
             <Drawer
@@ -37,7 +46,7 @@ export const ContestRubrics = () => {
             >
                 <List className={classes.rubricsContainer}>
                     {rubrics.map((item) => (
-                        <ListItem button key={item.name} onClick={()=>{navigate("/contest/" + context.id +"/"+  item.url)}}>
+                        <ListItem selected={item.name === selected} button key={item.name} onClick={() => {handleRubricClick(item)}}>
                             <ListItemText primary={item.name}/>
                         </ListItem>
                     ))}

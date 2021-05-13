@@ -1,5 +1,6 @@
 import React from "react";
 interface Props {
+  onClick?:  React.MouseEventHandler<HTMLDivElement>;
   tooltipText: string;
   icon: any;
   classes?: string[];
@@ -32,9 +33,9 @@ const messageLeaveIcon = (
   }
 };
 
-export const IconWrapper = ({ tooltipText, icon, classes }:Props) => {
+export const IconWrapper = ({onClick ,tooltipText, icon, classes }:Props) => {
   return (
-    <div
+    <div onClick={onClick}
       onMouseOver={(event) => messageMouseOverIcon(event, tooltipText)}
       onMouseOut={(event) => messageLeaveIcon(event)}
       className={classes ? classes.reduce((accumulated, current)=>{return accumulated + current + " "}) : ""}
