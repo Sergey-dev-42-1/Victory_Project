@@ -34,32 +34,6 @@
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\static\img\cards\organizeFeature.jpg" />
-        <None Remove="$(SpaRoot)**" />
-        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-        <None Include="ClientApp\src\App.tsx" />
-        <None Include="ClientApp\src\Forms\Elements\PasswordVisibilityAdornment.tsx" />
-        <None Include="ClientApp\src\hooks\useHeader.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestExpert\ContestPagesExpert.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestExpert\ContestRubricsExpert.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestParticipant\ContestPagesExpert.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestParticipant\ContestRubricsExpert.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestParticipant\Elements\ApplicationsRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\ContestParticipant\Elements\WorksParticipantRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Context\contestContext.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\Content\ExpertsRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\Content\NewsRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\Content\ParticipantsRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\Content\WorksRubric.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\ContestFooter.tsx" />
-        <None Include="ClientApp\src\Main_pages\Contest\Elements\ContestHeader.tsx" />
-        <None Include="ClientApp\src\Main_pages\OrganisatorPages\Elements\ContestCard.tsx" />
-        <None Include="ClientApp\src\Main_pages\OrganisatorPages\OrgBasePage.tsx" />
-        <None Include="ClientApp\src\Main_pages\RegisterPage\Components\FeatureCard.tsx" />
-        <None Include="ClientApp\src\Main_pages\RegisterPage\Register.tsx" />
-        <None Include="ClientApp\src\MaterialUI\Themes.ts" />
-        <None Include="ClientApp\src\state\contestSlice.tsx" />
-        <None Include="ClientApp\src\state\headerSlice.tsx" />
-        <None Include="ClientApp\src\state\themeSlice.tsx" />
     </ItemGroup>
 
     <ItemGroup>

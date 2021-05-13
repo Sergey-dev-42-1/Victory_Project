@@ -13,8 +13,8 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import {hide, selectHeaderHide} from "../../state/headerSlice";
 import {selectSidebarOpen} from "../../state/sidebarSlice";
-import {selectContest} from"../../state/contestSlice"
-import {RootState} from"../../state/store"
+import {selectContest} from "../../state/contestSlice"
+import {RootState} from "../../state/store"
 import {useDispatch, useSelector} from "react-redux";
 
 import {ContestHeader} from "./Elements/ContestHeader"
@@ -86,7 +86,7 @@ export const ContestPageManagement = (props: Props) => {
     const dispatch = useDispatch()
     const classes = useStyles()
 
-    const contest = useSelector((state: RootState)=> selectContest(state,props.id!))
+    const contest = useSelector((state: RootState) => selectContest(state, props.id!))
     const themeType = useSelector(selectDarkTheme)
     const sidebar = useSelector(selectSidebarOpen)
     const headerHidden = useSelector(selectHeaderHide)
@@ -97,63 +97,62 @@ export const ContestPageManagement = (props: Props) => {
     }
 
 
-    
-
     return (
         //Для кастомизации, нужно доставать из темы свойства и делать отдельный ThemeProvider
         <React.Fragment>
             {contest && <React.Fragment>
-            <Sidebar type={sidebarTypes.Org}/>
+                <Sidebar type={sidebarTypes.Org}/>
                 <ThemeProvider theme={themeType ? darkTheme : newTheme}>
 
-                <ContestContext.Provider value={contest!}>
+                    <ContestContext.Provider value={contest!}>
 
-                <Grid color={"primary"} className={classes.contestPage}>
+                        <Grid color={"primary"} className={classes.contestPage}>
 
-                <Tooltip title={"Элементы управления"}>
-                <Fab color={"secondary"} onClick={() => {
-                handleToggleHeader()
-            }}
-                className={classes.Fab} disabled={sidebar}>
+                            <Tooltip title={"Элементы управления"}>
+                                <Fab color={"secondary"} onClick={() => {
+                                    handleToggleHeader()
+                                }}
+                                     className={classes.Fab} disabled={sidebar}>
 
-            {headerHidden ? <ExpandMoreIcon/> : <ExpandLessIcon/>}
+                                    {headerHidden ? <ExpandMoreIcon/> : <ExpandLessIcon/>}
 
-                </Fab>
-                </Tooltip>
+                                </Fab>
+                            </Tooltip>
 
-                <Grid color={"primary"} className={classes.pageBody}>
-                <ContestHeader/>
-                <Grid color={"primary"} container style={{flexGrow: 1}}>
-            {contest!.role === UserRoles.organistor &&
-                <React.Fragment>
-                <ContestRubricsOrganizator/>
-                <ContestPagesOrganizator/>
-                </React.Fragment>
-            }
-            {contest!.role === UserRoles.expert &&
-                <React.Fragment>
-                <ContestRubricsExpert/>
-                <ContestPagesExpert/>
-                </React.Fragment>
-            }
-            {contest!.role === UserRoles.participant &&
-                <React.Fragment>
-                <ContestRubricsParticipant/>
-                <ContestPagesParticipant/>
-                </React.Fragment>
-            }
-                <ContestFooter/>
-                </Grid>
-                </Grid>
+                            <Grid color={"primary"} className={classes.pageBody}>
+                                <ContestHeader/>
+                                <Grid color={"primary"} container style={{flexGrow: 1}}>
+                                    {contest!.role === UserRoles.organistor &&
+                                    <React.Fragment>
+                                        <ContestRubricsOrganizator/>
+                                        <ContestPagesOrganizator/>
+                                    </React.Fragment>
+                                    }
+                                    {contest!.role === UserRoles.expert &&
+                                    <React.Fragment>
+                                        <ContestRubricsExpert/>
+                                        <ContestPagesExpert/>
+                                    </React.Fragment>
+                                    }
+                                    {contest!.role === UserRoles.participant &&
+                                    <React.Fragment>
+                                        <ContestRubricsParticipant/>
+                                        <ContestPagesParticipant/>
+                                    </React.Fragment>
+                                    }
+                                    <ContestFooter/>
+                                </Grid>
+                            </Grid>
 
-                </Grid>
+                        </Grid>
 
-                </ContestContext.Provider>
+                    </ContestContext.Provider>
 
                 </ThemeProvider>
             </React.Fragment>
             }
-            {!contest && <HttpError errorType={"HTTP 404"} errorMessage={"Выбранный вами конкурс не найден(возможно вы пытались перейти через адресную строку, аяяй)"}/>}
+            {!contest && <HttpError errorType={"HTTP 404"}
+                                    errorMessage={"Выбранный вами конкурс не найден(возможно вы пытались перейти через адресную строку, аяяй)"}/>}
         </React.Fragment>
     );
 }
