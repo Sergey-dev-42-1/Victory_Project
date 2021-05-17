@@ -2,9 +2,9 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 
-import {string, object, SchemaOf} from "yup";
-import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {object, SchemaOf, string} from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 import {navigate} from "@reach/router";
 import {register as axiosRegister} from "../API/mainServices";
@@ -68,7 +68,7 @@ export const RegistrationForm = () => {
     });
 
     const Submit = async (formData: any) => {
-        let user = new User(formData.Name, formData.Email, formData.Password);
+        let user : User = {username: formData.Name, email:formData.Email,  password:formData.Password};
 
         let response = await axiosRegister(user);
 

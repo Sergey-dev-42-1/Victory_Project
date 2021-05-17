@@ -1,11 +1,12 @@
-﻿import {createStyles, Divider, Grid, IconButton, Paper, Tooltip, Typography} from "@material-ui/core";
+import {createStyles, Divider, Grid, IconButton, Paper, Tooltip, Typography} from "@material-ui/core";
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import {makeStyles} from "@material-ui/core/styles";
 import React, {useContext} from "react";
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {ContestContext} from "../Context/contestContext";
-import {IconWrapper} from "../../../Additional/IconTooltipWrapper";
-import {navigate, useNavigate} from "@reach/router";
+
+import {useNavigate} from "@reach/router";
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => createStyles({
     },
     section: {
         height: "80%",
-        width: "33.3%",
+
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => createStyles({
     sectionTitle: {
         alignSelf: "flex-start"
     },
-    returnButton: {
+    Button: {
         color: theme.palette.getContrastText(theme.palette.primary.main),
         display: "flex"
     }
@@ -58,40 +59,68 @@ export const ContestHeader = () => {
 
         <React.Fragment>
             <Paper elevation={3} square className={classes.root}>
+                
                 <Grid className={classes.card} container>
-                    <Grid item spacing={1} style={{display:"flex",alignItems:"center"}}>
+                    
+                    <Grid item style={{display:"flex",alignItems:"center"}}>
                         <Grid item >
+                            
                             <Tooltip title={"Назад"}>
+                                
                             <IconButton onClick={() => {
+                                
                                 navigate("/")
-                            }} className={classes.returnButton}>
+                            }} className={classes.Button}>
                                 <ArrowBackIcon fontSize={"large"}  />
+                                
                             </IconButton>
+                                
                             </Tooltip>
+                            
                         </Grid>
+                        
                         <Grid item>
                             <Typography className={classes.title} variant="h4" component="h2">
                                 {contest.name +" "+ contest.id}
                             </Typography>
                         </Grid>
+                        
                     </Grid>
+                    
                     <Divider orientation={"vertical"} className={classes.divider}/>
+                    
                     <Grid item className={classes.section}>
+                        
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Даты проведения
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {contest.dateBeginning.toLocaleDateString() + "-" + contest.dateEnding.toLocaleDateString()}
+                            {new Date(contest.dateBeginning).toLocaleDateString() + "-" + new Date(contest.dateEnding).toLocaleDateString()}
                         </Typography>
+                        
                     </Grid>
+                    
                     <Divider orientation={"vertical"} className={classes.divider}/>
+                    
                     <Grid item className={classes.section}>
+                        
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Статус
                         </Typography>
                         <Typography variant="h6" component="h4">
                             {contest.status}
                         </Typography>
+                        
+                    </Grid>
+                    
+                    <Grid style={{display:"flex",alignItems:"center"}} item >
+                        
+                        <Tooltip title={"Перейти на страницу конкурса"}>
+                            <IconButton className ={classes.Button} onClick={()=>{navigate(`/contest/${contest.id}/presentation/news`)}}>
+                                 <OpenInNewIcon/>
+                            </IconButton>
+                        </Tooltip>
+                        
                     </Grid>
                 </Grid>
             </Paper>

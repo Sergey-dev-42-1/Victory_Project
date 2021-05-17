@@ -1,7 +1,8 @@
 import {RouteComponentProps} from "@reach/router";
-import {Container, Paper, makeStyles, Typography} from '@material-ui/core';
+import {Container, makeStyles, Paper, Typography} from '@material-ui/core';
 
 import React from "react";
+import {Grid} from "@material-ui/core/";
 
 const useStyles = makeStyles({
 
@@ -37,8 +38,11 @@ React.useEffect(() => {
   const classes = useStyles();
   return( <Container maxWidth="md" className={classes.container}>
     <Paper elevation={6} className={classes.paper}>
+     
       <Typography align={"center"} variant={"h2"}>{props.errorType} </Typography>
-      <Typography align={"center"} variant={"body2"}>{props.errorMessage}</Typography>
+      <Grid style={{justifyContent:"center",padding:"10px"}} container>
+      <Typography style={{textAlign:"center"}} align={"center"} variant={"body2"}>{props.errorMessage}</Typography>
+      </Grid>
       <Typography align={"center"} variant={"subtitle1"}>Вы будете перенаправлены обратно через несколько секунд</Typography>
     </Paper>
     

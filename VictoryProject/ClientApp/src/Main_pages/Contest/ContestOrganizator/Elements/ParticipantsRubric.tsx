@@ -1,13 +1,7 @@
-﻿import {RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import React, {useState} from "react"
-import {
-    DataGrid,
-    GridColDef,
-    GridColumnMenuProps,
-    gridColumnMenuStateSelector,
-    GridRowsProp, GridSortCellParams
-} from '@material-ui/data-grid';
-import {AppBar, Button, createStyles, Grid, makeStyles, Tab, Tabs, Toolbar, Typography} from "@material-ui/core/";
+import {DataGrid, GridColDef, GridRowsProp, GridSortCellParams} from '@material-ui/data-grid';
+import {Button, createStyles, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core/";
 
 
 const useStyles = makeStyles((Theme) => createStyles({
@@ -26,7 +20,7 @@ const useStyles = makeStyles((Theme) => createStyles({
 }))
 
 function getShow(params: GridSortCellParams) {
-    return params.getValue('accepted') === "no" ;
+    return params.getValue("accepted") === "no" ;
 }
 
 const columns: GridColDef[] = [
@@ -34,12 +28,11 @@ const columns: GridColDef[] = [
     {field: 'firstName', headerName: 'Имя', flex: 0.2},
     {field: 'lastName', headerName: 'Фамилия', flex: 0.2},
     {
-        field: 'actions',
+        field: '',
         align: "center",
         sortable: false,
         disableClickEventBubbling: true,
         disableColumnMenu: true,
-        headerName: 'Действия',
         valueGetter: getShow,
         flex: 0.2,
         renderCell: (params) => {

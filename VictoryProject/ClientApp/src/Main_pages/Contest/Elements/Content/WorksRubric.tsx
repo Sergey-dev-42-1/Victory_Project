@@ -1,8 +1,11 @@
-﻿import {RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import React, {useState} from "react";
-import {createStyles, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
+import {createStyles, Dialog, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
 import {DataGrid, GridColDef, GridRowsProp, GridSortCellParams} from "@material-ui/data-grid";
 import {Button} from "@material-ui/core/";
+
+import {ApplicationAssessForm} from "Forms/ContestForms/ApplicationAssessForm";
+import {Application, ApplicationField, HTMLInputTypes} from "../../../../Additional/Types";
 
 const useStyles = makeStyles((Theme) => createStyles({
     root: {
@@ -54,11 +57,17 @@ const filteringApplications = (rows: GridRowsProp, filter: number) => {
 function getShow(params: GridSortCellParams) {
     return !params.getValue("assessed") ;
 }
+const fields : ApplicationField[] = [{type:HTMLInputTypes.text,limit:20,name:"Обоснование оценки",required:true},
+    {type:HTMLInputTypes.number, limit:10,name:"Оценка",required:true}, {type:HTMLInputTypes.number, limit:100,name:"Оценка2",required:true}, {type:HTMLInputTypes.number, limit:5,name:"Оценка3",required:true}]
+const TempApplication: Application = {fileUrl:"C:/Users/xo3ab/Desktop/RyzhikhSergey_KI17-14B.pdf",
+    fields:fields
+}
+
 
 export const WorksRubric = (props: RouteComponentProps) => {
     const [tab, setTab] = useState(0);
     const [applications, setApplications] = useState(filteringApplications(rows, 0));
-
+    const [formOpen, setFormOpen] = useState(false);
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTab(newValue);
         setApplications(
@@ -66,7 +75,10 @@ export const WorksRubric = (props: RouteComponentProps) => {
         )
     };
     const handleCheckClick = (() => {
-        alert("clicked")
+        setFormOpen(true)
+    })
+    const handleCloseClick = (() => {
+        setFormOpen(false)
     })
     const classes = useStyles();
 
@@ -90,8 +102,10 @@ export const WorksRubric = (props: RouteComponentProps) => {
 
     return (
         <React.Fragment>
+            <Dialog onClose={handleCloseClick} aria-labelledby="simple-dialog-title" open={formOpen}>
+                <ApplicationAssessForm Application={TempApplication} setFormOpen={setFormOpen}/>
+            </Dialog>
             <Grid className={classes.root}>
-
                 <Toolbar className={classes.toolbar}>
                     <Tabs value={tab} onChange={handleChangeTab}>
                         <Tab label="Непроверенные"/>

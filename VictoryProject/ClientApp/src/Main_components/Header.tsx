@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 
 import {Link as RouterLink} from "@reach/router";
 
-import {AppBar, Toolbar, IconButton, Button, Typography, Link, Drawer, Dialog, Collapse} from "@material-ui/core";
+import {AppBar, Button, Collapse, Dialog, IconButton, Link, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles, Theme} from '@material-ui/core/';
 
 import {useDispatch, useSelector} from "react-redux";
-import {toggle, selectSidebarOpen, selectSidebarShow} from "../state/sidebarSlice";
+import {selectSidebarOpen, selectSidebarShow, toggle} from "../state/sidebarSlice";
 import {dark, selectDarkTheme} from "../state/themeSlice";
 import {selectHeaderHide} from "../state/headerSlice";
 
@@ -16,6 +16,7 @@ import Brightness2OutlinedIcon from '@material-ui/icons/Brightness2Outlined';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import {LogInForm} from "../Forms/LogInForm";
+import {UserContext} from "../App";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -43,7 +44,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 //TODO: Опираться на то, авторизован пользователь или нет при показе полей
 export const Header = () => {
-    
+
+    const userContext = useContext(UserContext)
     
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -53,10 +55,11 @@ export const Header = () => {
     const shown = useSelector(selectSidebarShow);
     const darkTheme = useSelector(selectDarkTheme);
     //Примерная имплементация, но нужно состояние перевести в глобальное, так как обновлений не будет до ререндера
-    const [user, setUser] = useState(localStorage.getItem("email"))
+    const [user, setUser] = useState(localStorage.getItem("username"))
+
     const [logIn, setLogIn] = useState(false);
-    
-    
+
+
     const handleCloseLogin = () => {
         setLogIn(false)
     }
@@ -85,7 +88,7 @@ export const Header = () => {
                             Victory
                         </Link>
                     </Typography>
-                    {!user &&
+                    {(userContext.user.username === "") &&
                     <React.Fragment>
                         <IconButton onClick={() => {
                             dispatch(dark())
@@ -105,9 +108,9 @@ export const Header = () => {
                         </Button>
                     </React.Fragment>
                     }
-                    {user && 
+                    {userContext.user.username !== "" &&
                     <Typography variant={"h5"}>
-                        {user}
+                        {userContext.user.username}
                     </Typography>
                     }
                 </Toolbar>

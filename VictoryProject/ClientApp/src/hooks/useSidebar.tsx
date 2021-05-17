@@ -1,5 +1,5 @@
-﻿import {show, toggle, selectSidebarOpen} from "../state/sidebarSlice"
-import {useDispatch, useSelector} from "react-redux";
+import {show, toggle} from "../state/sidebarSlice"
+import {useDispatch} from "react-redux";
 import React from "react";
 
 export function useSidebar() {

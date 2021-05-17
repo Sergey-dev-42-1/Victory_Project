@@ -1,8 +1,7 @@
-﻿import {RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import React, {useState} from "react";
 import {createStyles, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
 import {DataGrid, GridColDef, GridRowsProp} from "@material-ui/data-grid";
-import {Button} from "@material-ui/core/";
 
 const useStyles = makeStyles((Theme) => createStyles({
     root: {
@@ -40,6 +39,7 @@ const filteringApplications = (rows: GridRowsProp, filter: number) => {
             if (filter === 0) {
                 return true
             }
+            return false
         }
     )
 }

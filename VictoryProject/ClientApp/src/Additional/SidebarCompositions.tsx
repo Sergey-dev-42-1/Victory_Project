@@ -1,15 +1,16 @@
 import {ExitToApp} from "@material-ui/icons";
 
-import {Snackbar, Button, Portal} from "@material-ui/core";
+import {Button, Portal, Snackbar} from "@material-ui/core";
 import MuiAlert, {Color} from "@material-ui/lab/Alert";
 
-import React from "react";
+import React, {useContext} from "react";
 import {useNavigate} from "@reach/router";
 import {useDispatch, useSelector} from "react-redux";
-import {toggle, selectSidebarOpen} from "../state/sidebarSlice";
+import {selectSidebarOpen, toggle} from "../state/sidebarSlice";
 import {logout} from "../API/mainServices";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {createStyles} from "@material-ui/core/";
+import {UserContext} from "../App";
 
 
 type snackbarState = {
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 //Кнопки настроены лишь выполнять навигацию по ссылке, кнопки с другой логикой нужно писать в самом компоненте
 export const MainComposition = () => {
+    
+    const userContext = useContext(UserContext)
+    
     const [snackbarType, setSnackbarTypeOpen] = React.useState<snackbarState>(
         defaultSnackbar
     );
@@ -43,12 +47,12 @@ export const MainComposition = () => {
     const classes = useStyles();
 
     const handleLogout = async () => {
-        const response = await logout();
+       /* const response = await logout();
         
         console.log(response);
         if (response !== undefined && response.status === 200) {
             dispatch(toggle(!sidebarOpen));
-            localStorage.removeItem("email")
+             window.localStorage.removeItem("email")
             navigate("/signup")
         } 
         else {
@@ -57,7 +61,12 @@ export const MainComposition = () => {
                 severity: "error",
                 content: "Ошибка выхода, попробуйте еще раз",
             });
-        }
+        }*/
+        dispatch(toggle(!sidebarOpen));
+        window.localStorage.removeItem("username")
+        window.localStorage.removeItem("email")
+        userContext.setUser({username:""})
+        await navigate("/signup")
     };
     const handleClose = () => {
         setSnackbarTypeOpen(defaultSnackbar);
@@ -69,7 +78,7 @@ export const MainComposition = () => {
                     dispatch(toggle(!sidebarOpen));
                     navigate("/main");
                 }}
-                className={ classes.button +" "+"primaryButton"}
+                className={ classes.button + " primaryButton"}
             >
                 Ваши конкурсы
             </Button>

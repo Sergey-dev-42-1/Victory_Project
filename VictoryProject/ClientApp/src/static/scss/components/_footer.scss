@@ -1,8 +1,7 @@
 .Footer {
   @extend %flex-space-between;
-
+  
   background-color: #424242;
-
   grid-area: footer;
   justify-content: center;
   align-items: center;  

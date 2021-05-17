@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace VictoryProject.Entity
 {
-    public partial class Contest
+    public class Contest
     {
         public Contest()
         {

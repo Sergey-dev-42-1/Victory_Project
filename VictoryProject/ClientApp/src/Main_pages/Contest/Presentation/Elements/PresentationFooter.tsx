@@ -1,6 +1,6 @@
 import {createStyles, Grid, makeStyles} from "@material-ui/core";
 import React, {useContext} from "react";
-import {ContestContext} from "../Context/contestContext"
+import {ContestPresentationContext} from "../PresentationPage"
 import {Typography} from "@material-ui/core/";
 
 const useStyles = makeStyles((theme) => (createStyles({
@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => (createStyles({
 
 })))
 
-export const ContestFooter = () => {
-    const contest = useContext(ContestContext)
+export const ContestPresentationFooter = () => {
+    const contest = useContext(ContestPresentationContext)
     const classes = useStyles();
     return (
         <Grid container className={classes.footer}>
             <Grid item xs={4}   >
                 <Typography>
-                    Подвал страницы организатора
+                    Email организатора:
                 </Typography>
                 {localStorage.getItem("email")}
             </Grid>

@@ -1,20 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useForm} from "react-hook-form";
-import {string, object, SchemaOf} from "yup";
+import {object, SchemaOf, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 
 import {FormInputField} from "./Elements/FormInputField";
 import {passwordAdornment} from "./Elements/PasswordVisibilityAdornment";
-import {
-    Button, createStyles,
-    DialogActions,
-    DialogContent,
-    DialogTitle, Grid,
-    makeStyles
-} from "@material-ui/core";
+import {Button, createStyles, DialogActions, DialogContent, DialogTitle, Grid, makeStyles} from "@material-ui/core";
 import {login} from "../API/mainServices";
 import {navigate} from "@reach/router";
+import {UserContext} from "../App";
 
 
 interface FormFields {
@@ -29,7 +24,7 @@ const LogInFormSchema: SchemaOf<FormFields> = object({
 
 const useStyles = makeStyles((Theme) => createStyles({
     title: {
-        color:Theme.palette.getContrastText(Theme.palette.primary.main),
+        color: Theme.palette.getContrastText(Theme.palette.primary.main),
         backgroundColor: Theme.palette.primary.main
     },
     form: {
@@ -53,7 +48,10 @@ interface Props {
     setLogIn: any
 }
 
-export const LogInForm = ({setLogIn}:Props) => {
+export const LogInForm = ({setLogIn}: Props) => {
+
+    const userContext = useContext(UserContext)
+
     const [submitted, setSubmitted] = React.useState(false);
     const [passwordVisibility, setPasswordVisibility] = React.useState(false);
 
@@ -70,14 +68,24 @@ export const LogInForm = ({setLogIn}:Props) => {
         resolver: yupResolver(LogInFormSchema),
         shouldFocusError: true,
     });
+    //Рабочий метод
+    /* const Submit = async (data: any) => {
+         const response = await login(data);
+         window.localStorage.setItem("username", response.data.username)
+         window.localStorage.setItem("email", response.data.email)
+         setSubmitted(true);
+         navigate("/")
+         setLogIn(false)
+     };*/
     const Submit = async (data: any) => {
-        const response = await login(data);
-        localStorage.setItem("email", response.data.email)
+        console.log(data)
+        localStorage.setItem("username", data.Email)
+        localStorage.setItem("email", data.Email)
+        userContext.setUser({username:data.Email})
         setSubmitted(true);
-        navigate("/")
+        await navigate("/")
         setLogIn(false)
     };
-
     return (
         <React.Fragment>
             <DialogTitle className={classes.title}>Войти</DialogTitle>
@@ -90,8 +98,10 @@ export const LogInForm = ({setLogIn}:Props) => {
                                 placeholder="Введите адрес электронной почты или номер телефона"
                                 fieldName="Email"
                                 formSet={formSet}
-                                extra={{className: classes.input, fullWidth: true,
-                                    inputProps:{autoComplete:"username"}}}
+                                extra={{
+                                    className: classes.input, fullWidth: true,
+                                    inputProps: {autoComplete: "username"}
+                                }}
                             />
                         </Grid>
                         <Grid container item xs={12}>
@@ -108,7 +118,7 @@ export const LogInForm = ({setLogIn}:Props) => {
                                         endAdornment: passwordAdornment(passwordVisibility, passwordVisibilityChange)
                                     },
                                     fullWidth: true,
-                                    inputProps:{autoComplete:"current-password"},
+                                    inputProps: {autoComplete: "current-password"},
                                 }
                                 }
                             />

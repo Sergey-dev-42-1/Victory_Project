@@ -1,4 +1,4 @@
-﻿import {RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import React, {useState} from "react";
 import {createStyles, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
 import {DataGrid, GridColDef, GridRowsProp, GridSortCellParams} from "@material-ui/data-grid";

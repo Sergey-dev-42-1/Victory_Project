@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VictoryProject.Entity;
-
-
 
 namespace VictoryProject
 {
@@ -28,14 +26,14 @@ namespace VictoryProject
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/api/Login");
+                    options.LoginPath = new PathString("/api/Login");
                 });
             services.AddAuthorization();
             services.AddDbContext<VictoryContext>(options =>
                 options.UseOracle(Configuration.GetConnectionString("DevConnection")));
             services.AddControllers();
             services.AddAntiforgery(options => options.Cookie.Name = "X-CSRF-TOKEN");
-           // services.AddDbContext<VictoryContext>(options => options.UseOracle(Configuration.GetConnectionString("DevConnection")));
+            // services.AddDbContext<VictoryContext>(options => options.UseOracle(Configuration.GetConnectionString("DevConnection")));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
@@ -57,7 +55,7 @@ namespace VictoryProject
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-                //app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
@@ -67,10 +65,7 @@ namespace VictoryProject
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
         }
     }

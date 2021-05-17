@@ -1,6 +1,6 @@
 import React from "react";
 import {UseFormReturn} from "react-hook-form";
-import {Button, Paper, makeStyles, Theme, createStyles} from "@material-ui/core";
+import {Button, Paper, makeStyles, createStyles} from "@material-ui/core";
 
 interface Props {
     children: JSX.Element[] | JSX.Element;

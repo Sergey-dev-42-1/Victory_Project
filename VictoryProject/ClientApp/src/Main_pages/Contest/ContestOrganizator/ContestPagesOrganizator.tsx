@@ -1,11 +1,11 @@
-﻿import {Router} from "@reach/router";
-import {NewsRubric} from "./Content/NewsRubric";
-import {ParticipantsRubric} from "./Content/ParticipantsRubric";
-import {ExpertsRubric} from "./Content/ExpertsRubric";
-import {CustomizationRubric} from "./Content/CustomizationRubric";
+import {Router} from "@reach/router";
+import {NewsRubric} from "./Elements/NewsRubric";
+import {ParticipantsRubric} from "./Elements/ParticipantsRubric";
+import {ExpertsRubric} from "./Elements/ExpertsRubric";
+import {CustomizationRubric} from "./Elements/CustomizationRubric";
 import {createStyles, Grid, makeStyles} from "@material-ui/core";
 import React from "react";
-import {WorksRubric} from "./Content/WorksRubric";
+import {WorksRubric} from "../Elements/Content/WorksRubric";
 
 const useStyles = makeStyles(() => (createStyles({
     content: {

@@ -8,13 +8,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using VictoryProject.Entity;
 
 namespace VictoryProject.Controllers
 {
-    
-    
     [Route("api/")]
     [ApiController]
     public class ContestController : ControllerBase
@@ -25,7 +22,6 @@ namespace VictoryProject.Controllers
         public ContestController(VictoryContext dbContext)
         {
             _dbContext = dbContext;
-
         }
 
         //Пример рабочего обработчика, я не совсем понимаю как это должно работать, но насколько я понял,
@@ -36,42 +32,37 @@ namespace VictoryProject.Controllers
         [Route("[action]")]
         public async Task<IActionResult> Login([FromBody] JsonElement body)
         {
-            string Email = body.GetProperty("Email").ToString();
-            string Password = body.GetProperty("Password").ToString();
+            var Email = body.GetProperty("Email").ToString();
+            var Password = body.GetProperty("Password").ToString();
             Console.WriteLine(body.GetProperty("Password"));
             if (ModelState.IsValid)
             {
-                Console.WriteLine(Email+" : "+ Password);
-                User user = await _dbContext.Set<User>()
+                Console.WriteLine(Email + " : " + Password);
+                var user = await _dbContext.Set<User>()
                     .FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
                 if (user != null)
                 {
-                    
                     await Authenticate(Email);
 
                     return Ok(user);
                 }
 
                 return BadRequest("Неверный логин или пароль");
-
             }
 
             return Ok();
         }
 
-        
+
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> Register(User user)
         {
             Console.WriteLine("Register request accepted");
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Необходимые поля не заполнены");
-            }
+            if (!ModelState.IsValid) return BadRequest("Необходимые поля не заполнены");
 
             var checkUser = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == user.Email);
-            
+
             if (checkUser != null)
             {
                 ModelState.AddModelError("", "Пользователь с таким электронным адресом уже зарегестрирован");
@@ -94,16 +85,17 @@ namespace VictoryProject.Controllers
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, email)
                 };
-                ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(id));
             }
             catch (Exception e)
             {
-              Console.WriteLine("Auth error");
+                Console.WriteLine("Auth error");
             }
         }
+
         [Route("[action]")]
         public async Task<IActionResult> Logout()
         {
@@ -118,6 +110,7 @@ namespace VictoryProject.Controllers
                 return BadRequest("Что-то разломалось на logout");
             }
         }
+
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -132,16 +125,14 @@ namespace VictoryProject.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest("Что-то разломалось на создании конкурса");
-
             }
         }
+
         [HttpGet]
         [Route("test")]
         public async Task<IActionResult> test()
         {
-
             try
             {
                 return Ok("All is well");
@@ -151,7 +142,6 @@ namespace VictoryProject.Controllers
                 Console.WriteLine("Проблемка");
 
                 return BadRequest("Что-то разломалось на получении конкурсов");
-
             }
         }
     }

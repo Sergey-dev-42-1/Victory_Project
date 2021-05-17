@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
 namespace VictoryProject.Entity
 {
-    public partial class User
+    public class User
     {
         public User()
         {

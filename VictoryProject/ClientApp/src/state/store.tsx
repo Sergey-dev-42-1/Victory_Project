@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import sidebarReducer from "./sidebarSlice";
 import headerReducer from "./headerSlice";
 import themeReducer from "./themeSlice";
 import contestReducer from "./contestSlice";
+
 const Store = configureStore({
   reducer: {
     sidebar: sidebarReducer,

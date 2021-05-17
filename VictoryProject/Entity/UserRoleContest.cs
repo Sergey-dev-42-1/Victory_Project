@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace VictoryProject.Entity
 {
-    public partial class UserRoleContest
+    public class UserRoleContest
     {
         public long Id { get; set; }
         public int ContestId { get; set; }

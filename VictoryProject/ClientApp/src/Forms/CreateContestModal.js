@@ -1,23 +1,22 @@
 import React from "react";
 
 import {useForm} from "react-hook-form";
-import {string, object, date} from "yup";
+import * as yup from "yup";
+import {date, object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {createContest} from "../API/mainServices";
-
-import * as yup from "yup";
 
 import {FormInputField} from "./Elements/FormInputField";
 
 import {
     Button,
+    createStyles,
     DialogActions,
     DialogContent,
     DialogTitle,
+    Divider,
     Grid,
-    makeStyles,
-    createStyles,
-  Divider
+    makeStyles
 } from "@material-ui/core";
 
 

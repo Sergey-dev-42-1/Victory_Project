@@ -1,8 +1,12 @@
-﻿import {RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import React, {useState} from "react";
-import {createStyles, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
+
+import {ExpertInviteForm} from "../../../../Forms/ContestForms/ExpertInviteForm";
+
+import {Button, createStyles, Dialog, Grid, makeStyles, Tab, Tabs, Toolbar} from "@material-ui/core";
 import {DataGrid, GridColDef, GridRowsProp} from "@material-ui/data-grid";
-import {Button} from "@material-ui/core/";
+import {ConfirmationDialog} from "../../Elements/ConfirmationDialog";
+
 
 const useStyles = makeStyles((Theme) => createStyles({
     root: {
@@ -28,47 +32,65 @@ const columns: GridColDef[] = [
 ];
 
 const rows = [
-    {id: 1, lastName: 'Иванов', firstName: 'Иван',  accepted: "no"},
-    {id: 2, lastName: 'Петров', firstName: 'Петр', accepted: "no"},
-    {id: 3, lastName: 'Васильев', firstName: 'Василий',  accepted: "no"},
-    {id: 4, lastName: 'Кириллов', firstName: 'Кирилл',  accepted: "yes"},
+    {id: 1, lastName: 'Иванов', firstName: 'Иван',  acting: "no"},
+    {id: 2, lastName: 'Петров', firstName: 'Петр', acting: "no"},
+    {id: 3, lastName: 'Васильев', firstName: 'Василий',  acting: "no"},
+    {id: 4, lastName: 'Кириллов', firstName: 'Кирилл',  acting: "yes"},
 ];
-//0 - непринятые, 1 - принятые 2 - отклоненные
+
 const filteringApplications = (rows: GridRowsProp, filter: number) => {
     return rows.filter((value) => {
             if (filter === 0) {
-                return value.accepted === "no"
+                return value.acting === "no"
             } else if(filter === 1) {
-                return value.accepted === "yes"
+                return value.acting === "yes"
             }
+            return false
         }
     )
 }
 
-const handleInviteExpert = () => {
-    console.log('invite expert')
-}
+
 
 export const ExpertsRubric = (props: RouteComponentProps) => {
+    
     const [tab, setTab] = useState(0);
     const [applications, setApplications] = useState(filteringApplications(rows, 0));
+
+    const [formOpen, setFormOpen] = useState(false);
+    const [confDialogOpen, setConfDialogOpen] = useState(false);
+    
+    const toggleInviteExpert = () => {
+        formOpen ? setFormOpen(false) : setFormOpen(true)
+    }
+    const onInviteSubmit = () =>{
+        setConfDialogOpen(true)
+    }
+    
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTab(newValue);
         setApplications(
             filteringApplications(rows, newValue)
         )
     };
+    
     const classes = useStyles();
     return (
         <React.Fragment>
+            
+            <ConfirmationDialog content={"Приглашение успешно отправлено, после принятия приглашения," +
+            " эксперт появится во вкладке \"Эксперты\" "} open={confDialogOpen} setOpen={setConfDialogOpen}/>
+            <Dialog onClose={toggleInviteExpert} aria-labelledby="simple-dialog-title" open={formOpen}>
+                 <ExpertInviteForm setFormOpen={setFormOpen} onSubmit={onInviteSubmit}/>
+            </Dialog>
             <Grid className={classes.root}>
-
+                
                 <Toolbar className={classes.toolbar}>
                     <Tabs value={tab} className={classes.tabs} onChange={handleChangeTab}>
                         <Tab label="Действующие эксперты"/>
                         <Tab label="Отправленные приглашения"/>
                     </Tabs>
-                    <Button variant={"contained"} onClick={handleInviteExpert} color={"primary"}>Пригласить эксперта</Button>
+                    <Button variant={"contained"} onClick={toggleInviteExpert} color={"primary"}>Пригласить эксперта</Button>
                 </Toolbar>
                 <DataGrid className={classes.root} rows={applications} columns={columns} autoPageSize/>
 

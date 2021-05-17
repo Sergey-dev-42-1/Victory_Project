@@ -52,17 +52,17 @@ export const Register = (props: RouteComponentProps) => {
                                 </Typography>
                                 <Grid container justify={"space-around"}>
                                     <Grid container>
-                                        <Grid className={classes.features} lg={4}>
+                                        <Grid item className={classes.features} lg={4}>
                                             <FeatureCard title={"Организовывать"}
                                                          content={"Организовывайте любые конкурсы, приглашайте участников и экспертов"}
                                                          cardImg={require("../../static/img/cards/organizeFeature.jpg")}/>
                                         </Grid>
-                                        <Grid className={classes.features} lg={4}>
+                                        <Grid item className={classes.features} lg={4}>
                                             <FeatureCard title={"Оценивать"}
                                                          content={"Участвуйте в процессе оценки работ, используя интуитивно понятный интерфейс"}
                                                          cardImg={require("../../static/img/cards/assessFeature.jpg")}/>
                                         </Grid>
-                                        <Grid className={classes.features} lg={4}>
+                                        <Grid item className={classes.features} lg={4}>
                                             <FeatureCard title={"Участвовать"}
                                                          content={"Подавайте заявки на любые интересные вам конкурсы"}
                                                          cardImg={require("../../static/img/cards/participateFeature.jpg")}/>

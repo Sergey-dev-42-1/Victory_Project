@@ -25,6 +25,10 @@
       font-weight: bold;
       font-size: 3vh;
     }
+    .contestName:hover{
+      cursor: pointer;
+      color: darken($primary-color, 20);
+    }
 
     .timePeriod {
       font-style: italic;

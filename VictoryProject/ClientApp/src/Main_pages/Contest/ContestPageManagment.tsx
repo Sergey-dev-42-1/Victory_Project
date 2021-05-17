@@ -1,11 +1,11 @@
 import React from "react";
 
-import {Contest} from "../../Additional/Types";
+import {Contest, UserRoles} from "../../Additional/Types";
 
 import {useHeader as hideHeader} from "../../hooks/useHeader";
 import {useSidebar} from "../../hooks/useSidebar";
 
-import {Redirect, RouteComponentProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import {createStyles, Fab, Grid, makeStyles, ThemeProvider, Tooltip} from "@material-ui/core";
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -13,13 +13,13 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import {hide, selectHeaderHide} from "../../state/headerSlice";
 import {selectSidebarOpen} from "../../state/sidebarSlice";
-import {selectContest} from "../../state/contestSlice"
-import {RootState} from "../../state/store"
+import {selectContests} from "../../state/contestSlice"
+
 import {useDispatch, useSelector} from "react-redux";
 
 import {ContestHeader} from "./Elements/ContestHeader"
-import {ContestRubricsOrganizator} from "./Elements/ContestRubricsOrganizator";
-import {ContestPagesOrganizator} from "./Elements/ContestPagesOrganizator";
+import {ContestRubricsOrganizator} from "./ContestOrganizator/ContestRubricsOrganizator";
+import {ContestPagesOrganizator} from "./ContestOrganizator/ContestPagesOrganizator";
 import {ContestRubricsExpert} from "./ContestExpert/ContestRubricsExpert"
 import {ContestPagesExpert} from "./ContestExpert/ContestPagesExpert"
 import {ContestRubricsParticipant} from "./ContestParticipant/ContestRubricsParticipant"
@@ -36,8 +36,6 @@ import {darkTheme} from "../../MaterialUI/Themes";
 import {selectDarkTheme} from "../../state/themeSlice";
 
 import {ruRU} from "@material-ui/data-grid";
-
-import {UserRoles} from "../../Additional/Types"
 import {HttpError} from "../../Extra_pages/HTTPErrorPage";
 
 interface Props
@@ -86,7 +84,8 @@ export const ContestPageManagement = (props: Props) => {
     const dispatch = useDispatch()
     const classes = useStyles()
 
-    const contest = useSelector((state: RootState) => selectContest(state, props.id!))
+    const contests: Contest[] = useSelector(selectContests) as Contest[]
+    const contest = contests.find((item)=>{return item.id === props.id})
     const themeType = useSelector(selectDarkTheme)
     const sidebar = useSelector(selectSidebarOpen)
     const headerHidden = useSelector(selectHeaderHide)

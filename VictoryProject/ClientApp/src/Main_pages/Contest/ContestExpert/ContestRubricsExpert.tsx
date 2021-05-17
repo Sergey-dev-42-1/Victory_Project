@@ -1,7 +1,8 @@
-﻿import {Grid, List, ListItem, ListItemText, makeStyles, Drawer,} from "@material-ui/core";
+import {Drawer, Grid, List, ListItem, ListItemText, makeStyles,} from "@material-ui/core";
 import React, {useContext, useState} from "react";
 import {useNavigate} from "@reach/router";
 import {ContestContext} from "../Context/contestContext"
+
 const useStyles = makeStyles((theme) => ({
     drawer:{
         height:"100%",
