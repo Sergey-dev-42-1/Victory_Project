@@ -28,7 +28,7 @@ const tempContestData = (id: string) => {
         role: Math.floor(Math.random() * 3),
         dateBeginning: Date.now(),
         dateEnding: Date.now() + 86400 * 1000,
-        applyDateBeginning: Date.now() + 86400 * 1000 * 20,
+       applyDateBeginning: Date.now() + 86400 * 1000 * 20,
         applyDateEnding: Date.now() + 86400 * 1000 * 31,
     }
 };

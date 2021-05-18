@@ -6,14 +6,18 @@ import {CustomizationRubric} from "./Elements/CustomizationRubric";
 import {createStyles, Grid, makeStyles} from "@material-ui/core";
 import React from "react";
 import {WorksRubric} from "../Elements/Content/WorksRubric";
+import {Theme} from "@material-ui/core/";
 
 const useStyles = makeStyles(() => (createStyles({
     content: {
         height: "90%",
     },
 })))
-
-export const ContestPagesOrganizator = () => {
+interface Props {
+    setTheme: React.Dispatch<React.SetStateAction<Theme>>
+}
+ 
+export const ContestPagesOrganizator = (props:Props) => {
     const classes = useStyles();
     return (
         <Grid item xs={12} md={10} className={classes.content}>
@@ -22,7 +26,7 @@ export const ContestPagesOrganizator = () => {
                 <NewsRubric path={`/news`}/>
                 <ParticipantsRubric path={"/participants"}/>
                 <ExpertsRubric path={"/experts"}/>
-                <CustomizationRubric path={"/customization"}/>
+                <CustomizationRubric {...props} path={"/customization"}/>
             </Router>
         </Grid>
     )

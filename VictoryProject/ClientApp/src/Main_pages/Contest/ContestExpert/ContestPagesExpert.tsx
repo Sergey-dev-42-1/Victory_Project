@@ -14,7 +14,7 @@ export const ContestPagesExpert = () => {
     return (
         <Grid item xs={12} md={10} className={classes.content}>
             <Router id="routerWrapper">
-                <WorksRubric path={`/works`}/>
+                <WorksRubric hideAuthor={true} path={`/works`}/>
             </Router>
         </Grid>
     )

@@ -63,9 +63,17 @@ const TempApplication: Application = {fileUrl:"C:/Users/xo3ab/Desktop/RyzhikhSer
     fields:fields
 }
 
+interface Props extends RouteComponentProps{
+    hideAuthor?: boolean
+}
 
-export const WorksRubric = (props: RouteComponentProps) => {
+export const WorksRubric = (props: Props) => {
     const [tab, setTab] = useState(0);
+
+    if(props.hideAuthor){
+        columns.splice(1,1)
+    }
+    
     const [applications, setApplications] = useState(filteringApplications(rows, 0));
     const [formOpen, setFormOpen] = useState(false);
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -93,9 +101,9 @@ export const WorksRubric = (props: RouteComponentProps) => {
         valueGetter: getShow,
         renderCell: ((params) => (
             <React.Fragment>
-            {
-                params.value && <Button variant={"contained"} onClick={handleCheckClick}>Проверить</Button>
-            }
+                {
+                    params.value && <Button variant={"contained"} onClick={handleCheckClick}>Проверить</Button>
+                }
             </React.Fragment>
         ))
     })

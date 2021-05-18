@@ -18,15 +18,15 @@ import {ruRU} from "@material-ui/data-grid";
 
 import {selectDarkTheme} from "../../../state/themeSlice";
 import {Tab, Tabs} from "@material-ui/core/";
+import {MainRubric} from "./PresentationRubrics/MainRubric";
 import {NewsRubric} from "./PresentationRubrics/NewsRubric";
 import {TermsRubric} from "./PresentationRubrics/TermsRubric";
-import {ContactsRubric} from "./PresentationRubrics/ContactsRubric";
 import {ResultsRubric} from "./PresentationRubrics/ResultsRubric";
 import useScrollReset from "../../../hooks/useScrollReset";
 
 const useStyles = makeStyles((Theme) => (createStyles({
     contestPage: {
-        
+
         display: "flex",
         flexFlow: "column",
         flexGrow: 1,
@@ -43,15 +43,9 @@ const useStyles = makeStyles((Theme) => (createStyles({
         flexGrow: 1,
         alignContent: "space-between"
     },
-    tabsContainer:{
-        //elevaion [3]
-        boxShadow: "rgb(0 0 0 / 20%) 0px 3px 3px -2px, rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 12%) 0px 1px 8px 0px",
-        backgroundColor: "white",
-        flexGrow: 1,
-        top: "64px",
-        position: "sticky",
-    },
+
     Fab: {
+        zIndex: 1100,
         position: "fixed",
         alignSelf: "flex-end",
         margin: "10px 0"
@@ -75,6 +69,8 @@ const newTheme = createMuiTheme({
 
 let tempContest = tempContestData
 
+
+
 export const ContestPresentationContext = React.createContext({...tempContestData});
 export const PresentationPage = (props: RouteComponentProps) => {
 
@@ -82,36 +78,20 @@ export const PresentationPage = (props: RouteComponentProps) => {
     useHeader()
     //По умолчанию, при переходе по ссылкам, Router пролистывает страницу до отображенного элемента, хук это выключает
     useScrollReset(props)
-    
+
     const classes = useStyles()
     const headerHidden = useAppSelector(selectHeaderHide)
     const sidebar = useAppSelector(selectSidebarOpen)
     const themeType = useAppSelector(selectDarkTheme)
     const dispatch = useAppDispatch()
 
-    const [naviTab, setNaviTab] = useState(0)
+
 
     function handleToggleHeader() {
         headerHidden ? dispatch(hide(false)) : dispatch(hide(true))
     }
 
-    function handleTabChange(event: React.ChangeEvent<{}>, tab: number) {
-        setNaviTab(tab)
-        switch(tab){
-            case 0:
-                navigate("./news")
-                break
-            case 1:
-                navigate("./terms")
-                break
-            case 2:
-                navigate("./contacts")
-                break
-            case 3:
-                navigate("./results")
-                break
-        }
-    }
+    
 
     return (
         //Для кастомизации, нужно доставать из темы свойства и делать отдельный ThemeProvider
@@ -136,19 +116,12 @@ export const PresentationPage = (props: RouteComponentProps) => {
                             </Tooltip>
 
                             <Grid color={"primary"} className={classes.pageBody}>
-                                <ContestPresentationHeader/>
+                                <ContestPresentationHeader {...props}/>
                                 <Grid color={"primary"} container className={classes.contentArea}>
-                                        <Tabs centered value={naviTab} onChange={handleTabChange} className={classes.tabsContainer}>
-                                            <Tab label="Новости"/>
-                                            <Tab label="Положения"/>
-                                            <Tab label="Контакты"/>
-                                            <Tab label="Результаты"/>
-                                            
-                                        </Tabs>
                                         <Router id="routerWrapper">
+                                            <MainRubric path={'/main'} />
                                             <NewsRubric path={'/news'} />
                                             <TermsRubric path={'/terms'} />
-                                            <ContactsRubric path={'/contacts'} />
                                             <ResultsRubric path={'/results'} />
                                         </Router>
                                     <ContestPresentationFooter/>

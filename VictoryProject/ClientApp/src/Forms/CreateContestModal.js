@@ -37,7 +37,7 @@ const useStyles = makeStyles((Theme) => createStyles({
 }))
 const CreateContestSchema = object({
     name: string()
-        .max(50, "Слишком длинное название конкурса")
+        .max(40, "Слишком длинное название конкурса")
         .required("Поле необходимо заполнить")
         .defined(),
     notes: string().max(200, "Достигнут предел длины примечаний").defined(),

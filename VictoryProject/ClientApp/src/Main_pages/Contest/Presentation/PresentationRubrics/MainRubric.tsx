@@ -9,9 +9,10 @@ import {react} from "@babel/types";
 
 const useStyles = makeStyles((Theme) => createStyles({
     container: {
+        width: "100%",
         padding:0,
         paddingLeft:0,
-        paddingRight:0,
+        paddingRight:0, 
         display: "flex",
         flexGrow: 1
     },
@@ -56,7 +57,7 @@ const useStyles = makeStyles((Theme) => createStyles({
 //         }
 //     })(ContentState)
 // }
-export const TermsRubric = (props: RouteComponentProps) => {
+export const MainRubric = (props: RouteComponentProps) => {
     const contest = useContext(ContestPresentationContext)
     const classes = useStyles();
     const getContents = window.localStorage.getItem("savedJSONContent") ? window.localStorage.getItem("savedJSONContent") : "";

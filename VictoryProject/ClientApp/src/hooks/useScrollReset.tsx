@@ -4,12 +4,12 @@ import {RouteComponentProps} from "@reach/router";
 
 function ScrollToTop(props : RouteComponentProps) {
     useEffect(() => {
-        
-        window.scrollTo({top:0,left:0,behavior:"smooth"})
+
+        window.scrollTo(0,0)
         return () => {
-            window.scrollTo({top:0,left:0,behavior:"smooth"})
+            window.scrollTo(0,0)
         }
-    }, [props.location]);
+    }, [props.location?.pathname]);
 }
 
 export default ScrollToTop

@@ -41,7 +41,7 @@ export const Sidebar = ({type}: Props) => {
         <React.Fragment>
             <Modal
                 onClick={()=>{dispatch(toggle(!opened))}}
-                style={{zIndex:1000}}
+                style={{zIndex:1100}}
                 open={opened}
             >{<React.Fragment/>}
             </Modal>

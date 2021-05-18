@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import {Contest, UserRoles} from "../../Additional/Types";
 
@@ -70,7 +70,7 @@ const useStyles = makeStyles(() => (createStyles({
         flexGrow: 1,
     },
     Fab: {
-
+        zIndex: 1100,
         position: "fixed",
         alignSelf: "flex-end",
         margin: "10px 0"
@@ -80,16 +80,22 @@ const useStyles = makeStyles(() => (createStyles({
 export const ContestPageManagement = (props: Props) => {
     useSidebar()
     hideHeader()
-
+    const themeType = useSelector(selectDarkTheme)
+    
+    const [theme, setTheme] = useState(themeType ? darkTheme : newTheme);
+    
     const dispatch = useDispatch()
     const classes = useStyles()
 
+
+    
     const contests: Contest[] = useSelector(selectContests) as Contest[]
     const contest = contests.find((item)=>{return item.id === props.id})
-    const themeType = useSelector(selectDarkTheme)
+   
     const sidebar = useSelector(selectSidebarOpen)
     const headerHidden = useSelector(selectHeaderHide)
 
+    React.useEffect(()=>{setTheme(themeType ? darkTheme : newTheme)},[themeType])
 
     const handleToggleHeader = () => {
         dispatch(hide(!headerHidden));
@@ -101,7 +107,7 @@ export const ContestPageManagement = (props: Props) => {
         <React.Fragment>
             {contest && <React.Fragment>
                 <Sidebar type={sidebarTypes.Org}/>
-                <ThemeProvider theme={themeType ? darkTheme : newTheme}>
+                <ThemeProvider theme={theme}>
 
                     <ContestContext.Provider value={contest!}>
 
@@ -124,7 +130,7 @@ export const ContestPageManagement = (props: Props) => {
                                     {contest!.role === UserRoles.organistor &&
                                     <React.Fragment>
                                         <ContestRubricsOrganizator/>
-                                        <ContestPagesOrganizator/>
+                                        <ContestPagesOrganizator setTheme={setTheme}/>
                                     </React.Fragment>
                                     }
                                     {contest!.role === UserRoles.expert &&

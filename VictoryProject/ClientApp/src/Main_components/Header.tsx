@@ -21,7 +21,6 @@ import {UserContext} from "../App";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        position: "sticky",
         flexGrow: 1,
     },
     menuButton: {
@@ -65,7 +64,7 @@ export const Header = () => {
     }
 
     return (
-        <Collapse style={{zIndex: 1101}} in={!hideHeader}>
+        <Collapse style={{zIndex: 1101,position:"sticky", top:0}} in={!hideHeader}>
 
             <Dialog onClose={handleCloseLogin} aria-labelledby="simple-dialog-title" open={logIn}>
                 <LogInForm setLogIn={setLogIn}/>
@@ -88,17 +87,19 @@ export const Header = () => {
                             Victory
                         </Link>
                     </Typography>
+                    
+                    <IconButton onClick={() => {
+                        dispatch(dark())
+                    }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        {darkTheme ?
+                            <Brightness7Icon/> :
+                            <Brightness2OutlinedIcon/>
+
+                        }
+                    </IconButton>
                     {(userContext.user.username === "") &&
                     <React.Fragment>
-                        <IconButton onClick={() => {
-                            dispatch(dark())
-                        }} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            {darkTheme ?
-                                <Brightness7Icon/> :
-                                <Brightness2OutlinedIcon/>
-
-                            }
-                        </IconButton>
+                       
                         <Button color="inherit" onClick={() => {
                             setLogIn(true)
                         }}>Войти</Button>

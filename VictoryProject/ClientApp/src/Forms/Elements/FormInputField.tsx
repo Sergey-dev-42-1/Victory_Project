@@ -2,7 +2,7 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 import { Controller } from "react-hook-form";
 //Компонент добавляющий поле в форму
-// Regist - объект с параметрами от react-hook-form необходимый для регистрации поля в форме
+
 interface Props {
   label: string;
   fieldName: string;
