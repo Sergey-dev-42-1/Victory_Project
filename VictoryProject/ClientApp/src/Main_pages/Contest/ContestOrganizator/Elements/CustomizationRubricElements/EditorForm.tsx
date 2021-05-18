@@ -25,6 +25,7 @@ export const EditorForm = ({setFormOpened}:Props)=>{
 
     const classes = useStyles();
     const getContents = window.localStorage.getItem("savedJSONContent") ? window.localStorage.getItem("savedJSONContent") : "";
+    console.log(getContents!.length)
     const contents: ContentState = convertFromRaw(JSON.parse(getContents ? getContents : ""))
     const [editorState, setEditorState] = useState(EditorState.createWithContent(contents))
     const onEditorStateChange = (editorState:EditorState) =>{

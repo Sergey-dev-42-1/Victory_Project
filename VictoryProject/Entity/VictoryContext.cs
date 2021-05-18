@@ -137,13 +137,9 @@ namespace VictoryProject.Entity
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_USER_ROLE_CONTEST_USER_ID");
             });
-
-            OnModelCreatingPartial(modelBuilder);
+            
         }
 
-        private void OnModelCreatingPartial(ModelBuilder modelBuilder)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

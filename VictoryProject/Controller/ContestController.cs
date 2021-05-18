@@ -34,12 +34,12 @@ namespace VictoryProject.Controllers
         {
             var Email = body.GetProperty("Email").ToString();
             var Password = body.GetProperty("Password").ToString();
-            Console.WriteLine(body.GetProperty("Password"));
+
             if (ModelState.IsValid)
             {
                 Console.WriteLine(Email + " : " + Password);
-                var user = await _dbContext.Set<User>()
-                    .FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
+                var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
+                Console.WriteLine(user);
                 if (user != null)
                 {
                     await Authenticate(Email);

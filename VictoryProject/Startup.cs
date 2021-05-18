@@ -29,13 +29,14 @@ namespace VictoryProject
                     options.LoginPath = new PathString("/api/Login");
                 });
             services.AddAuthorization();
-            services.AddDbContext<VictoryContext>(options =>
-                options.UseOracle(Configuration.GetConnectionString("DevConnection")));
+          
             services.AddControllers();
-            services.AddAntiforgery(options => options.Cookie.Name = "X-CSRF-TOKEN");
-            // services.AddDbContext<VictoryContext>(options => options.UseOracle(Configuration.GetConnectionString("DevConnection")));
+
+           
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddDbContext<VictoryContext>(options =>
+                options.UseOracle(Configuration.GetConnectionString("DevConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
