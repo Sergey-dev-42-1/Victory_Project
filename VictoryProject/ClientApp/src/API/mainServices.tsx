@@ -27,10 +27,10 @@ export async function logout() {
 }
 
 export async function createContest(Contest: types.Contest) {
-  let response = await instance.post(`add_contest`, Contest);
+  let response = await instance.post(`addcontest`, Contest);
   return response;
-}
+} 
 export async function getAllContests() {
-  let response = await instance.get(`https:/localhost:44337/get_all_contests`);
+  let response = await instance.get(`getallcontests`);
   return response;
 }

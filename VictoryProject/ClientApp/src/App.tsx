@@ -6,21 +6,21 @@ import {Register} from "./Main_pages/RegisterPage/Register";
 import {BasePage} from "./Main_pages/OrganisatorPages/BasePage";
 import {ContestPageManagement} from "./Main_pages/Contest/ContestPageManagment";
 import {HttpError} from "./Extra_pages/HTTPErrorPage";
-import {PresentationPage} from "./Main_pages/Contest/Presentation/PresentationPage"
+import {PresentationPage} from "./Main_pages/Presentation/PresentationPage"
 
 import {ThemeProvider} from "@material-ui/core";
 
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import {Router, Redirect} from "@reach/router";
+import {Router} from "@reach/router";
 import reportWebVitals from "./reportWebVitals";
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 
 import {selectDarkTheme} from "./state/themeSlice";
 import {darkTheme, defaultTheme} from "./MaterialUI/Themes";
 import {useSelector} from "react-redux";
-import {User} from "./Additional/Types";
+import {BrowseContests} from "./Main_pages/BrowseContests/BrowseContests";
 
 export const UserContext = React.createContext({
     user: {username: ""},
@@ -54,6 +54,7 @@ export const App = () => {
                         <Register path="/signup"/>
                     </React.Fragment>
                         }
+                        <BrowseContests path="/main"/>
                     <PresentationPage path="/contest/:id/presentation/*"/>
                     <HttpError path={"*"} errorType={"404"} errorMessage={"Запрошенная страница не существует"}/>
                 </Router>

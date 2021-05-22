@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -112,15 +113,20 @@ namespace VictoryProject.Controllers
         }
 
         [Authorize]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         [Route("addcontest")]
         public async Task<IActionResult> AddContest(Contest contest)
         {
             Console.WriteLine("recievedContest");
+
+            
             try
             {
+
                 await _dbContext.Set<Contest>().AddAsync(contest);
+
+                 await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
@@ -128,7 +134,25 @@ namespace VictoryProject.Controllers
                 return BadRequest("Что-то разломалось на создании конкурса");
             }
         }
+        
+        [Authorize]
+        //[ValidateAntiForgeryToken]
+        [HttpGet]
+        [Route("getallcontests")]
+        public async Task<IActionResult> GetAllContests()
+        {
+            Console.WriteLine("sentContests");
 
+            
+            try
+            {
+                return Ok(_dbContext.Contests);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Что-то разломалось на создании конкурса");
+            }
+        }
         [HttpGet]
         [Route("test")]
         public async Task<IActionResult> test()

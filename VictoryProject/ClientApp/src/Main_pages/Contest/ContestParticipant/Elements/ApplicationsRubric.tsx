@@ -15,25 +15,26 @@ const useStyles = makeStyles((Theme) => createStyles({
         backgroundColor: Theme.palette.secondary.dark,
         color: Theme.palette.getContrastText(Theme.palette.secondary.dark),
     },
-    tabs:{
-        flexGrow:1,
+    tabs: {
+        flexGrow: 1,
     }
 }))
 
 const columns: GridColDef[] = [
     {field: 'id', headerName: 'Номер заявки', flex: 0.2},
-    {field: 'contestName', headerName: 'Название конкурса', flex: 0.2},
+
     {field: 'status', headerName: 'Статус заявки', flex: 0.2},
-    {field: '', headerName: '', flex: 0.2},
+    {
+        field: '', headerName: '', flex: 0.2, sortable: false,
+        disableClickEventBubbling: true,
+        disableColumnMenu: true,
+    },
 ];
 
 const rows = [
-    {id: 1, contestName: 'Конкурс1', status: 'Принята'},
-    {id: 2, contestName: 'Конкурс2', status: 'Рассматривается'},
-    {id: 3, contestName: 'Конкурс3', status: 'Отклонена'},
-
+    {id: 1, status: 'Принята'},
 ];
-//0 - непринятые, 1 - принятые 2 - отклоненные
+
 const filteringApplications = (rows: GridRowsProp, filter: number) => {
     return rows.filter((value) => {
             if (filter === 0) {

@@ -1,28 +1,28 @@
 import {navigate, RouteComponentProps, Router} from "@reach/router";
-import {useSidebar} from "../../../hooks/useSidebar";
-import {useHeader} from "../../../hooks/useHeader";
+import {useSidebar} from "../../hooks/useSidebar";
+import {useHeader} from "../../hooks/useHeader";
 import {createMuiTheme, createStyles, Fab, Grid, makeStyles, ThemeProvider, Tooltip} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import React, {useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../hooks/ReduxHooks";
-import {hide, selectHeaderHide} from "../../../state/headerSlice";
-import {selectSidebarOpen} from "../../../state/sidebarSlice";
-import {Sidebar, sidebarTypes} from "../../../Main_components/Sidebar";
-import {darkTheme} from "../../../MaterialUI/Themes";
-import {tempContestData} from "../Context/contestContext";
+import {useAppDispatch, useAppSelector} from "../../hooks/ReduxHooks";
+import {hide, selectHeaderHide} from "../../state/headerSlice";
+import {selectSidebarOpen} from "../../state/sidebarSlice";
+import {Sidebar, sidebarTypes} from "../../Main_components/Sidebar";
+import {darkTheme} from "../../MaterialUI/Themes";
+import {tempContestData} from "../Contest/Context/contestContext";
 import {ContestPresentationHeader} from "./Elements/PresentationHeader";
 import {ContestPresentationFooter} from "./Elements/PresentationFooter";
-import {HttpError} from "../../../Extra_pages/HTTPErrorPage";
+import {HttpError} from "../../Extra_pages/HTTPErrorPage";
 import {ruRU} from "@material-ui/data-grid";
 
-import {selectDarkTheme} from "../../../state/themeSlice";
+import {selectDarkTheme} from "../../state/themeSlice";
 import {Tab, Tabs} from "@material-ui/core/";
 import {MainRubric} from "./PresentationRubrics/MainRubric";
 import {NewsRubric} from "./PresentationRubrics/NewsRubric";
 import {TermsRubric} from "./PresentationRubrics/TermsRubric";
 import {ResultsRubric} from "./PresentationRubrics/ResultsRubric";
-import useScrollReset from "../../../hooks/useScrollReset";
+import useScrollReset from "../../hooks/useScrollReset";
 
 const useStyles = makeStyles((Theme) => (createStyles({
     contestPage: {

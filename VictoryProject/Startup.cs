@@ -31,7 +31,7 @@ namespace VictoryProject
             services.AddAuthorization();
           
             services.AddControllers();
-
+            services.AddAntiforgery(options => options.Cookie.Name = "X-CSRF-TOKEN");
            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });

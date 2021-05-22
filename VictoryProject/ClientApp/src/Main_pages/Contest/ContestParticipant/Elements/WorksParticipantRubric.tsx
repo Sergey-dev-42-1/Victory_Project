@@ -20,7 +20,6 @@ const useStyles = makeStyles((Theme) => createStyles({
 
 const columns: GridColDef[] = [
     {field: 'id', headerName: 'Номер работы', flex: 0.2},
-    {field: 'author', headerName: 'Автор', flex: 0.2},
     {
         field: 'assessed', headerName: 'Оценена?', flex: 0.2, renderCell: ((params) => (
             <React.Fragment>

@@ -1,36 +1,27 @@
 import {
     Box,
     Button,
-    createMuiTheme,
     createStyles,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     Grid,
     makeStyles,
-    Theme,
-    Typography,
-    useTheme
+    Typography
 } from "@material-ui/core";
-import {FormInputField} from "../../../../../Forms/Elements/FormInputField";
 import React, {useState} from "react";
-import {darkTheme} from "../../../../../MaterialUI/Themes";
-import {useAppSelector} from "../../../../../hooks/ReduxHooks";
-import {selectDarkTheme} from "../../../../../state/themeSlice";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {object, string} from "yup";
-import {RouteComponentProps} from "@reach/router";
-
-const colorSchema = object({
-    primary: string().required("Выберите новый цвет").defined(),
-    secondary: string().required("Выберите новый цвет").defined()
-})
-
+import {FormConstructor} from "../../../../../FormConstructor/FormConstructor";
+import {ApplicationField} from "../../../../../Additional/Types";
+import {CustomForm} from "../../../../../Forms/CustomForm";
 
 const useStyles = makeStyles((Theme) => createStyles({
     formChangeContainer: {
         padding: Theme.spacing(2),
+        margin: Theme.spacing(2),
         border: "2px solid rgba(0,0,0,0.33)",
         borderRadius: "2%",
-        margin: "0 30px"
+
     },
     formTitle: {
         padding:"0 10px",
@@ -49,26 +40,56 @@ const useStyles = makeStyles((Theme) => createStyles({
 }))
 
 export const FormsCustomization = () => {
-
-    const formSet = useForm({
-        mode: "onSubmit",
-        reValidateMode: "onChange",
-        resolver: yupResolver(colorSchema),
-        shouldFocusError: true,
-    });
+    const initialState = {ApplicationForm:false, WorksForm:false,AssessForm:false}
+    const [formsOpen, setFormsOpen] = useState(initialState)
+    const [formsViewOpen, setFormsViewOpen] = useState(initialState)
 
     const classes = useStyles();
+    const [values, setValues] = useState([] as ApplicationField[])
+    const currentState = window.localStorage.getItem("testForm")
+    const parsedCurrentState : ApplicationField[] = currentState ? JSON.parse(currentState) : values
+    function handleSaveForm() {
+        window.localStorage.setItem("testForm", JSON.stringify(values))
+        console.log(values)
+    }
+    function saveData (values:ApplicationField[]) {
+        setValues(values)
+    }
 
     return (
-        <Box p={3} style={{marginTop: "20px"}}>
+        <Box  p={3} style={{marginTop: "20px"}}>
+
+            <Dialog fullWidth maxWidth={"md"} onClose={()=>{setFormsOpen(initialState); setValues([])}} open={formsOpen.ApplicationForm || formsOpen.WorksForm || formsOpen.AssessForm}>
+                <DialogTitle>
+                    Изменить форму
+                </DialogTitle>
+                <DialogContent>
+                    <FormConstructor saveData={saveData}/>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant={"contained"} color={"secondary"} onClick={handleSaveForm}>Сохранить изменения</Button>
+                </DialogActions>
+            </Dialog>
+            
+            <Dialog fullWidth maxWidth={"sm"} onClose={()=>{setFormsViewOpen(initialState)}} open={formsViewOpen.ApplicationForm || formsViewOpen.WorksForm || formsViewOpen.AssessForm}>
+                <CustomForm Fields={parsedCurrentState} Submit={(data:any)=>{setFormsViewOpen(initialState)}}/>
+            </Dialog>
+            
             <Grid container className={classes.formsRoot}>
                 <Grid item className={classes.formChangeContainer}>
                     <div className={classes.titleContainer}>
                         <Typography className={classes.formTitle}>Заявка участника</Typography>
                     </div>
                     <Grid container spacing={3} className={classes.formButtonContainer}>
-                        <Grid item>
-                            <Button variant={"contained"} color={"secondary"}>Просмотр/Изменение</Button>
+                            <Grid item>
+                            <Button onClick={() => {
+                                setFormsOpen({...formsOpen, ApplicationForm: true})
+                            }} variant={"contained"} color={"primary"}>Просмотр/Изменение</Button>
+                            </Grid>
+                            <Grid item>
+                            <Button onClick={() => {
+                                setFormsViewOpen({...formsViewOpen, ApplicationForm: true})
+                            }} variant={"contained"} color={"secondary"}>Предпросмотр</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -78,11 +99,34 @@ export const FormsCustomization = () => {
                     </div>
                     <Grid container spacing={3} className={classes.formButtonContainer}>
                         <Grid item>
-                            <Button variant={"contained"} color={"secondary"}>Просмотр/Изменение</Button>
+                            <Button onClick={() => {
+                                setFormsOpen({...formsOpen, AssessForm: true})
+                            }} variant={"contained"} color={"primary"}>Просмотр/Изменение</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button onClick={() => {
+                                setFormsViewOpen({...formsViewOpen,AssessForm: true})
+                            }} variant={"contained"} color={"secondary"}>Предпросмотр</Button>
                         </Grid>
                     </Grid>
                 </Grid>
-
+                <Grid item className={classes.formChangeContainer}>
+                    <div className={classes.titleContainer}>
+                        <Typography className={classes.formTitle}>Подача работы</Typography>
+                    </div>
+                    <Grid container spacing={3} className={classes.formButtonContainer}>
+                        <Grid item>
+                            <Button onClick={() => {
+                                setFormsOpen({...formsOpen, WorksForm: true})
+                            }} variant={"contained"} color={"primary"}>Просмотр/Изменение</Button>
+                        </Grid>
+                        <Grid item>
+                            <Button onClick={() => {
+                                setFormsViewOpen({...formsViewOpen,WorksForm: true})
+                            }} variant={"contained"} color={"secondary"}>Предпросмотр</Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Box>
     )
