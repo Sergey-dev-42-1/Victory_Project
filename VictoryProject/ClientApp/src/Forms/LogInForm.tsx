@@ -68,24 +68,16 @@ export const LogInForm = ({setLogIn}: Props) => {
         resolver: yupResolver(LogInFormSchema),
         shouldFocusError: true,
     });
-    //Рабочий метод
-    /* const Submit = async (data: any) => {
-         const response = await login(data);
-         window.localStorage.setItem("username", response.data.username)
-         window.localStorage.setItem("email", response.data.email)
-         setSubmitted(true);
-         navigate("/")
-         setLogIn(false)
-     };*/
     const Submit = async (data: any) => {
-        console.log(data)
-        localStorage.setItem("username", data.Email)
-        localStorage.setItem("email", data.Email)
+        const response = await login(data);
+        localStorage.setItem("username", response.data.username)
+        localStorage.setItem("email", response.data.email)
         userContext.setUser({username:data.Email})
         setSubmitted(true);
         await navigate("/")
         setLogIn(false)
     };
+
     return (
         <React.Fragment>
             <DialogTitle className={classes.title}>Войти</DialogTitle>

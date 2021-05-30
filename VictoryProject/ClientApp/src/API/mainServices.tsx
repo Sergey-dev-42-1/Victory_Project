@@ -2,7 +2,7 @@ import axios from "axios";
 import * as types from "../Additional/Types";
 
 const instance = axios.create({
-  baseURL: "https://localhost:44337/api",
+  baseURL: "https://localhost:5001/api",
 });
 
 export async function register(user: types.User) {

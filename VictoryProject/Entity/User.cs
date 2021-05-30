@@ -6,16 +6,14 @@ namespace VictoryProject.Entity
 {
     public class User
     {
-        public User()
-        {
-            UserRoleContests = new HashSet<UserRoleContest>();
-        }
 
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
 
-        public virtual ICollection<UserRoleContest> UserRoleContests { get; set; }
+        public List<UserRoleContest> UserRoleContests { get; set; }
+        
+        
     }
 }

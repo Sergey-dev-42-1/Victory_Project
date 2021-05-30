@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
 
 namespace VictoryProject.Entity
 {
     public class Contest
     {
-        public Contest()
-        {
-            UserRoleContests = new HashSet<UserRoleContest>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
@@ -20,6 +14,6 @@ namespace VictoryProject.Entity
         public DateTime StartRegistrationDate { get; set; }
         public DateTime EndRegistrationDate { get; set; }
 
-        public virtual ICollection<UserRoleContest> UserRoleContests { get; set; }
+        public List<UserRoleContest> UserRoleContests { get; set; }
     }
 }

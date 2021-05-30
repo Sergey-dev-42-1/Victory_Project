@@ -1,56 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
-using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using VictoryProject.Entity;
+using VictoryProject.Enum;
+using VictoryProject.ViewModel;
 
-namespace VictoryProject.Controllers
+namespace VictoryProject.Controller
 {
     [Route("api/")]
     [ApiController]
     public class ContestController : ControllerBase
     {
         private readonly VictoryContext _dbContext;
+        private readonly HttpContext _httpContext;
 
 
-        public ContestController(VictoryContext dbContext)
+        public ContestController(VictoryContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
-        //Пример рабочего обработчика, я не совсем понимаю как это должно работать, но насколько я понял,
-        //по умолчанию JSON пропихивается как есть(Регистрация пролезла без проблем)
-        // а если он соответствует какой-то из моделей, то он автоматически десериализуется на отдельные поля, 
-        // Если разобрать запрос с помощью JsonElement, то можно вытащить из тела все что нужно
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Login([FromBody] JsonElement body)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
-            var Email = body.GetProperty("Email").ToString();
-            var Password = body.GetProperty("Password").ToString();
-            Console.WriteLine(body.GetProperty("Password"));
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine(Email + " : " + Password);
-                var user = await _dbContext.Set<User>()
-                    .FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
-                if (user != null)
-                {
-                    await Authenticate(Email);
+            if (!ModelState.IsValid)
+                return BadRequest("Model state isn't valid");
 
-                    return Ok(user);
-                }
+            var user = await _dbContext.Set<User>()
+                .FirstOrDefaultAsync(u =>
+                    u.Email == loginViewModel.Email && u.Password == loginViewModel.Password);
 
+            if (user == null)
                 return BadRequest("Неверный логин или пароль");
-            }
 
-            return Ok();
+            await Authenticate(loginViewModel.Email);
+            return Ok(user);
         }
 
 
@@ -65,8 +61,7 @@ namespace VictoryProject.Controllers
 
             if (checkUser != null)
             {
-                ModelState.AddModelError("", "Пользователь с таким электронным адресом уже зарегестрирован");
-                return BadRequest("Пользователь с таким электронным адресом уже зарегестрирован");
+                return BadRequest("Пользователь с таким электронным адресом уже зарегистрирован");
             }
 
             await _dbContext.Set<User>().AddAsync(user);
@@ -77,29 +72,19 @@ namespace VictoryProject.Controllers
 
         private async Task Authenticate(string email)
         {
-            Console.Write("Authentification");
-            try
-
+            var claims = new List<Claim>
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, email)
-                };
-                var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(id));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Auth error");
-            }
+                new Claim(ClaimsIdentity.DefaultNameClaimType, email)
+            };
+            var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(id));
         }
 
         [Route("[action]")]
         public async Task<IActionResult> Logout()
         {
-            Console.WriteLine("recievedLogout");
             try
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -112,26 +97,109 @@ namespace VictoryProject.Controllers
         }
 
         [Authorize]
-        [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("addcontest")]
         public async Task<IActionResult> AddContest(Contest contest)
         {
-            Console.WriteLine("recievedContest");
             try
             {
+                var currentUser = await GetCurrentUser();
+                var ownerRole =
+                    await _dbContext.Set<Role>()
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(role => role.Id == RoleEnum.Owner);
                 await _dbContext.Set<Contest>().AddAsync(contest);
+                await _dbContext.Set<UserRoleContest>()
+                    .AddAsync(UserRoleContest.Create(contest, currentUser, ownerRole));
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
             {
-                return BadRequest("Что-то разломалось на создании конкурса");
+                return BadRequest("Creating Contest Failed");
             }
         }
 
         [HttpGet]
+        [Route("getaffiliatedcontests")]
+        public async Task<JsonResult> GetAffiliatedContests()
+        {
+            var currentUser = await GetCurrentUser();
+            var contests = await _dbContext.Set<Contest>()
+                .Where(contest =>
+                    contest.UserRoleContests.Exists(roleContest => roleContest.User.Email == currentUser.Email))
+                .AsNoTracking()
+                .ToListAsync();
+            return new JsonResult(JsonConvert.SerializeObject(contests));
+        }
+
+        public async Task<User> GetCurrentUser()
+        {
+            return await _dbContext.Set<User>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(user => user.Email.Equals(_httpContext.User.Identity.Name));
+        }
+
+        [Route("deletecontest")]
+        public async Task<IActionResult> DeleteContest([FromQuery] int contestId)
+        {
+            try
+            {
+                var contest = await _dbContext.Set<Contest>()
+                    .FirstOrDefaultAsync(c => c.Id == contestId);
+                _dbContext.Remove(contest);
+                await _dbContext.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Remove contest Failed");
+            }
+        }
+
+        [HttpGet]
+        [Route("getalluserapplications")]
+        public async Task<JsonResult> GetUserApplications([FromQuery] int contestId)
+        {
+            var currentUser = await GetCurrentUser();
+            var applications = _dbContext.Set<Application>()
+                .AsNoTracking()
+                .Where(application => application.ContestId == contestId && application.UserId == currentUser.Id)
+                .ToListAsync();
+            return new JsonResult(JsonConvert.SerializeObject(applications));
+        }
+
+        [HttpGet]
+        [Route("getallapplications")]
+        public async Task<IActionResult> GetContestApplications([FromQuery] int contestId)
+        {
+            var currentUser = await GetCurrentUser();
+            if (await _dbContext.Set<UserRoleContest>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(urc =>
+                    urc.ContestId == contestId && urc.RoleId == RoleEnum.Owner && urc.UserId == currentUser.Id) == null)
+            {
+                return BadRequest("Current user is not owner of this contest");
+            }
+
+            var applications = await _dbContext.Set<Application>()
+                .AsNoTracking()
+                .Where(app => app.ContestId == contestId)
+                .ToListAsync();
+            return new JsonResult(JsonConvert.SerializeObject(applications));
+        }
+
+        public async Task<IActionResult> GetContest([FromQuery] int contestId)
+        {
+            var contest = await _dbContext.Set<Contest>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(con => con.Id == contestId);
+            return new JsonResult(JsonConvert.SerializeObject(contest));
+        }
+
+        [HttpGet]
         [Route("test")]
-        public async Task<IActionResult> test()
+        public async Task<IActionResult> Test()
         {
             try
             {
