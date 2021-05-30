@@ -31,7 +31,7 @@
     }
 
     .managementContainer {
-      width: 70%;
+      min-width: 70%;
       min-height: 100%;
       border: 1px solid rgba($color: #000000, $alpha: 0.1);
 
@@ -61,7 +61,7 @@
 
     .contestControls {
       position:sticky;
-      top:20px;
+      top:80px;
       
       width: 20%;
 

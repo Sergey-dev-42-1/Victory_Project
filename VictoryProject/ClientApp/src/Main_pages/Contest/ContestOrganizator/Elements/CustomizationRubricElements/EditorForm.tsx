@@ -1,10 +1,9 @@
-import {useContext, useState} from "react";
-import {ContestPresentationContext} from "../../../Presentation/PresentationPage";
-import {ContentState, convertFromRaw, EditorState} from "draft-js";
+import React, {useState} from "react";
+import {ContentState, convertFromRaw, convertToRaw, EditorState} from "draft-js";
 import {makeStyles} from "@material-ui/core/";
-import {Button, createStyles, Grid} from "@material-ui/core";
+import {Button, createStyles} from "@material-ui/core";
 import {Editor} from "react-draft-wysiwyg";
-import React from "react";
+
 const  useStyles = makeStyles((Theme)=>
     createStyles({
         editorToolbar:{
@@ -25,16 +24,24 @@ export const EditorForm = ({setFormOpened}:Props)=>{
 
     const classes = useStyles();
     const getContents = window.localStorage.getItem("savedJSONContent") ? window.localStorage.getItem("savedJSONContent") : "";
-    const contents: ContentState = convertFromRaw(JSON.parse(getContents ? getContents : ""))
-    const [editorState, setEditorState] = useState(EditorState.createWithContent(contents))
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    
+    React.useEffect(()=>{
+        if(getContents!.length > 0){
+            const contents : ContentState = convertFromRaw(JSON.parse(getContents ? getContents : ""))
+            setEditorState((EditorState.createWithContent(contents)))
+        }
+    }, [])
+    
+        
+  
+    function handleContentSave() {
+        window.localStorage.setItem("savedJSONContent", JSON.stringify(convertToRaw((editorState.getCurrentContent()))))
+        setFormOpened({MainForm:false,TermsForm:false})
+    }
     const onEditorStateChange = (editorState:EditorState) =>{
         setEditorState(editorState)
     }
-
-    function handleContentSave() {
-        setFormOpened({MainForm:false,TermsForm:false})
-    }
-
     return(
         <React.Fragment>
             <Editor

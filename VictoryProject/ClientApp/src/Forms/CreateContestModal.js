@@ -36,46 +36,46 @@ const useStyles = makeStyles((Theme) => createStyles({
     }
 }))
 const CreateContestSchema = object({
-    name: string()
+    Name: string()
         .max(40, "Слишком длинное название конкурса")
         .required("Поле необходимо заполнить")
         .defined(),
-    notes: string().max(200, "Достигнут предел длины примечаний").defined(),
-    dateBeginning: date()
+    Comment: string().max(200, "Достигнут предел длины примечаний").defined(),
+    StartDate: date()
         .min(new Date(Date.now()), "Нельзя создать конкурс в прошлом :)")
         .nullable()
         .typeError("Заполните поле")
         .required("Укажите дату начала конкурса")
         .defined(),
-    dateEnding: date()
+    EndDate: date()
         .min(
-            yup.ref("dateBeginning"),
+            yup.ref("StartDate"),
             "Дата окончания не может быть раньше начала"
         )
         .required("Укажите дату окончания конкурса")
         .nullable()
         .typeError("Заполните поле")
         .defined(),
-    applyDateBeginning: date()
+    StartRegistrationDate: date()
         .min(
-            yup.ref("dateBeginning"),
+            yup.ref("StartDate"),
             "Нельзя установить начало приема заявок ранее начала конкурса"
         )
         .max(
-            yup.ref("dateEnding"),
+            yup.ref("EndDate"),
             "Нельзя установить прием заявок позднее окончания конкурса"
         )
         .required("Укажите дату начала приема заявок на конкурс")
         .nullable()
         .typeError("Заполните поле")
         .defined(),
-    applyDateEnding: date()
+    EndRegistrationDate: date()
         .min(
-            yup.ref("applyDateBeginning"),
+            yup.ref("StartRegistrationDate"),
             "Нельзя установить окончание приема заявок ранее начала приема"
         )
         .max(
-            yup.ref("dateEnding"),
+            yup.ref("EndDate"),
             "Нельзя установить окончание приема заявок позднее окончания конкурса"
         )
         .required("Укажите дату начала приема заявок на конкурс")
@@ -84,6 +84,7 @@ const CreateContestSchema = object({
         .typeError("Заполните поле")
         .defined(),
 }).defined();
+
 
 export const CreateContestModal = (props) => {
     
@@ -100,20 +101,20 @@ export const CreateContestModal = (props) => {
     
     const Submit = async (data) => {
         console.log("submitted")
-        await createContest(data);
-
         setSubmitted(true);
+        await createContest(data);
+        props.close()
     };
 
     React.useEffect(() => {
         if (formSet.formState.isSubmitSuccessful) {
             formSet.reset({
-                name: "",
-                notes: "",
-                dateBeginning: "",
-                dateEnding: "",
-                applyDateBeginning: "",
-                applyDateEnding: "",
+                Name: "",
+                Comment: "",
+                StartDate: "",
+                EndDate: "",
+                StartRegistrationDate: "",
+                EndRegistrationDate: "",
             });
         }
     }, [formSet.formState, formSet, formSet.reset]);
@@ -127,13 +128,13 @@ export const CreateContestModal = (props) => {
 
                     <FormInputField
                         label="Название конкурса*"
-                        fieldName="name"
+                        fieldName="Name"
                         formSet={formSet}
 
                     />
                     <FormInputField
                         label="Описание конкурса"
-                        fieldName="notes"
+                        fieldName="Comment"
                         formSet={formSet}
 
                     />
@@ -141,7 +142,7 @@ export const CreateContestModal = (props) => {
                         <Grid container item xs={6} spacing={1}>
                             <FormInputField
                                 label="Дата начала*"
-                                fieldName="dateBeginning"
+                                fieldName="StartDate"
                                 type="datetime-local"
                                 formSet={formSet}
                                 extra={{InputLabelProps: { shrink: true } }}
@@ -150,7 +151,7 @@ export const CreateContestModal = (props) => {
                         <Grid container item  xs={6} spacing={1}>
                             <FormInputField
                                 label="Дата окончания конкурса*"
-                                fieldName="dateEnding"
+                                fieldName="EndDate"
                                 type="datetime-local"
                                 formSet={formSet}
                                 extra={{InputLabelProps: { shrink: true } }}
@@ -161,7 +162,7 @@ export const CreateContestModal = (props) => {
                         <Grid container item  xs={6} spacing={1}>
                             <FormInputField
                                 label="Дата начала приема заявок*"
-                                fieldName="applyDateBeginning"
+                                fieldName="StartRegistrationDate"
                                 type="datetime-local"
                                 formSet={formSet}
                                 extra={{InputLabelProps: { shrink: true } }}
@@ -170,7 +171,7 @@ export const CreateContestModal = (props) => {
                         <Grid container item xs={6} spacing={1}>
                             <FormInputField
                                 label="Дата окончания приема заявок*"
-                                fieldName="applyDateEnding"
+                                fieldName="EndRegistrationDate"
                                 type="datetime-local"
                                 
                                 formSet={formSet}

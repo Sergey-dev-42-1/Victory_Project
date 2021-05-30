@@ -197,6 +197,29 @@ namespace VictoryProject.Controller
             return new JsonResult(JsonConvert.SerializeObject(contest));
         }
 
+
+        [Authorize]
+        //[ValidateAntiForgeryToken]
+        [HttpGet]
+        [Route("getallcontests")]
+        public async Task<IActionResult> GetAllContests()
+        {
+            Console.WriteLine("sentContests");
+
+
+            try
+            {
+                var contests = await _dbContext.Set<Contest>()
+                    .AsNoTracking()
+                    .ToListAsync();
+                return new JsonResult(JsonConvert.SerializeObject(contests));
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Что-то разломалось на создании конкурса");
+            }
+        }
+
         [HttpGet]
         [Route("test")]
         public async Task<IActionResult> Test()

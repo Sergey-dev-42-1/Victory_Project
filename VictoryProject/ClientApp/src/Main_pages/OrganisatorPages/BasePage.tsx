@@ -18,7 +18,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {makeStyles, Tab, Tabs, Typography} from "@material-ui/core/";
 
 
-
 const tempContestData = (id: string) => {
     return {
         id: id,
@@ -28,7 +27,7 @@ const tempContestData = (id: string) => {
         role: Math.floor(Math.random() * 3),
         dateBeginning: Date.now(),
         dateEnding: Date.now() + 86400 * 1000,
-       applyDateBeginning: Date.now() + 86400 * 1000 * 20,
+        applyDateBeginning: Date.now() + 86400 * 1000 * 20,
         applyDateEnding: Date.now() + 86400 * 1000 * 31,
     }
 };
@@ -59,17 +58,18 @@ const useStyles = makeStyles((theme) => createStyles({
 const generateTempData: object[] = [tempContestData("1"), tempContestData("2"), tempContestData("3"),
     tempContestData("4"), tempContestData("5"), tempContestData("6"), tempContestData("7"), tempContestData("8")]
 
-const options = ["Архивировать конкурс", "Удалить конкурс"];
+
 
 export const BasePage = (props: RouteComponentProps) => {
 
     useSidebar()
 
 
-    
     const contestsSelector = useSelector(selectContests)
 
     const [createNew, setCreateNew] = React.useState(false);
+
+    const [deleteState, setDeleteState] = React.useState(false);
 
     const [tab, setTab] = useState(0);
 
@@ -105,7 +105,7 @@ export const BasePage = (props: RouteComponentProps) => {
             <Dialog onClose={handleCloseCreate} aria-labelledby="simple-dialog-title" open={createNew}>
                 <CreateContestModal close={handleCloseCreate}/>
             </Dialog>
-
+            
             <Paper square elevation={0} className="mainPageContainer">
                 <Sidebar type={sidebarTypes.Org}/>
 
@@ -124,29 +124,32 @@ export const BasePage = (props: RouteComponentProps) => {
                             >
                                 Создать новый конкурс
                             </div>
-                            {options.map((element, index) => {
-                                return (
-                                    <span key={index} className="option">
-                    {element}
-                  </span>
-                                );
-                            })}
+                            <div
+                                onClick={() => {
+                                    setDeleteState(!deleteState);
+                                }}
+                                className="option"
+                            >
+                                Удалить
+                            </div>
                         </div>
+                    
                         <div className="managementContainer">
                             <Tabs value={tab} onChange={handleChangeTab} className={classes.controlTabs}>
-
+    
                                 <Tab className={classes.tab} label={"Организатор"}/>
                                 <Tab className={classes.tab} label={"Участник"}/>
                                 <Tab className={classes.tab} label={"Эксперт"}/>
                             </Tabs>
                             {contests && contests.map((item) => {
-                                return <ContestCard key={item.id} contest={item} id={item.id.toString()}/>
+                                return <ContestCard deleteState={deleteState} controls key={item.id} contest={item} id={item.id.toString()}/>
                             })}
                         </div>
                     </div>
-                    <Footer/>
-                </main>
-            </Paper>
-        </React.Fragment>
-    );
+
+                <Footer/>
+            </main>
+        </Paper>
+</React.Fragment>
+);
 };

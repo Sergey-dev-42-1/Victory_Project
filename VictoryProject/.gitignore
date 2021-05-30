@@ -1,5 +1,6 @@
 ## Игнор для абсолютного большинства ненужных вне рамок конкретной среды файлов(шаблон для VS, но для Райдера тоже подойдет)
-
+appsettings.json
+appsettings.Development.json
 # Ignore only specific Rider files/directories
 # For syntax see: https://stackoverflow.com/a/14422549/12124
 /.idea/*

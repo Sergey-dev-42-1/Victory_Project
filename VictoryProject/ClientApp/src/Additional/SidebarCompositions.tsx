@@ -47,7 +47,7 @@ export const MainComposition = () => {
     const classes = useStyles();
 
     const handleLogout = async () => {
-       /* const response = await logout();
+       /* 
         
         console.log(response);
         if (response !== undefined && response.status === 200) {
@@ -62,21 +62,20 @@ export const MainComposition = () => {
                 content: "Ошибка выхода, попробуйте еще раз",
             });
         }*/
+        await logout();
         dispatch(toggle(!sidebarOpen));
         window.localStorage.removeItem("username")
         window.localStorage.removeItem("email")
         userContext.setUser({username:""})
         await navigate("/signup")
     };
-    const handleClose = () => {
-        setSnackbarTypeOpen(defaultSnackbar);
-    };
+
     return (
         <React.Fragment>
             <Button
                 onClick={() => {
                     dispatch(toggle(!sidebarOpen));
-                    navigate("/main");
+                    navigate("/");
                 }}
                 className={ classes.button + " primaryButton"}
             >
@@ -98,21 +97,6 @@ export const MainComposition = () => {
             >
                 Выйти <ExitToApp style={{fontSize: "3vh"}}/>
             </Button>
-            <Portal container={document.body}>
-                <Snackbar
-                    open={snackbarType.open}
-                    onClose={handleClose}
-                    autoHideDuration={5000}
-                >
-                    <MuiAlert
-                        elevation={6}
-                        variant="filled"
-                        severity={snackbarType.severity}
-                    >
-                        {snackbarType.content}
-                    </MuiAlert>
-                </Snackbar>
-            </Portal>
         </React.Fragment>
     );
 };

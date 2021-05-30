@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {ApplicationField} from '../../Additional/Types';
-import {schemaConstructor} from '../../Additional/yupSchemaConstructor';
-import {FormInputField} from "../Elements/FormInputField";
+import {ApplicationField} from "../Additional/Types";
+import {schemaConstructor} from '../Additional/yupSchemaConstructor';
+import {FormInputField} from "./Elements/FormInputField";
 
 import {
     Button,
@@ -12,7 +12,7 @@ import {
     DialogContent,
     DialogTitle,
     Grid,
-    Link,
+
     makeStyles
 } from "@material-ui/core";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((Theme) => createStyles({
     },
     form: {
         height: "80vh",
-        maxWidth: "800px",
+        maxWidth:"800px",
         display: "flex",
         flexFlow: "column nowrap"
     },
@@ -35,25 +35,26 @@ const useStyles = makeStyles((Theme) => createStyles({
         margin: Theme.spacing(1)
     },
     linkContainer:{
-        
+
     }
 }))
 
 interface Props {
-    setFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
     Fields: ApplicationField[]
+    Submit: (data:any)=>void
 }
 
 
 
 
 
-export const ApplicationAssessForm = ({setFormOpen, Fields}:Props) => {
+export const CustomForm = ({Submit, Fields}:Props) => {
     const [submitted, setSubmitted] = React.useState(false);
 
+    const [fields,setFields] = useState(Fields)
 
-    
     const classes = useStyles();
+    console.log(fields)
     const schema = schemaConstructor(Fields)
     console.log(schema)
     const formSet = useForm({
@@ -62,31 +63,30 @@ export const ApplicationAssessForm = ({setFormOpen, Fields}:Props) => {
         resolver: yupResolver(schema),
         shouldFocusError: true,
     });
-    const Submit = async (data: any) => {
+    const SubmitForm = (data:any) => {
         setSubmitted(true)
-        setFormOpen(false)
-    };
+        console.log(data)
+        Submit(data)
+    }
 
     return (
         <React.Fragment>
             <DialogTitle className={classes.title}>Оценить работу</DialogTitle>
             <DialogContent>
                 <form autoComplete={"off"} className={classes.form}>
-                   
                     <Grid container className={classes.fieldset}>
-                       
-                        {Fields.map((field:ApplicationField, index)=>{
+                        {fields.map((field:ApplicationField)=>{
                             return(
-                            <Grid container item xs={12}>
-                                <FormInputField
-                                    type={field.type}
-                                    label={field.name}
-                                    placeholder={field.name}
-                                    fieldName={field.name}
-                                    formSet={formSet}
-                                    extra={{className: classes.input, fullWidth: true}}
-                                />
-                            </Grid>
+                                    <FormInputField
+                                        key={field.id}
+                                        id={field.id}
+                                        type={field.type}
+                                        label={field.name}
+                                        placeholder={field.name}
+                                        fieldName={field.name}
+                                        formSet={formSet}
+                                        extra={{className: classes.input, fullWidth: true}}
+                                    />
                             )
                         })}
                     </Grid>
@@ -96,7 +96,7 @@ export const ApplicationAssessForm = ({setFormOpen, Fields}:Props) => {
                             variant="contained"
                             disabled={formSet.formState.isSubmitting || submitted}
                             formAction="submit"
-                            onClick={formSet.handleSubmit(Submit)}
+                            onClick={formSet.handleSubmit(SubmitForm)}
                         >
                             Отправить
                         </Button>
