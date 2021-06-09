@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using VictoryProject.DBContext;
 using VictoryProject.Entity;
 using VictoryProject.Enum;
 using VictoryProject.ViewModel;
@@ -106,11 +106,13 @@ namespace VictoryProject.Controller
                 var currentUser = await GetCurrentUser();
                 var ownerRole =
                     await _dbContext.Set<Role>()
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(role => role.Id == RoleEnum.Owner);
-                await _dbContext.Set<Contest>().AddAsync(contest);
+                        .FirstOrDefaultAsync(role => role.Id == (byte) RoleEnum.Owner);
+                var createdContest = Contest.Create(contest.Name, contest.Comment, contest.StartDate, contest.EndDate,
+                    contest.StartRegistrationDate, contest.EndRegistrationDate);
+                await _dbContext.Set<Contest>().AddAsync(createdContest);
+                var userRoleContest = UserRoleContest.Create(createdContest, currentUser, ownerRole);
                 await _dbContext.Set<UserRoleContest>()
-                    .AddAsync(UserRoleContest.Create(contest, currentUser, ownerRole));
+                    .AddAsync(userRoleContest);
                 await _dbContext.SaveChangesAsync();
                 return Ok();
             }
@@ -136,7 +138,6 @@ namespace VictoryProject.Controller
         public async Task<User> GetCurrentUser()
         {
             return await _dbContext.Set<User>()
-                .AsNoTracking()
                 .FirstOrDefaultAsync(user => user.Email.Equals(_httpContext.User.Identity.Name));
         }
 
@@ -177,7 +178,8 @@ namespace VictoryProject.Controller
             if (await _dbContext.Set<UserRoleContest>()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(urc =>
-                    urc.ContestId == contestId && urc.RoleId == RoleEnum.Owner && urc.UserId == currentUser.Id) == null)
+                    urc.ContestId == contestId && urc.RoleId == (byte) RoleEnum.Owner &&
+                    urc.UserId == currentUser.Id) == null)
             {
                 return BadRequest("Current user is not owner of this contest");
             }
@@ -199,7 +201,6 @@ namespace VictoryProject.Controller
 
 
         [Authorize]
-        //[ValidateAntiForgeryToken]
         [HttpGet]
         [Route("getallcontests")]
         public async Task<IActionResult> GetAllContests()

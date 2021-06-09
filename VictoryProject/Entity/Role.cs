@@ -1,13 +1,20 @@
-﻿using System.Collections.Generic;
-using VictoryProject.Enum;
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
 
 namespace VictoryProject.Entity
 {
-    public class Role
+    public partial class Role
     {
-        public RoleEnum Id { get; set; }
+        public Role()
+        {
+            UserRoleContests = new HashSet<UserRoleContest>();
+        }
+
+        public byte Id { get; set; }
         public string Name { get; set; }
 
-        public List<UserRoleContest> UserRoleContests { get; set; }
+        public virtual ICollection<UserRoleContest> UserRoleContests { get; set; }
     }
 }

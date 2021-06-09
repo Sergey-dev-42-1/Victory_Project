@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using VictoryProject.Entity;
+using VictoryProject.DBContext;
 
 namespace VictoryProject
 {
@@ -32,6 +32,7 @@ namespace VictoryProject
                 options.UseOracle(Configuration.GetConnectionString("DevConnection")));
             services.AddControllers();
             services.AddAntiforgery(options => options.Cookie.Name = "X-CSRF-TOKEN");
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }

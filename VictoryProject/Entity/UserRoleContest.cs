@@ -1,6 +1,4 @@
-﻿using VictoryProject.Enum;
-
-#nullable disable
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VictoryProject.Entity
 {
@@ -8,12 +6,16 @@ namespace VictoryProject.Entity
     {
         public long Id { get; set; }
         public int ContestId { get; set; }
-        public RoleEnum RoleId { get; set; }
+        public byte RoleId { get; set; }
         public int UserId { get; set; }
 
         public Contest Contest { get; set; }
         public Role Role { get; set; }
         public User User { get; set; }
+
+        public UserRoleContest()
+        {
+        }
 
         private UserRoleContest(Contest contest, User user, Role role)
         {

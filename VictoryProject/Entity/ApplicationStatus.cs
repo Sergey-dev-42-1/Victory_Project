@@ -1,8 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
 namespace VictoryProject.Entity
 {
-    public class ApplicationStatus
+    public partial class ApplicationStatus
     {
-        public int Id { get; set; }
+        public byte Id { get; set; }
         public string Name { get; set; }
     }
 }
