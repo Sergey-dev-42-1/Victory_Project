@@ -206,8 +206,6 @@ namespace VictoryProject.Controller
         public async Task<IActionResult> GetAllContests()
         {
             Console.WriteLine("sentContests");
-
-
             try
             {
                 var contests = await _dbContext.Set<Contest>()

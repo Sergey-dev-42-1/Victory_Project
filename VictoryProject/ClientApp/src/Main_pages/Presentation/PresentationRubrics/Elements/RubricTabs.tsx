@@ -11,12 +11,10 @@ const tabSetter = (path:string) => {
     switch (route){
         case "main":
             return 0
-        case "news":
-            return 1
         case "terms":
-            return 2
+            return 1
         case "results":
-            return 3
+            return 2
     }
 }
 
@@ -40,13 +38,11 @@ export const RubricTabs = (props : RouteComponentProps) => {
             case 0:
                 navigate("./main")
                 break
+
             case 1:
-                navigate("./news")
-                break
-            case 2:
                 navigate("./terms")
                 break
-            case 3:
+            case 2:
                 navigate("./results")
                 break
         }
@@ -55,8 +51,8 @@ export const RubricTabs = (props : RouteComponentProps) => {
     return (
         <Tabs centered value={naviTab} onChange={handleTabChange} className={classes.tabsContainer}>
             <Tab label="Главная"/>
-            <Tab label="Новости"/>
-            <Tab label="Положение"/>
+
+            <Tab label="Положения"/>
             {/*disabled={tempContestData.status!=="Подведение итогов"}*/}
             <Tab label="Результаты"/>
         </Tabs>

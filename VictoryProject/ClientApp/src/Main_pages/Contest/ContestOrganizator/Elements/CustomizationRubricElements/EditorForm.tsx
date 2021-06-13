@@ -7,7 +7,9 @@ import {Editor} from "react-draft-wysiwyg";
 const  useStyles = makeStyles((Theme)=>
     createStyles({
         editorToolbar:{
-            
+            position:"sticky",
+            zIndex:1100,
+            top:0
         },
         editorWrapper:{
             

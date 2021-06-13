@@ -40,6 +40,7 @@ const useStyles = makeStyles((Theme) => createStyles({
 }))
 
 interface Props {
+    Title: string,
     Fields: ApplicationField[]
     Submit: (data:any)=>void
 }
@@ -48,7 +49,7 @@ interface Props {
 
 
 
-export const CustomForm = ({Submit, Fields}:Props) => {
+export const CustomForm = ({Title, Submit, Fields}:Props) => {
     const [submitted, setSubmitted] = React.useState(false);
 
     const [fields,setFields] = useState(Fields)
@@ -71,7 +72,7 @@ export const CustomForm = ({Submit, Fields}:Props) => {
 
     return (
         <React.Fragment>
-            <DialogTitle className={classes.title}>Оценить работу</DialogTitle>
+            <DialogTitle className={classes.title}>{Title}</DialogTitle>
             <DialogContent>
                 <form autoComplete={"off"} className={classes.form}>
                     <Grid container className={classes.fieldset}>

@@ -3,8 +3,8 @@ import {Contest, UserRoles} from "../../../Additional/Types"
 
 export const tempContestData: Contest = {
     id: "10000000",
-    name: "НазваниеНазваниеНазваниеНазвание",
-    notes: "Заметки о конкурсе",
+    name: "Умник",
+    notes: "Здесь можно оставить описание конкурса",
     status: "Начат",
     role: UserRoles.organistor,
     dateBeginning: Date.now(),

@@ -98,7 +98,7 @@ export const FormConstructorField = ({returnData,item, deleteSelf}:Props) => {
                         <TextField required onChange={handleNameChange} value={field.name} label="Название поля" placeholder={"Введите название"} />
                     </CardContent>
                 </div>
-                {chooseLayout(item, handleConstraintsChange)}
+                {chooseLayout(field, handleConstraintsChange)}
                 <div className={classes.controls} >
                    
                         <TextField

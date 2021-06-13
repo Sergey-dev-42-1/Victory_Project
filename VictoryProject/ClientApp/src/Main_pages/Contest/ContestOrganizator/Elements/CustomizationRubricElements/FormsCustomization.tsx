@@ -72,7 +72,7 @@ export const FormsCustomization = () => {
             </Dialog>
             
             <Dialog fullWidth maxWidth={"sm"} onClose={()=>{setFormsViewOpen(initialState)}} open={formsViewOpen.ApplicationForm || formsViewOpen.WorksForm || formsViewOpen.AssessForm}>
-                <CustomForm Fields={parsedCurrentState} Submit={(data:any)=>{setFormsViewOpen(initialState)}}/>
+                <CustomForm Title={"Подача заявки на участие"} Fields={parsedCurrentState} Submit={(data:any)=>{setFormsViewOpen(initialState)}}/>
             </Dialog>
             
             <Grid container className={classes.formsRoot}>

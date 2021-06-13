@@ -17,20 +17,21 @@ import {receive, selectContests} from "../../state/contestSlice"
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles, Tab, Tabs, Typography} from "@material-ui/core/";
 
-
+import {getAffiliatedContests} from "../../API/mainServices";
+/*
 const tempContestData = (id: string) => {
     return {
         id: id,
-        name: "Название",
-        notes: "Заметки о конкурсе",
+        name: "Умник",
+        notes: "Здесь можно оставить описание конкурса",
         status: "Начат",
         role: Math.floor(Math.random() * 3),
         dateBeginning: Date.now(),
-        dateEnding: Date.now() + 86400 * 1000,
+        dateEnding: Date.now() + 86400 * 1000 * 34,
         applyDateBeginning: Date.now() + 86400 * 1000 * 20,
         applyDateEnding: Date.now() + 86400 * 1000 * 31,
     }
-};
+};*/
 
 const useStyles = makeStyles((theme) => createStyles({
     pageTitle: {
@@ -55,9 +56,11 @@ const useStyles = makeStyles((theme) => createStyles({
     }
 }))
 
+/*
 const generateTempData: object[] = [tempContestData("1"), tempContestData("2"), tempContestData("3"),
     tempContestData("4"), tempContestData("5"), tempContestData("6"), tempContestData("7"), tempContestData("8")]
 
+*/
 
 
 export const BasePage = (props: RouteComponentProps) => {
@@ -77,27 +80,29 @@ export const BasePage = (props: RouteComponentProps) => {
 
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTab(newValue);
-        //TODO: фильтр опасный, не стоит опираться на магические числа
         setContests((contestsSelector as Contest[]).filter((item) => {
             return item.role === newValue
         }))
     };
-
-    const dispatch = useDispatch()
-
-    dispatch(receive(generateTempData))
-
+    
     const classes = useStyles()
-
+    
+    
+    
     const handleCloseCreate = () => {
         setCreateNew(false)
     }
-
-    React.useEffect(() => {
-        setContests((contestsSelector as Contest[]).filter((item) => {
-            return item.role === 0
-        }))
-    }, [contestsSelector])
+    
+    const getContests =  async () => {
+        let contestsResponse = await getAffiliatedContests()
+        await setContests(contestsResponse.data)
+        return
+    }
+    
+    React.useEffect(()=>{getContests()}, [getContests,contests])
+    
+   
+    
     return (
 
         <React.Fragment>

@@ -70,7 +70,12 @@ export const LogInForm = ({setLogIn}: Props) => {
     });
     //Рабочий метод
      const Submit = async (data: any) => {
-         const response = await login(data);
+         let response = await login(data);
+
+             if(response.status !== 200){
+                 alert(response.data);
+                 return
+             }
          localStorage.setItem("username", response.data.username)
          localStorage.setItem("email", response.data.email)
          userContext.setUser({username:data.Email})

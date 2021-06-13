@@ -1,5 +1,5 @@
 //Форма регистрации
-import React from "react";
+import React, {useContext} from "react";
 import {useForm} from "react-hook-form";
 
 import * as yup from "yup";
@@ -7,7 +7,7 @@ import {object, SchemaOf, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 import {navigate} from "@reach/router";
-import {register as axiosRegister} from "../API/mainServices";
+import {login, register as axiosRegister} from "../API/mainServices";
 
 import {FormInputField} from "./Elements/FormInputField";
 import {FormBase} from "./Elements/FormBase";
@@ -15,6 +15,7 @@ import {User} from "../Additional/Types";
 import {passwordAdornment} from "./Elements/PasswordVisibilityAdornment";
 import {createStyles, Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import {UserContext} from "../App";
 
 interface FormFields {
     Email: string;
@@ -49,7 +50,7 @@ const OrgFormSchema: SchemaOf<FormFields> = object({
 }).defined();
 
 export const RegistrationForm = () => {
-
+    const userContext = useContext(UserContext)
     const [submitted, setSubmitted] = React.useState(false);
     const [passwordVisibility, setPasswordVisibility] = React.useState(false);
 
@@ -68,16 +69,32 @@ export const RegistrationForm = () => {
     });
 
     const Submit = async (formData: any) => {
+
+        
+        
         let user : User = {username: formData.Name, email:formData.Email,  password:formData.Password};
-
-        let response = await axiosRegister(user);
-
-        if (response.status === 200) {
+        
+        try {
+            await axiosRegister(user);
             setSubmitted(true);
-            navigate("./main");
-        } else {
+        }
+        catch(e) {
             alert("Произошла ошибка, попробуйте снова");
         }
+        
+        let responseLogin: any;
+        try {
+            responseLogin = await login({email:formData.Email,  password:formData.Password});
+        }
+        catch(e){
+            alert("Произошла ошибка, попробуйте снова");
+            return
+        }
+        localStorage.setItem("username", responseLogin.data.username)
+        localStorage.setItem("email", responseLogin.data.email)
+        userContext.setUser({username:formData.Email})
+        setSubmitted(true);
+        await navigate("/")
         return;
     };
 

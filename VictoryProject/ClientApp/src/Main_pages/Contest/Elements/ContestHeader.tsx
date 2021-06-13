@@ -59,68 +59,85 @@ export const ContestHeader = () => {
 
         <React.Fragment>
             <Paper elevation={3} square className={classes.root}>
-                
+
                 <Grid className={classes.card} container>
-                    
-                    <Grid item style={{display:"flex",alignItems:"center"}}>
-                        <Grid item >
-                            
+
+                    <Grid item style={{display: "flex", alignItems: "center"}}>
+                        <Grid item>
+
                             <Tooltip title={"Назад"}>
-                                
-                            <IconButton onClick={() => {
-                                
-                                navigate("/")
-                            }} className={classes.Button}>
-                                <ArrowBackIcon fontSize={"large"}  />
-                                
-                            </IconButton>
-                                
+
+                                <IconButton onClick={() => {
+
+                                    navigate("/")
+                                }} className={classes.Button}>
+                                    <ArrowBackIcon fontSize={"large"}/>
+
+                                </IconButton>
+
                             </Tooltip>
-                            
+
                         </Grid>
-                        
+
                         <Grid item>
                             <Typography className={classes.title} variant="h4" component="h2">
-                                {contest.name +" "+ contest.id}
+                                {contest.name + " " + contest.id}
                             </Typography>
                         </Grid>
-                        
+
                     </Grid>
-                    
+
                     <Divider orientation={"vertical"} className={classes.divider}/>
-                    
+
                     <Grid item className={classes.section}>
-                        
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Даты проведения
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {new Date(contest.dateBeginning).toLocaleDateString() + "-" + new Date(contest.dateEnding).toLocaleDateString()}
+                            {new Date(contest.dateBeginning).toLocaleString() + " - " + new Date(contest.dateEnding).toLocaleString()}
                         </Typography>
-                        
                     </Grid>
-                    
-                    <Divider orientation={"vertical"} className={classes.divider}/>
-                    
                     <Grid item className={classes.section}>
-                        
+                        <Typography className={classes.sectionTitle} variant="h5" component="h5">
+                            Дата начала приема заявок
+                        </Typography>
+                        <Typography variant="h6" component="h4">
+                            {new Date(contest.applyDateBeginning).toLocaleString()}
+                        </Typography>
+                    </Grid>
+                    <Grid item className={classes.section}>
+                        <Typography className={classes.sectionTitle} variant="h5" component="h5">
+                            Даты окончания приема заявок
+                        </Typography>
+                        <Typography variant="h6" component="h4">
+                            {new Date(contest.applyDateEnding).toLocaleString()}
+                        </Typography>
+                    </Grid>
+
+
+                    <Divider orientation={"vertical"} className={classes.divider}/>
+
+                    <Grid item className={classes.section}>
+
                         <Typography className={classes.sectionTitle} variant="h5" component="h5">
                             Статус
                         </Typography>
                         <Typography variant="h6" component="h4">
                             {contest.status}
                         </Typography>
-                        
+
                     </Grid>
-                    
-                    <Grid style={{display:"flex",alignItems:"center"}} item >
-                        
+
+                    <Grid style={{display: "flex", alignItems: "center"}} item>
+
                         <Tooltip title={"Перейти на страницу конкурса"}>
-                            <IconButton className ={classes.Button} onClick={()=>{navigate(`/contest/${contest.id}/presentation/news`)}}>
-                                 <OpenInNewIcon/>
+                            <IconButton className={classes.Button} onClick={() => {
+                                navigate(`/contest/${contest.id}/presentation/news`)
+                            }}>
+                                <OpenInNewIcon/>
                             </IconButton>
                         </Tooltip>
-                        
+
                     </Grid>
                 </Grid>
             </Paper>

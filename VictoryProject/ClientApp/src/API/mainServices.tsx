@@ -9,10 +9,16 @@ export async function register(user: types.User) {
   let response = await instance.post(`register`, user);
   return response;
 }
+
 export async function login(credentials: any) {
-  let response = await instance.post(`login`, credentials);
-  console.log(response.data);
-  console.log(response.statusText);
+  let response:any;
+  try{
+    response = await instance.post(`login`, credentials);
+  }
+ catch(error){
+    console.log(error.response)
+    return error.response
+  }
   return response;
 }
 
@@ -33,4 +39,8 @@ export async function createContest(Contest: types.Contest) {
 export async function getAllContests() {
   let response = await instance.get(`getallcontests`);
   return response;
+}
+export async function getAffiliatedContests() {
+    let response = await instance.get(`getaffiliatedcontests`);
+    return response;
 }

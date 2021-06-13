@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         height: "90%",
     },
 }))
-const rubrics = [{name:'Новости',url:`news`},
+const rubrics = [
     {name:'Поданные работы',url:`works`},
     {name:'Участники',url:`participants`},
     {name:'Эксперты',url:`experts`},

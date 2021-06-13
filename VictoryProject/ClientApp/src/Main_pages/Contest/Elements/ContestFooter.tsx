@@ -20,7 +20,7 @@ export const ContestFooter = () => {
         <Grid container className={classes.footer}>
             <Grid item xs={4}   >
                 <Typography>
-                    Подвал страницы организатора
+                   Организатор:
                 </Typography>
                 {localStorage.getItem("email")}
             </Grid>
