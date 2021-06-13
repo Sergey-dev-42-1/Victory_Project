@@ -124,12 +124,12 @@ namespace VictoryProject.Controller
 
         [HttpGet]
         [Route("getaffiliatedcontests")]
-        public async Task<JsonResult> GetAffiliatedContests()
+        public async Task<ActionResult> GetAffiliatedContests()
         {
             var currentUser = await GetCurrentUser();
             var contests = await _dbContext.Set<Contest>()
                 .Where(contest =>
-                    contest.UserRoleContests.Exists(roleContest => roleContest.User.Email == currentUser.Email))
+                    contest.UserRoleContests.Any(roleContest => roleContest.User.Email == currentUser.Email))
                 .AsNoTracking()
                 .ToListAsync();
             return new JsonResult(JsonConvert.SerializeObject(contests));
