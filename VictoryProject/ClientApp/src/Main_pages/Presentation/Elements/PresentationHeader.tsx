@@ -90,7 +90,7 @@ export const ContestPresentationHeader = (props: RouteComponentProps) => {
 
                         <Grid item>
                             <Typography className={classes.title} variant="h5" component="h2">
-                                {contest.name + " " + contest.id}
+                                {contest.Name + " " + contest.Id}
                             </Typography>
                         </Grid>
 
@@ -103,7 +103,7 @@ export const ContestPresentationHeader = (props: RouteComponentProps) => {
                             Статус
                         </Typography>
                         <Typography variant="h6" style={{paddingRight: "10px"}} component="h4">
-                            {contest.status}
+                            {contest.Status}
                         </Typography>
 
                     </Grid>
@@ -128,19 +128,19 @@ export const ContestPresentationHeader = (props: RouteComponentProps) => {
                    
                     {/*Имплементация нестабильная, в зависимости от часового пояса будет разниться, лучше использовать время сервера для этого либо нормализовывать все даты по одному поясу*/}
                     <Grid style={{display: "flex", alignItems: "center", padding: "0 10px"}} item>
-                        {(Date.now() > contest.applyDateBeginning && Date.now() < contest.applyDateEnding) &&
+                        {(Date.now() > contest.StartRegistrationDate && Date.now() < contest.EndRegistrationDate) &&
                         <Button variant={"contained"} onClick={() => {
                             console.log("clicked")
                         }} color={"secondary"}>Принять участие</Button>
                         }
-                        {(Date.now() > contest.dateBeginning && Date.now() < contest.applyDateBeginning) &&
+                        {(Date.now() > contest.StartDate && Date.now() < contest.StartRegistrationDate) &&
                         <Typography variant={"body1"}>Прием работ еще не открыт</Typography>
                         }
-                        {(Date.now() > contest.applyDateEnding && Date.now() < contest.dateEnding) &&
+                        {(Date.now() > contest.EndRegistrationDate && Date.now() < contest.EndDate) &&
                         <Typography variant={"body1"}>Прием работ окончен, результаты будут объявлены после
                             завершения</Typography>
                         }
-                        {(Date.now() > contest.dateEnding) &&
+                        {(Date.now() > contest.EndDate) &&
                         <Typography variant={"body1"}>Конкурс окончен!</Typography>
                         }
                     </Grid>

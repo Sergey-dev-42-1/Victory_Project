@@ -81,7 +81,7 @@ export const ContestHeader = () => {
 
                         <Grid item>
                             <Typography className={classes.title} variant="h4" component="h2">
-                                {contest.name + " " + contest.id}
+                                {contest.Name}
                             </Typography>
                         </Grid>
 
@@ -94,7 +94,7 @@ export const ContestHeader = () => {
                             Даты проведения
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {new Date(contest.dateBeginning).toLocaleString() + " - " + new Date(contest.dateEnding).toLocaleString()}
+                            {new Date(contest.StartDate).toLocaleString() + " - " + new Date(contest.EndDate).toLocaleString()}
                         </Typography>
                     </Grid>
                     <Grid item className={classes.section}>
@@ -102,7 +102,7 @@ export const ContestHeader = () => {
                             Дата начала приема заявок
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {new Date(contest.applyDateBeginning).toLocaleString()}
+                            {new Date(contest.StartRegistrationDate).toLocaleString()}
                         </Typography>
                     </Grid>
                     <Grid item className={classes.section}>
@@ -110,7 +110,7 @@ export const ContestHeader = () => {
                             Даты окончания приема заявок
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {new Date(contest.applyDateEnding).toLocaleString()}
+                            {new Date(contest.EndRegistrationDate).toLocaleString()}
                         </Typography>
                     </Grid>
 
@@ -123,7 +123,7 @@ export const ContestHeader = () => {
                             Статус
                         </Typography>
                         <Typography variant="h6" component="h4">
-                            {contest.status}
+                            {contest.Status}
                         </Typography>
 
                     </Grid>
@@ -132,7 +132,7 @@ export const ContestHeader = () => {
 
                         <Tooltip title={"Перейти на страницу конкурса"}>
                             <IconButton className={classes.Button} onClick={() => {
-                                navigate(`/contest/${contest.id}/presentation/news`)
+                                navigate(`/contest/${contest.Id}/presentation/news`)
                             }}>
                                 <OpenInNewIcon/>
                             </IconButton>

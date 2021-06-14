@@ -19,7 +19,7 @@ export const FormInputField = (props: Props) => {
     const {
         formState: {errors},
     } = props.formSet;
-    console.log(errors)
+
     return (
         <React.Fragment>
             <Controller

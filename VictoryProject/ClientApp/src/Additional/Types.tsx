@@ -1,9 +1,9 @@
 //Файл для помещения сюда интерфейсов некоторых сущностей
 
 export enum UserRoles {
-    organistor = 0,
-    participant,
+    organizator = 0,
     expert,
+    participant,
 }
 
 export interface User {
@@ -13,17 +13,17 @@ export interface User {
 }
 
 export interface Contest {
-    id: string;
-    name: string;
-    notes: string;
+    Id: string;
+    Name: string;
+    Comment: string;
     //TODO: Лучше конкретно определить варианты статусов, на сервере
-    status: string;
-    role: UserRoles;
+    Status: string;
+    UserRoleContest: UserRoles;
     //Date плохо совместим с Redux подробнее в store.tsx
-    dateBeginning: number;
-    dateEnding: number;
-    applyDateBeginning: number;
-    applyDateEnding: number;
+    StartDate: number;
+    EndDate: number;
+    StartRegistrationDate: number;
+    EndRegistrationDate: number;
 }
 
 export interface ApplicationField {

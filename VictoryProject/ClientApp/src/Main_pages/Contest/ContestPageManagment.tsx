@@ -90,8 +90,11 @@ export const ContestPageManagement = (props: Props) => {
 
     
     const contests: Contest[] = useSelector(selectContests) as Contest[]
-    const contest = contests.find((item)=>{return item.id === props.id})
-   
+    console.log(contests)
+    const contest = contests.find((item)=>{
+        return item.Id.toString() === props.id!.toString()}
+    )
+
     const sidebar = useSelector(selectSidebarOpen)
     const headerHidden = useSelector(selectHeaderHide)
 
@@ -127,19 +130,19 @@ export const ContestPageManagement = (props: Props) => {
                             <Grid color={"primary"} className={classes.pageBody}>
                                 <ContestHeader/>
                                 <Grid color={"primary"} container style={{flexGrow: 1}}>
-                                    {contest!.role === UserRoles.organistor &&
+                                    
                                     <React.Fragment>
                                         <ContestRubricsOrganizator/>
                                         <ContestPagesOrganizator setTheme={setTheme}/>
                                     </React.Fragment>
-                                    }
-                                    {contest!.role === UserRoles.expert &&
+                                 
+                                    {contest!.UserRoleContest === UserRoles.expert &&
                                     <React.Fragment>
                                         <ContestRubricsExpert/>
                                         <ContestPagesExpert/>
                                     </React.Fragment>
                                     }
-                                    {contest!.role === UserRoles.participant &&
+                                    {contest!.UserRoleContest === UserRoles.participant &&
                                     <React.Fragment>
                                         <ContestRubricsParticipant/>
                                         <ContestPagesParticipant/>

@@ -35,7 +35,7 @@ export const ContestRubricsParticipant = () => {
 
     const handleRubricClick = (item: {name: string, url: string})=>{
         setSelected(item.name)
-        navigate("/contest/" + contest.id +"/"+  item.url)
+        navigate("/contest/" + contest.Id +"/"+  item.url)
     }
 
     return (

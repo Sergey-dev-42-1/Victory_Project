@@ -3,7 +3,7 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import React, {useState} from "react";
 import {Link, navigate} from "@reach/router";
-import {Contest} from "../../../Additional/Types";
+
 import {
     Card,
     Typography,
@@ -20,8 +20,9 @@ import {Delete} from "@material-ui/icons";
 
 interface Props {
     deleteState?: boolean;
+    deleteContest?: (id:number) => void;
     controls: boolean;
-    contest: Contest;
+    contest: any;
     id: string;
 }
 
@@ -89,7 +90,7 @@ const useStyles = makeStyles((Theme) => createStyles({
 }))
 
 
-export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
+export const ContestCard = ({deleteState, deleteContest, contest, id, controls}: Props) => {
     const classes = useStyles()
     const dateFormat: Intl.DateTimeFormatOptions = {
         month: "long",
@@ -104,23 +105,24 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
         setAnchorEl(anchorEl ? null : event.currentTarget)
         setNotesPopper(!notesPopper)
     }
+    
     return (
         <Card elevation={3} className={classes.cardRoot}>
             <Box className={classes.decorator}/>
             <Box className={classes.cardContent}>
                 <Box p={1} className={classes.cardHeader}>
                     <div style={{width: "100%"}}>
-                        <Link to={`/contest/` + (id || "3") + "/presentation/main"} state={{contest: contest, id: id}}>
+                        <Link to={`/contest/` + (contest.id) + "/presentation/main"} state={{contest: contest, id: contest.id}}>
                             <Typography className={classes.cardLink} color={"primary"}
-                                        variant={"h5"}>{contest.name}</Typography>
+                                        variant={"h5"}>{contest.Name}</Typography>
                         </Link>
                     </div>
                     <Typography color={"textSecondary"} style={{display: "flex"}} variant={"body1"}>
                         <AccessTimeIcon alignmentBaseline={"after-edge"}/>
                         {
-                            new Date(contest.dateBeginning).toLocaleString("ru-RU", dateFormat)
+                            new Date(contest.StartDate).toLocaleString("ru-RU", dateFormat)
                             + " \u2013 " +
-                            new Date(contest.dateEnding).toLocaleString("ru-RU", dateFormat)
+                            new Date(contest.EndDate).toLocaleString("ru-RU", dateFormat)
                         }</Typography>
 
                 </Box>
@@ -130,12 +132,12 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
                         <div  className="description">
                             <span>Описание</span>
                             <Typography style={{width:"400px"}} noWrap>
-                                {contest.notes} {contest.notes} {contest.notes} {contest.notes} {contest.notes}
+                                {contest.Comment}
                                 <Popper onClick={(event)=>{handlePopper(event)}} id={id} open={notesPopper} anchorEl={anchorEl} transition>
                                     {({ TransitionProps }) => (
                                         <Fade {...TransitionProps} timeout={350}>
                                             <Box>
-                                            <Paper  elevation={8} className={classes.paper}>{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}{contest.notes}</Paper>
+                                            <Paper  elevation={8} className={classes.paper}>{contest.Comment}</Paper>
                                             </Box>
                                         </Fade>
                                     )}
@@ -147,7 +149,7 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
                         <div className="status">
                             <span>Статус</span>
                             <Typography>
-                                {contest.status}
+                                Подготовка
                             </Typography>
                         </div>
                     </Box>
@@ -157,7 +159,7 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
                 {controls &&
                 <Tooltip title={"Личный кабинет конкурса"}>
                     <IconButton onClick={() => {
-                        navigate(`contest/${contest.id}`)
+                        navigate(`contest/${contest.Id}`)
                     }}>
                         <CreateSharpIcon/>
                     </IconButton>
@@ -165,7 +167,7 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
                 }
                 <Tooltip title={"Перейти на страницу конкурса"}>
                     <IconButton onClick={() => {
-                        navigate(`/contest/${contest.id}/presentation/news`)
+                        navigate(`/contest/${contest.Id}/presentation/news`)
                     }}>
                         <OpenInNewIcon/>
                     </IconButton>
@@ -173,7 +175,7 @@ export const ContestCard = ({deleteState, contest, id, controls}: Props) => {
                 {deleteState &&
                 <Tooltip title={"Удалить"}>
                     <IconButton onClick={() => {
-                        alert("Удалено")
+                        deleteContest!(parseInt(id))
                     }}>
                         <Delete/>
                     </IconButton>

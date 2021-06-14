@@ -31,33 +31,9 @@ const useStyles = makeStyles((Theme) => createStyles({
         overflow: "clip",
     },
 }))
-// const converter = (ContentState: ContentState) => {
-//     return convertToHTML({
-//         styleToHTML:(style) => {
-//             console.log(style)
-//             if (style === 'BOLD') {
-//                 return <span style={{fontWeight: "bold"}} />;
-//             }
-//         },
-//         blockToHTML: (block) => {
-//             if (block.type === 'PARAGRAPH') {
-//                 return <p />;
-//             }
-//
-//         },
-//         entityToHTML: (entity, originalText) => {
-//             if (entity.type === 'LINK') {
-//                 return <Link href={entity.data.url}>{originalText}</Link>;
-//             }
-//             if (entity.type === 'IMAGE') {
-//                 return <img alt={"Изображение"} src={entity.data.src}/>;
-//             }
-//             return originalText;
-//         }
-//     })(ContentState)
-// }
+
 export const TermsRubric = (props: RouteComponentProps) => {
-    const contest = useContext(ContestPresentationContext)
+
     const classes = useStyles();
     const getContents = window.localStorage.getItem("savedJSONContent") ? window.localStorage.getItem("savedJSONContent") : "";
     const contents: ContentState = convertFromRaw(JSON.parse(getContents ? getContents : ""))

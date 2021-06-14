@@ -44,3 +44,7 @@ export async function getAffiliatedContests() {
     let response = await instance.get(`getaffiliatedcontests`);
     return response;
 }
+export async function deleteContest(contestId:number) {
+    let response = await instance.post(`deletecontest/contestId=${contestId}`);
+    return response;
+}

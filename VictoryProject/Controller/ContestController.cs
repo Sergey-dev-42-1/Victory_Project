@@ -140,14 +140,17 @@ namespace VictoryProject.Controller
             return await _dbContext.Set<User>()
                 .FirstOrDefaultAsync(user => user.Email.Equals(_httpContext.User.Identity.Name));
         }
-
+        [Authorize]
+        [HttpPost]
         [Route("deletecontest")]
-        public async Task<IActionResult> DeleteContest([FromQuery] int contestId)
+        public async Task<IActionResult> DeleteContest([FromBody]int contestId)
         {
             try
             {
+                Console.WriteLine(contestId);
                 var contest = await _dbContext.Set<Contest>()
                     .FirstOrDefaultAsync(c => c.Id == contestId);
+                Console.WriteLine(contest);
                 _dbContext.Remove(contest);
                 await _dbContext.SaveChangesAsync();
                 return Ok();

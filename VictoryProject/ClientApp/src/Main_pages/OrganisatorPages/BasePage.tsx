@@ -11,13 +11,14 @@ import {Footer} from "../../Main_components/Footer";
 import {useSidebar} from "../../hooks/useSidebar"
 import {RouteComponentProps} from "@reach/router";
 
-import {createStyles, Dialog, Paper} from "@material-ui/core";
+import {Box, createStyles, Dialog, Paper} from "@material-ui/core";
 
 import {receive, selectContests} from "../../state/contestSlice"
+import {AppDispatch} from '../../state/store';
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles, Tab, Tabs, Typography} from "@material-ui/core/";
 
-import {getAffiliatedContests} from "../../API/mainServices";
+import {getAffiliatedContests, deleteContest as APIDelete} from "../../API/mainServices";
 /*
 const tempContestData = (id: string) => {
     return {
@@ -67,6 +68,7 @@ export const BasePage = (props: RouteComponentProps) => {
 
     useSidebar()
 
+    const dispatch: AppDispatch = useDispatch();
 
     const contestsSelector = useSelector(selectContests)
 
@@ -81,28 +83,35 @@ export const BasePage = (props: RouteComponentProps) => {
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTab(newValue);
         setContests((contestsSelector as Contest[]).filter((item) => {
-            return item.role === newValue
+            return item.UserRoleContest === newValue
         }))
     };
-    
+
     const classes = useStyles()
-    
-    
-    
+
+
     const handleCloseCreate = () => {
+        getContests()
         setCreateNew(false)
     }
-    
-    const getContests =  async () => {
+
+    const getContests = async () => {
         let contestsResponse = await getAffiliatedContests()
-        await setContests(contestsResponse.data)
+        await setContests(JSON.parse(contestsResponse.data) as Contest[])
         return
     }
-    
-    React.useEffect(()=>{getContests()}, [getContests,contests])
-    
-   
-    
+
+    const deleteContest = (id:number)=>{
+        APIDelete(id)
+        getContests()
+    }
+    React.useEffect(() => {
+        getContests()
+        contests ? dispatch(receive(contests)) : dispatch(receive([]))
+        console.log(contests)
+    }, [contestsSelector])
+
+
     return (
 
         <React.Fragment>
@@ -110,7 +119,7 @@ export const BasePage = (props: RouteComponentProps) => {
             <Dialog onClose={handleCloseCreate} aria-labelledby="simple-dialog-title" open={createNew}>
                 <CreateContestModal close={handleCloseCreate}/>
             </Dialog>
-            
+
             <Paper square elevation={0} className="mainPageContainer">
                 <Sidebar type={sidebarTypes.Org}/>
 
@@ -138,23 +147,30 @@ export const BasePage = (props: RouteComponentProps) => {
                                 Удалить
                             </div>
                         </div>
-                    
+
                         <div className="managementContainer">
                             <Tabs value={tab} onChange={handleChangeTab} className={classes.controlTabs}>
-    
+
                                 <Tab className={classes.tab} label={"Организатор"}/>
                                 <Tab className={classes.tab} label={"Участник"}/>
                                 <Tab className={classes.tab} label={"Эксперт"}/>
                             </Tabs>
-                            {contests && contests.map((item) => {
-                                return <ContestCard deleteState={deleteState} controls key={item.id} contest={item} id={item.id.toString()}/>
-                            })}
+                            {contests && contests.map((contest:any) => {
+                                return (<ContestCard key={contest.Id} contest={contest}  deleteContest={deleteContest} id={contest.Id} controls={true}
+                                                     deleteState={deleteState}/>)
+                            })
+                            }
+                            {!contests &&
+                                <Box style={{padding:"10px"}}>
+                            <Typography variant={"h6"}>Пока пусто, создайте один :)</Typography>
+                                </Box>
+                            }
                         </div>
                     </div>
 
-                <Footer/>
-            </main>
-        </Paper>
-</React.Fragment>
-);
+                    <Footer/>
+                </main>
+            </Paper>
+        </React.Fragment>
+    );
 };

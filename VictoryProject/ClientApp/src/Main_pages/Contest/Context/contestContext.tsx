@@ -2,15 +2,15 @@ import React from "react";
 import {Contest, UserRoles} from "../../../Additional/Types"
 
 export const tempContestData: Contest = {
-    id: "10000000",
-    name: "Умник",
-    notes: "Здесь можно оставить описание конкурса",
-    status: "Начат",
-    role: UserRoles.organistor,
-    dateBeginning: Date.now(),
-    dateEnding: Date.now() + 86400 * 1000,
-    applyDateBeginning: Date.now() + 86400 * 1000 * 20,
-    applyDateEnding: Date.now() + 86400 * 1000 * 31,
+    Id: "10000000",
+    Name: "Умник",
+    Comment: "Здесь можно оставить описание конкурса",
+    Status: "Начат",
+    UserRoleContest: UserRoles.organizator,
+    StartDate: Date.now(),
+    EndDate: Date.now() + 86400 * 1000,
+    StartRegistrationDate: Date.now() + 86400 * 1000 * 20,
+    EndRegistrationDate: Date.now() + 86400 * 1000 * 31,
 };
 
 export const ContestContext = React.createContext({...tempContestData});

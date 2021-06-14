@@ -120,7 +120,7 @@ export const BrowseContests = (props: RouteComponentProps) => {
     
     function handleSearch() {
         const searchFilter = (contestsSelector as Contest[])?.filter((item)=>{
-            const normalized = {name:item.name.toLowerCase(),notes:item.notes.toLowerCase(), search: search.toLowerCase()}
+            const normalized = {name:item.Name.toLowerCase(),notes:item.Comment.toLowerCase(), search: search.toLowerCase()}
             return normalized.name.includes(normalized.search) || normalized.notes.includes(normalized.search)
         })
         setSearchResults(searchFilter ? searchFilter : null)
@@ -162,7 +162,7 @@ export const BrowseContests = (props: RouteComponentProps) => {
                     {searching &&
                         <div className="managementContainer">
                             {searchRender && searchRender.map((item) => {
-                                return <ContestCard controls={false} key={item.id} contest={item} id={item.id.toString()}/>
+                                return <ContestCard controls={false} key={item.Id} contest={item} id={item.Id.toString()}/>
                             })}
                             {!searchRender && <Typography variant={"h5"}>Ничего не найдено</Typography>}
                         </div>
@@ -170,7 +170,7 @@ export const BrowseContests = (props: RouteComponentProps) => {
                     {!searching &&
                     <div className="managementContainer">
                         {contests && contests.map((item) => {
-                            return <ContestCard controls={false} key={item.id} contest={item} id={item.id.toString()}/>
+                            return <ContestCard controls={false} key={item.Id} contest={item} id={item.Id.toString()}/>
                         })}
                     </div>
                     }
